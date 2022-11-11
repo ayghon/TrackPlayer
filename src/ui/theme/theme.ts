@@ -20,22 +20,5 @@ const colors: {
 
 export const theme = createTheme({
   ...colors,
-  components: {
-    Text: {
-      h1Style: {
-        fontFamily: 'Nunito-SemiBold',
-        fontWeight: '300',
-        backgroundColor: 'white'
-      },
-      h2Style: {
-        fontFamily: 'Nunito-Regular',
-        fontWeight: '100'
-      },
-      h3Style: {
-        fontFamily: 'Nunito-Bold',
-        fontWeight: '500'
-      }
-    }
-  },
   mode: 'dark'
 });
