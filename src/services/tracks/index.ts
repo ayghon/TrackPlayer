@@ -1,1 +1,1 @@
-export * from './trackList';
+export * from './tracks';

@@ -1,17 +1,28 @@
-import { ScreenContainer } from '../../ui';
-import React from 'react';
-import { Button } from '@rneui/base';
-import { useNavigation } from '@react-navigation/native';
+import { PlaylistItem, ScreenContainer } from '../../ui';
+import React, { FC } from 'react';
 import { RootStackParamList, Routes } from '../../services/routes/routes.types';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Playlist, playlists } from '../../services';
+import { Carousel } from '../../ui/display/Carousel';
 
-export const HomeScreen = () => {
-  const { navigate } =
-    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
+export const HomeScreen: FC<
+  NativeStackScreenProps<RootStackParamList, Routes.HOME>
+> = ({ navigation: { navigate } }) => {
   return (
     <ScreenContainer>
-      <Button title="Go to Player" onPress={() => navigate(Routes.PLAYER)} />
+      <Carousel<Playlist>
+        data={playlists}
+        initialNumToRender={3}
+        keyExtractor={({ title }) => title}
+        renderItem={({ item: { tracks, title, artwork, count } }) => (
+          <PlaylistItem
+            artwork={artwork}
+            title={title}
+            trackCount={count}
+            onPress={() => navigate(Routes.PLAYER, { tracks })}
+          />
+        )}
+      />
     </ScreenContainer>
   );
 };

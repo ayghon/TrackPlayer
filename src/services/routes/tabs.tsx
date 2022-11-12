@@ -37,7 +37,12 @@ const tabs: TabScreenProps[] = [
 
 export const TabNavigator = () => {
   return (
-    <TabStack.Navigator>
+    <TabStack.Navigator
+      screenOptions={{
+        headerStyle: {
+          height: 0
+        }
+      }}>
       {tabs.map(({ name, component, iconName, title }) => (
         <TabStack.Screen
           key={name}

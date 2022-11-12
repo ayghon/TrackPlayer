@@ -1,22 +1,39 @@
-import React from 'react';
+import React, { FC, useEffect } from 'react';
 import { ScreenContainer, TrackView } from '../../ui';
-import TrackPlayer from 'react-native-track-player';
-import { Button } from '@rneui/base';
-import { trackList, useInitPlayer, usePlayerControls } from '../../services';
+import { usePlayerControls } from '../../services';
+import TrackPlayer, { Track } from 'react-native-track-player';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList, Routes } from '../../services/routes/routes.types';
 
-export const PlayerScreen = () => {
-  useInitPlayer();
+export type PlayerScreenProps = {
+  tracks: Track[];
+};
 
+export const PlayerScreen: FC<
+  NativeStackScreenProps<RootStackParamList, Routes.PLAYER>
+> = ({
+  route: {
+    params: { tracks }
+  }
+}) => {
   const { controlsProps, currentTrack, setQueue } = usePlayerControls();
 
-  const addTracks = async () => {
-    setQueue(trackList);
-    await TrackPlayer.add(trackList);
-  };
+  useEffect(() => {
+    const addTracks = async () => {
+      setQueue(tracks);
+      await TrackPlayer.add(tracks);
+    };
+
+    addTracks();
+
+    return () => {
+      TrackPlayer.reset();
+    };
+  }, [setQueue, tracks]);
 
   return (
     <ScreenContainer>
-      <Button title="Add tracks" onPress={addTracks} />
+      {/*<Button title="Add tracks" onPress={addTracks} />*/}
       {currentTrack && (
         <TrackView
           artwork={currentTrack?.artwork as string}

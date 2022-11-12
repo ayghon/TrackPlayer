@@ -12,7 +12,9 @@ import { TrackControlsCapability, TrackControlsProps } from '../../ui';
 export const useInitPlayer = () => {
   useEffect(() => {
     const initPlayer = async () => {
-      await TrackPlayer.setupPlayer();
+      await TrackPlayer.setupPlayer().catch(() =>
+        console.log('TrackPlayer: Already initialised')
+      );
       await TrackPlayer.updateOptions({
         // Media controls capabilities
         capabilities: [

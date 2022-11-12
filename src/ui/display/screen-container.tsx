@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     backgroundColor: theme.colors.background,
     height: '100%',
-    padding: 8
+    paddingVertical: 16,
+    paddingHorizontal: 18
   }
 }));

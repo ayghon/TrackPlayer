@@ -1,6 +1,6 @@
 import { Track } from 'react-native-track-player';
 
-export const trackList: Track[] = [
+export const tracks: Track[] = [
   {
     url: 'https://bigsoundbank.com/UPLOAD/mp3/0001.mp3',
     title: '0001',
