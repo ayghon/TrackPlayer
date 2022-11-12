@@ -22,9 +22,13 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
       style={styles.button}
       activeOpacity={0.75}
       onPress={onPress}>
-      <Card containerStyle={styles.container} wrapperStyle={styles.wrapper}>
+      <Card containerStyle={styles.container}>
         {artwork ? (
-          <Card.Image source={{ uri: artwork, width: 146, height: 150 }} />
+          <Card.Image
+            style={styles.image}
+            resizeMode="cover"
+            source={{ uri: artwork, width: 146, height: 150 }}
+          />
         ) : (
           <View style={styles.artwork} />
         )}
@@ -36,7 +40,9 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
 };
 
 const useStyles = makeStyles((theme) => ({
-  wrapper: {},
+  image: {
+    borderRadius: 6
+  },
   artwork: {
     backgroundColor: theme.colors.background,
     height: 150,

@@ -1,9 +1,8 @@
-import { PlaylistItem, ScreenContainer } from '../../ui';
+import { Carousel, PlaylistItem, ScreenContainer } from '../../ui';
 import React, { FC } from 'react';
 import { RootStackParamList, Routes } from '../../services/routes/routes.types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Playlist, playlists } from '../../services';
-import { Carousel } from '../../ui/display/Carousel';
 
 export const HomeScreen: FC<
   NativeStackScreenProps<RootStackParamList, Routes.HOME>

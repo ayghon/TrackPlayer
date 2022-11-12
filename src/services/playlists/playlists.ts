@@ -9,17 +9,9 @@ export type Playlist = {
   tracks: Track[];
 };
 
-export const playlists: Playlist[] = [
-  {
-    tracks: tracks,
-    title: 'My playlist',
-    count: tracks.length,
-    artwork: tracks[0].artwork as string
-  },
-  {
-    tracks: tracks.slice(0, 2),
-    title: 'My second playlist',
-    count: tracks.length - 1,
-    artwork: tracks[0].artwork as string
-  }
-];
+export const playlists: Playlist[] = Array.from(Array(6)).map((_, index) => ({
+  tracks: tracks.slice(index, index + 5),
+  title: `My playlist ${index}`,
+  count: 5,
+  artwork: tracks[index].artwork as string
+}));
