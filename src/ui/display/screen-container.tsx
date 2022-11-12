@@ -23,6 +23,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.colors.background,
     height: '100%',
     paddingVertical: 16,
-    paddingHorizontal: 18
+    paddingHorizontal: 12
   }
 }));

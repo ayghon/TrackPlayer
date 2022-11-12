@@ -27,7 +27,9 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
           <Card.Image
             style={styles.image}
             resizeMode="cover"
-            source={{ uri: artwork, width: 146, height: 150 }}
+            source={{
+              uri: artwork
+            }}
           />
         ) : (
           <View style={styles.artwork} />
@@ -41,16 +43,18 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
 
 const useStyles = makeStyles((theme) => ({
   image: {
-    borderRadius: 6
+    borderRadius: 6,
+    height: 128,
+    width: 128
   },
   artwork: {
     backgroundColor: theme.colors.background,
-    height: 150,
-    width: 146
+    height: 128,
+    width: 128
   },
   button: {
-    height: 240,
-    width: 180
+    height: 220,
+    width: 160
   },
   container: {
     margin: 0,
