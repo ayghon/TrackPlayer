@@ -7,7 +7,7 @@ import TrackPlayer, {
   useProgress,
   useTrackPlayerEvents
 } from 'react-native-track-player';
-import { ControlsCapability, ControlsProps } from '../../ui';
+import { TrackControlsCapability, TrackControlsProps } from '../../ui';
 
 export const useInitPlayer = () => {
   useEffect(() => {
@@ -27,9 +27,7 @@ export const useInitPlayer = () => {
         // Capabilities that will show up when the notification is in the compact form on Android
         compactCapabilities: [Capability.Play, Capability.Pause]
       });
-      await TrackPlayer.reset();
     };
-
     initPlayer();
 
     return () => {
@@ -51,7 +49,7 @@ export type UsePlayerControlsResponse = {
   setQueue: Dispatch<SetStateAction<Track[]>>;
   currentTrack?: TrackInQueue;
   setCurrentTrack: Dispatch<SetStateAction<TrackInQueue | undefined>>;
-  controlsProps: ControlsProps;
+  controlsProps: TrackControlsProps;
 };
 
 export const usePlayerControls = (): UsePlayerControlsResponse => {
@@ -107,24 +105,24 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
         playerState !== State.Playing && playerState !== State.Buffering,
       onProgressChange: TrackPlayer.seekTo,
       capabilities: {
-        [ControlsCapability.JUMP_BACKWARD]: {
+        [TrackControlsCapability.JUMP_BACKWARD]: {
           disabled: !currentTrack,
           onPress: jumpBackwardInTrack
         },
-        [ControlsCapability.JUMP_FORWARD]: {
+        [TrackControlsCapability.JUMP_FORWARD]: {
           disabled: !currentTrack,
           onPress: jumpForwardInTrack
         },
-        [ControlsCapability.PLAY_PAUSE]: {
+        [TrackControlsCapability.PLAY_PAUSE]: {
           disabled: !currentTrack,
           onPress: startTrack
         },
-        [ControlsCapability.SKIP_TO_NEXT]: {
+        [TrackControlsCapability.SKIP_TO_NEXT]: {
           disabled:
             !currentTrack || isLastTrack(currentTrack.index, queue.length),
           onPress: skipToNextTrack
         },
-        [ControlsCapability.SKIP_TO_PREVIOUS]: {
+        [TrackControlsCapability.SKIP_TO_PREVIOUS]: {
           disabled: !currentTrack || isFirstTrack(currentTrack.index),
           onPress: skipToPreviousTrack
         }

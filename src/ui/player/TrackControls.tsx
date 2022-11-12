@@ -3,12 +3,12 @@ import React from 'react';
 import { View } from 'react-native';
 import { makeStyles, useTheme } from '@rneui/themed';
 
-type ControlButton = {
+type TrackControlButton = {
   disabled: boolean;
   onPress: () => void;
 };
 
-export enum ControlsCapability {
+export enum TrackControlsCapability {
   PLAY_PAUSE = 'play-pause',
   JUMP_FORWARD = 'jump-forward',
   JUMP_BACKWARD = 'jump-backward',
@@ -16,21 +16,21 @@ export enum ControlsCapability {
   SKIP_TO_PREVIOUS = 'skip-to-previous'
 }
 
-export type ControlsProps = {
+export type TrackControlsProps = {
   position: number;
   isPlaying: boolean;
   duration: number;
   onProgressChange: (position: number) => void;
-  capabilities: Record<ControlsCapability, ControlButton>;
+  capabilities: Record<TrackControlsCapability, TrackControlButton>;
 };
 
-export const Controls = ({
+export const TrackControls = ({
   duration,
   isPlaying,
   position,
   onProgressChange,
   capabilities
-}: ControlsProps) => {
+}: TrackControlsProps) => {
   const styles = useStyles();
   const { theme } = useTheme();
 
@@ -54,39 +54,45 @@ export const Controls = ({
           containerStyle={styles.outerIconStart}
           iconStyle={styles.icon}
           name="skip-previous"
-          disabled={capabilities[ControlsCapability.SKIP_TO_PREVIOUS].disabled}
-          onPress={capabilities[ControlsCapability.SKIP_TO_PREVIOUS].onPress}
+          disabled={
+            capabilities[TrackControlsCapability.SKIP_TO_PREVIOUS].disabled
+          }
+          onPress={
+            capabilities[TrackControlsCapability.SKIP_TO_PREVIOUS].onPress
+          }
         />
         <Icon
           containerStyle={styles.innerIconStart}
           size={32}
           iconStyle={styles.icon}
           name="fast-rewind"
-          disabled={capabilities[ControlsCapability.JUMP_BACKWARD].disabled}
-          onPress={capabilities[ControlsCapability.JUMP_BACKWARD].onPress}
+          disabled={
+            capabilities[TrackControlsCapability.JUMP_BACKWARD].disabled
+          }
+          onPress={capabilities[TrackControlsCapability.JUMP_BACKWARD].onPress}
         />
         <Icon
           size={56}
           iconStyle={styles.icon}
           name={isPlaying ? 'play-arrow' : 'pause'}
-          disabled={capabilities[ControlsCapability.PLAY_PAUSE].disabled}
-          onPress={capabilities[ControlsCapability.PLAY_PAUSE].onPress}
+          disabled={capabilities[TrackControlsCapability.PLAY_PAUSE].disabled}
+          onPress={capabilities[TrackControlsCapability.PLAY_PAUSE].onPress}
         />
         <Icon
           containerStyle={styles.innerIconEnd}
           size={32}
           iconStyle={styles.icon}
           name="fast-forward"
-          disabled={capabilities[ControlsCapability.JUMP_FORWARD].disabled}
-          onPress={capabilities[ControlsCapability.JUMP_FORWARD].onPress}
+          disabled={capabilities[TrackControlsCapability.JUMP_FORWARD].disabled}
+          onPress={capabilities[TrackControlsCapability.JUMP_FORWARD].onPress}
         />
         <Icon
           containerStyle={styles.outerIconEnd}
           size={56}
           iconStyle={styles.icon}
           name="skip-next"
-          disabled={capabilities[ControlsCapability.SKIP_TO_NEXT].disabled}
-          onPress={capabilities[ControlsCapability.SKIP_TO_NEXT].onPress}
+          disabled={capabilities[TrackControlsCapability.SKIP_TO_NEXT].disabled}
+          onPress={capabilities[TrackControlsCapability.SKIP_TO_NEXT].onPress}
         />
       </View>
     </View>

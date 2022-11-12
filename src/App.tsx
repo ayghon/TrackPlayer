@@ -1,16 +1,14 @@
 import React from 'react';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@rneui/themed';
 import { theme } from './ui';
-import { PlayerScreen } from './screens';
+import { BaseStackNavigation } from './services';
 
 export const App = () => {
   return (
     <SafeAreaProvider>
       <ThemeProvider theme={theme}>
-        <SafeAreaView>
-          <PlayerScreen />
-        </SafeAreaView>
+        <BaseStackNavigation />
       </ThemeProvider>
     </SafeAreaProvider>
   );

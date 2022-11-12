@@ -1,32 +1,55 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
+import { ParamListBase } from '@react-navigation/native';
 import React from 'react';
-import { TabRoutes } from './routes.types';
-import { PlayerScreen } from '../../screens';
+import { Routes } from './routes.types';
+import { HomeScreen, LibraryScreen } from '../../screens';
+import { RouteProp } from '@react-navigation/core/src/types';
+import { TabBarIcon } from './components/TabBarIcon';
 
-const Tab = createBottomTabNavigator();
+const TabStack = createBottomTabNavigator();
 
-// type TabScreenProps = {
-//   name: TabRoutes;
-//   component: (props: {
-//     route: RouteProp<ParamListBase, TabRoutes>;
-//     navigation: any;
-//   }) => ReactNode;
-// };
+type TabScreenProps = {
+  iconName: string;
+  name: Routes;
+  title: string;
+  component:
+    | React.ComponentType<{
+        route: RouteProp<ParamListBase, Routes>;
+        navigation: any;
+      }>
+    | React.ComponentType<Record<string, unknown>>;
+};
 
-// const tabs: TabScreenProps[] = [
-//   {
-//     name: TabRoutes.PLAYER,
-//     component: PlayerScreen
-//   }
-// ];
+const tabs: TabScreenProps[] = [
+  {
+    name: Routes.HOME,
+    component: HomeScreen,
+    iconName: 'home',
+    title: 'Home'
+  },
+  {
+    name: Routes.LIBRARY,
+    component: LibraryScreen,
+    iconName: 'list',
+    title: 'Library'
+  }
+];
 
-export const TabStack = () => {
+export const TabNavigator = () => {
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        <Tab.Screen name={TabRoutes.PLAYER} component={PlayerScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <TabStack.Navigator>
+      {tabs.map(({ name, component, iconName, title }) => (
+        <TabStack.Screen
+          key={name}
+          name={name}
+          options={{
+            tabBarIcon: (props) => <TabBarIcon {...props} name={iconName} />,
+            title,
+            headerTitle: ''
+          }}
+          component={component}
+        />
+      ))}
+    </TabStack.Navigator>
   );
 };
