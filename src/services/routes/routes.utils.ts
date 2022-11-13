@@ -10,8 +10,6 @@ export const getHeaderTitle = (route: RouteProp<ParamListBase, Routes>) => {
   const routeName = getFocusedRouteNameFromRoute(route);
 
   switch (routeName) {
-    case Routes.PLAYER:
-      return '';
     case Routes.LIBRARY:
       return 'Your library';
     case Routes.HOME:

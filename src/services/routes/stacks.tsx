@@ -1,12 +1,16 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import { RootStackParamList, Routes } from './routes.types';
-import { PlayerScreen, SettingsScreen } from '../../screens';
+import { PlaylistViewScreen, SettingsScreen } from '../../screens';
 import React from 'react';
 import { TabNavigator } from './tabs';
 import { getHeaderTitle } from './routes.utils';
 import { Icon, useTheme } from '@rneui/themed';
-import { ColorSchemeModal, CreatePlaylistModal } from '../../modals';
+import {
+  ColorSchemeModal,
+  PlayerModal,
+  PlaylistCreateModal
+} from '../../modals';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { Horizontal } from '../../ui';
 
@@ -56,12 +60,13 @@ export const BaseStackNavigation = () => {
             }}
           />
           <BaseStack.Screen
-            name={Routes.PLAYER}
-            component={PlayerScreen}
-            options={{
+            name={Routes.PLAYLIST_VIEW}
+            component={PlaylistViewScreen}
+            options={() => ({
+              headerTitle: '',
               headerBackTitle: '',
               title: ''
-            }}
+            })}
           />
         </BaseStack.Group>
         <BaseStack.Group screenOptions={{ presentation: 'modal' }}>
@@ -73,11 +78,26 @@ export const BaseStackNavigation = () => {
             }}
           />
           <BaseStack.Screen
-            name={Routes.CREATE_PLAYLIST}
-            component={CreatePlaylistModal}
+            name={Routes.PLAYLIST_CREATE}
+            component={PlaylistCreateModal}
             options={{
               headerShown: false
             }}
+          />
+          <BaseStack.Screen
+            name={Routes.PLAYER}
+            component={PlayerModal}
+            options={({
+              route: {
+                params: { playlist }
+              }
+            }) => ({
+              headerShown: !!playlist?.title,
+              contentStyle: {
+                paddingTop: playlist?.title ? 0 : 16
+              },
+              title: playlist?.title ?? ''
+            })}
           />
         </BaseStack.Group>
       </BaseStack.Navigator>

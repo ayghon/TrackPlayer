@@ -18,12 +18,12 @@ export const HomeScreen: FC<
         data={playlists.slice(0, 3)}
         initialNumToRender={3}
         keyExtractor={({ title }) => title}
-        renderItem={({ item: { tracks, title, artwork, count } }) => (
+        renderItem={({ item }) => (
           <PlaylistItem
-            artwork={artwork}
-            title={title}
-            trackCount={count}
-            onPress={() => navigate(Routes.PLAYER, { tracks })}
+            artwork={item.artwork}
+            title={item.title}
+            trackCount={item.count}
+            onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
           />
         )}
       />

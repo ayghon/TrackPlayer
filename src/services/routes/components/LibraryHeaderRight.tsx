@@ -10,7 +10,7 @@ export const LibraryHeaderRight = () => {
 
   return (
     <View style={styles.container}>
-      <Icon name="add" onPress={() => navigate(Routes.CREATE_PLAYLIST)} />
+      <Icon name="add" onPress={() => navigate(Routes.PLAYLIST_CREATE)} />
     </View>
   );
 };

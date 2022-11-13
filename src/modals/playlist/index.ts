@@ -1,1 +1,1 @@
-export * from './CreatePlaylistModal';
+export * from './PlaylistCreateModal';

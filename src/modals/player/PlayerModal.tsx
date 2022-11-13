@@ -5,15 +5,19 @@ import TrackPlayer, { Track } from 'react-native-track-player';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Routes } from '../../services/routes/routes.types';
 
-export type PlayerScreenProps = {
+export type PlayerModalProps = {
   tracks: Track[];
+  position?: number;
+  playlist?: {
+    title: string;
+  };
 };
 
-export const PlayerScreen: FC<
+export const PlayerModal: FC<
   NativeStackScreenProps<RootStackParamList, Routes.PLAYER>
 > = ({
   route: {
-    params: { tracks }
+    params: { tracks, position = 0 }
   }
 }) => {
   const { controlsProps, currentTrack, setQueue } = usePlayerControls();
@@ -22,6 +26,10 @@ export const PlayerScreen: FC<
     const addTracks = async () => {
       setQueue(tracks);
       await TrackPlayer.add(tracks);
+
+      if (position > 0) {
+        await TrackPlayer.skip(position);
+      }
     };
 
     addTracks();

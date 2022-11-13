@@ -16,12 +16,16 @@ export type ButtonProps = _ButtonProps & {
 
 export const Button: FC<ButtonProps> = ({
   children,
-  variant = ButtonVariant.PRIMARY
+  variant = ButtonVariant.PRIMARY,
+  ...props
 }) => {
   const styles = useStyles({ variant });
 
   return (
-    <_Button buttonStyle={styles.button} titleStyle={styles.buttonTitle}>
+    <_Button
+      {...props}
+      buttonStyle={[styles.button, props.buttonStyle]}
+      titleStyle={[styles.buttonTitle, props.titleStyle]}>
       {children}
     </_Button>
   );

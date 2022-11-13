@@ -3,7 +3,7 @@ import { Input, makeStyles, useTheme } from '@rneui/themed';
 import { Button, ScreenContainer } from '../../ui';
 import { View } from 'react-native';
 
-export const CreatePlaylistModal = () => {
+export const PlaylistCreateModal = () => {
   const [playlistName, setPlaylistName] = useState('');
   const { theme } = useTheme();
   const styles = useStyles();

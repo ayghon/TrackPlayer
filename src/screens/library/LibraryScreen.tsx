@@ -13,12 +13,12 @@ export const LibraryScreen: FC<
         data={playlists}
         initialNumToRender={6}
         keyExtractor={({ title }) => title}
-        renderItem={({ item: { tracks, title, artwork, count } }) => (
+        renderItem={({ item }) => (
           <PlaylistItem
-            artwork={artwork}
-            title={title}
-            trackCount={count}
-            onPress={() => navigate(Routes.PLAYER, { tracks })}
+            artwork={item.artwork}
+            title={item.title}
+            trackCount={item.count}
+            onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
           />
         )}
       />
