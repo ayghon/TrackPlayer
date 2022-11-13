@@ -3,7 +3,7 @@ import { TrackControls, TrackControlsProps } from './TrackControls';
 import React from 'react';
 import { makeStyles } from '@rneui/themed';
 import { TrackTitle } from './components/TrackTitle';
-import { TrackArtwork } from './components/TrackArtwork';
+import { Image } from '../image';
 
 export type TrackViewProps = {
   controlsProps: TrackControlsProps;
@@ -22,8 +22,8 @@ export const TrackView = ({
 
   return (
     <View>
-      <TrackArtwork
-        style={styles.artwork}
+      <Image
+        containerStyle={styles.image}
         source={artwork ? { uri: artwork } : undefined}
       />
       <TrackTitle style={styles.title} title={title} artist={artist} />
@@ -33,7 +33,9 @@ export const TrackView = ({
 };
 
 const useStyles = makeStyles({
-  artwork: {
+  image: {
+    width: '100%',
+    height: 400,
     marginBottom: 16
   },
   title: {

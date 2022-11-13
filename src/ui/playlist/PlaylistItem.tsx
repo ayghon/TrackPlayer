@@ -1,6 +1,7 @@
 import { Card, makeStyles } from '@rneui/themed';
 import React, { FC } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity } from 'react-native';
+import { Image } from '../image';
 
 export type PlaylistItemProps = {
   trackCount: number;
@@ -23,17 +24,10 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
       activeOpacity={0.75}
       onPress={onPress}>
       <Card containerStyle={styles.container}>
-        {artwork ? (
-          <Card.Image
-            style={styles.image}
-            resizeMode="cover"
-            source={{
-              uri: artwork
-            }}
-          />
-        ) : (
-          <View style={styles.artwork} />
-        )}
+        <Image
+          containerStyle={styles.image}
+          source={artwork ? { uri: artwork } : undefined}
+        />
         <Card.Title style={styles.title}>{title}</Card.Title>
         <Card.Title style={styles.count}>{trackCount} tracks</Card.Title>
       </Card>
@@ -42,8 +36,12 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
 };
 
 const useStyles = makeStyles((theme) => ({
+  loader: {
+    height: '100%',
+    width: '100%',
+    backgroundColor: theme.colors.background
+  },
   image: {
-    borderRadius: 6,
     height: 128,
     width: 128
   },

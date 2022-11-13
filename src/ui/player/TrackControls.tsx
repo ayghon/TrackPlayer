@@ -1,6 +1,7 @@
 import { Icon, makeStyles, Slider, useTheme } from '@rneui/themed';
 import React from 'react';
 import { View } from 'react-native';
+import { Horizontal } from '../display';
 
 type TrackControlButton = {
   disabled: boolean;
@@ -47,7 +48,7 @@ export const TrackControls = ({
         thumbStyle={styles.sliderThumb}
         onSlidingComplete={onProgressChange}
       />
-      <View style={styles.container}>
+      <Horizontal alignCenter style={styles.container}>
         <Icon
           size={56}
           containerStyle={styles.outerIconStart}
@@ -93,7 +94,7 @@ export const TrackControls = ({
           disabled={capabilities[TrackControlsCapability.SKIP_TO_NEXT].disabled}
           onPress={capabilities[TrackControlsCapability.SKIP_TO_NEXT].onPress}
         />
-      </View>
+      </Horizontal>
     </View>
   );
 };
@@ -102,10 +103,7 @@ const useStyles = makeStyles((theme) => ({
   sliderTrack: { height: 6 },
   sliderThumb: { height: 16, width: 16 },
   container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    justifyContent: 'center'
   },
   outerIconEnd: {
     paddingStart: 16

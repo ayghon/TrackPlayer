@@ -6,7 +6,9 @@ import React from 'react';
 import { TabNavigator } from './tabs';
 import { getHeaderTitle } from './routes.utils';
 import { Icon, useTheme } from '@rneui/themed';
-import { ColorSchemeModal } from '../../modals';
+import { ColorSchemeModal, CreatePlaylistModal } from '../../modals';
+import { LibraryHeaderRight } from './components/LibraryHeaderRight';
+import { Horizontal } from '../../ui';
 
 const BaseStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -34,11 +36,14 @@ export const BaseStackNavigation = () => {
             options={({ navigation, route }) => ({
               headerTitle: getHeaderTitle(route),
               headerRight: () => (
-                <Icon
-                  onPress={() => navigation.navigate(Routes.SETTINGS)}
-                  name="settings"
-                  color={theme.colors.black}
-                />
+                <Horizontal>
+                  <LibraryHeaderRight />
+                  <Icon
+                    onPress={() => navigation.navigate(Routes.SETTINGS)}
+                    name="settings"
+                    color={theme.colors.black}
+                  />
+                </Horizontal>
               )
             })}
           />
@@ -65,6 +70,13 @@ export const BaseStackNavigation = () => {
             component={ColorSchemeModal}
             options={{
               headerTitle: 'Color scheme'
+            }}
+          />
+          <BaseStack.Screen
+            name={Routes.CREATE_PLAYLIST}
+            component={CreatePlaylistModal}
+            options={{
+              headerShown: false
             }}
           />
         </BaseStack.Group>

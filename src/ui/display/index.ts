@@ -1,3 +1,4 @@
-export * from './screen-container';
-export * from './carousel';
-export * from './grid';
+export * from './ScreenContainer';
+export * from './Carousel';
+export * from './Grid';
+export * from './Horizontal';
