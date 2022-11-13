@@ -13,6 +13,7 @@ import {
 } from '../../modals';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { Horizontal } from '../../ui';
+import { Platform } from 'react-native';
 
 const BaseStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -33,7 +34,7 @@ export const BaseStackNavigation = () => {
         }
       }}>
       <BaseStack.Navigator>
-        <BaseStack.Group>
+        <BaseStack.Group screenOptions={{ animation: 'fade' }}>
           <BaseStack.Screen
             name={Routes.ROOT}
             component={TabNavigator}
@@ -69,7 +70,11 @@ export const BaseStackNavigation = () => {
             })}
           />
         </BaseStack.Group>
-        <BaseStack.Group screenOptions={{ presentation: 'modal' }}>
+        <BaseStack.Group
+          screenOptions={{
+            presentation: 'modal',
+            animation: 'fade'
+          }}>
           <BaseStack.Screen
             name={Routes.COLOR_SCHEME}
             component={ColorSchemeModal}
@@ -81,7 +86,9 @@ export const BaseStackNavigation = () => {
             name={Routes.PLAYLIST_CREATE}
             component={PlaylistCreateModal}
             options={{
-              headerShown: false
+              headerTitle: '',
+              title: '',
+              headerShown: Platform.OS === 'android'
             }}
           />
           <BaseStack.Screen
@@ -92,7 +99,7 @@ export const BaseStackNavigation = () => {
                 params: { playlist }
               }
             }) => ({
-              headerShown: !!playlist?.title,
+              headerShown: Platform.OS === 'android' || !!playlist?.title,
               contentStyle: {
                 paddingTop: playlist?.title ? 0 : 16
               },
