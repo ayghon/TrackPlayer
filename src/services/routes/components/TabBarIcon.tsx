@@ -1,4 +1,4 @@
-import { Icon } from '@rneui/base';
+import { Icon } from '@rneui/themed';
 import React from 'react';
 
 export const TabBarIcon = (props: {

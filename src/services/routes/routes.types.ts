@@ -5,7 +5,8 @@ export enum Routes {
   SETTINGS = 'settings',
   PLAYER = 'player',
   HOME = 'home',
-  LIBRARY = 'library'
+  LIBRARY = 'library',
+  COLOR_SCHEME = 'color-scheme'
 }
 
 export type RootStackParamList = {
@@ -14,4 +15,5 @@ export type RootStackParamList = {
   [Routes.PLAYER]: PlayerScreenProps;
   [Routes.HOME]: undefined;
   [Routes.LIBRARY]: undefined;
+  [Routes.COLOR_SCHEME]: undefined;
 };

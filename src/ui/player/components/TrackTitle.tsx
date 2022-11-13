@@ -1,7 +1,6 @@
 import { StyleProp, View, ViewStyle } from 'react-native';
-import { Text } from '@rneui/base';
 import React from 'react';
-import { makeStyles } from '@rneui/themed';
+import { makeStyles, Text } from '@rneui/themed';
 
 export type TrackTitleProps = {
   title: string;
@@ -20,14 +19,12 @@ export const TrackTitle = ({ style, title, artist }: TrackTitleProps) => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   title: {
-    color: theme.colors.black,
     fontWeight: 'bold',
     fontSize: 24
   },
   artist: {
-    color: theme.colors.black,
     fontSize: 16
   }
-}));
+});

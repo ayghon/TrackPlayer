@@ -14,6 +14,7 @@ export const HomeScreen: FC<
     <ScreenContainer>
       <Text style={styles.recentlyPlayed}>Recently played</Text>
       <Carousel<Playlist>
+        enableGradient={false}
         data={playlists.slice(0, 3)}
         initialNumToRender={3}
         keyExtractor={({ title }) => title}

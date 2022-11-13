@@ -13,7 +13,7 @@ const colors: {
   },
   lightColors: {
     primary: '#f5f5f5',
-    secondary: '#1de9b6',
+    secondary: '#AD1457',
     background: '#c2c2c2'
   }
 };

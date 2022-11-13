@@ -8,9 +8,14 @@ const ItemSeparator = () => {
   return <View style={[styles.separator]} />;
 };
 
-type CarouselProps<TItem> = FlatListProps<TItem>;
+type CarouselProps<TItem> = FlatListProps<TItem> & {
+  enableGradient?: boolean;
+};
 
-export function Carousel<TItem>(props: CarouselProps<TItem>) {
+export function Carousel<TItem>({
+  enableGradient = true,
+  ...props
+}: CarouselProps<TItem>) {
   const styles = useStyles();
   return (
     <View>
@@ -20,12 +25,14 @@ export function Carousel<TItem>(props: CarouselProps<TItem>) {
         horizontal
         {...props}
       />
-      <LinearGradient
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 0 }}
-        style={styles.linearGradient}
-        colors={['transparent', 'rgba(0,0,0,0.85)']}
-      />
+      {enableGradient && (
+        <LinearGradient
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={styles.linearGradient}
+          colors={['transparent', 'rgba(0,0,0,0.85)']}
+        />
+      )}
     </View>
   );
 }
