@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import TrackPlayer, {
+  AppKilledPlaybackBehavior,
   Capability,
   Event,
   State,
@@ -16,6 +17,10 @@ export const useInitPlayer = () => {
         console.log('TrackPlayer: Already initialised')
       );
       await TrackPlayer.updateOptions({
+        android: {
+          appKilledPlaybackBehavior: AppKilledPlaybackBehavior.ContinuePlayback
+        },
+
         // Media controls capabilities
         capabilities: [
           Capability.Play,
@@ -27,7 +32,12 @@ export const useInitPlayer = () => {
         ],
 
         // Capabilities that will show up when the notification is in the compact form on Android
-        compactCapabilities: [Capability.Play, Capability.Pause]
+        compactCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious
+        ]
       });
     };
     initPlayer();
