@@ -2,13 +2,14 @@ import { Carousel, PlaylistItem, ScreenContainer } from '../../ui';
 import React, { FC } from 'react';
 import { RootStackParamList, Routes } from '../../services/routes/routes.types';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Playlist, playlists } from '../../services';
+import { Playlist, usePlaylists } from '../../services';
 import { makeStyles, Text } from '@rneui/themed';
 
 export const HomeScreen: FC<
   NativeStackScreenProps<RootStackParamList, Routes.HOME>
 > = ({ navigation: { navigate } }) => {
   const styles = useStyles();
+  const { playlists } = usePlaylists();
 
   return (
     <ScreenContainer>

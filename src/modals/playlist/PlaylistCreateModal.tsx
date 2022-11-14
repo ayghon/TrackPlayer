@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { Input, makeStyles, useTheme } from '@rneui/themed';
 import { Button, ScreenContainer } from '../../ui';
 import { View } from 'react-native';
+import { usePlaylists } from '../../services';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { RootStackParamList, Routes } from '../../services/routes/routes.types';
 
-export const PlaylistCreateModal = () => {
+export const PlaylistCreateModal: FC<
+  NativeStackScreenProps<RootStackParamList, Routes.PLAYLIST_CREATE>
+> = ({ navigation: { goBack } }) => {
   const [playlistName, setPlaylistName] = useState('');
   const { theme } = useTheme();
   const styles = useStyles();
+  const { addPlaylist, isLoading } = usePlaylists();
+
+  const createHandler = async () => {
+    await addPlaylist({
+      title: playlistName,
+      tracks: [],
+      count: 0
+    });
+    goBack();
+  };
 
   return (
     <ScreenContainer>
@@ -18,7 +33,9 @@ export const PlaylistCreateModal = () => {
           placeholder="Name your playlist"
           onChangeText={(text) => setPlaylistName(text)}
         />
-        <Button>Create</Button>
+        <Button loading={isLoading} onPress={createHandler}>
+          Create
+        </Button>
       </View>
     </ScreenContainer>
   );

@@ -1,4 +1,4 @@
-import { Horizontal, ScreenContainer } from '../../ui';
+import { Button, Horizontal, ScreenContainer } from '../../ui';
 import React, { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Icon, makeStyles, Switch, Text, useTheme } from '@rneui/themed';
@@ -41,6 +41,12 @@ export const SettingsScreen: FC<
           <Text style={styles.settingValue}>{activeColorSchemeText}</Text>
           <Icon name="chevron-right" />
         </TouchableOpacity>
+      </Horizontal>
+      <Horizontal alignCenter style={styles.setting}>
+        <Text style={styles.switchTitle}>Playlists in storage</Text>
+        <Button onPress={() => AsyncStorage.removeItem(StorageKeys.PLAYLISTS)}>
+          Clear
+        </Button>
       </Horizontal>
     </ScreenContainer>
   );

@@ -1,12 +1,23 @@
 import { Grid, PlaylistItem, ScreenContainer } from '../../ui';
-import { Playlist, playlists } from '../../services';
+import { Playlist, usePlaylists } from '../../services';
 import React, { FC } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Routes } from '../../services/routes/routes.types';
+import { ActivityIndicator } from 'react-native';
 
 export const LibraryScreen: FC<
   NativeStackScreenProps<RootStackParamList, Routes.LIBRARY>
 > = ({ navigation: { navigate } }) => {
+  const { playlists, isLoading } = usePlaylists();
+
+  if (isLoading) {
+    return (
+      <ScreenContainer>
+        <ActivityIndicator />
+      </ScreenContainer>
+    );
+  }
+
   return (
     <ScreenContainer>
       <Grid<Playlist>
