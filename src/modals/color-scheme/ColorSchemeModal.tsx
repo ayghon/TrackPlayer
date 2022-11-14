@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScreenContainer } from '../../ui';
+import { ModalContainer } from '../../ui';
 import { View } from 'react-native';
 import { ColorSchemeSetting, useColorScheme } from '../../services';
 import { ColorSchemeListItem } from './components/ColorSchemeListItem';
@@ -19,7 +19,7 @@ export const ColorSchemeModal = () => {
   };
 
   return (
-    <ScreenContainer>
+    <ModalContainer>
       <View>
         {colorSchemeList.map(({ name, title }) => (
           <ColorSchemeListItem
@@ -31,6 +31,6 @@ export const ColorSchemeModal = () => {
           />
         ))}
       </View>
-    </ScreenContainer>
+    </ModalContainer>
   );
 };

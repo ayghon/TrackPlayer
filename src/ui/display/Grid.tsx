@@ -10,6 +10,7 @@ export function Grid<TItem>(props: GridProps<TItem>) {
   return (
     <View>
       <FlatList<TItem>
+        key={2}
         numColumns={2}
         columnWrapperStyle={styles.column}
         showsHorizontalScrollIndicator={false}

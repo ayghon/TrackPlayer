@@ -97,11 +97,12 @@ export const BaseStackNavigation = () => {
             name={Routes.PLAYER}
             component={PlayerModal}
             options={({
+              navigation: { goBack },
               route: {
                 params: { playlist }
               }
             }) => ({
-              headerShown: Platform.OS === 'android' || !!playlist?.title,
+              headerRight: () => <Icon name="close" onPress={() => goBack()} />,
               contentStyle: {
                 paddingTop: playlist?.title ? 0 : 16
               },

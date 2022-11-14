@@ -15,9 +15,9 @@ export type Playlist = {
 
 export const playlistsMock: Playlist[] = Array.from(Array(3)).map(
   (_, index) => ({
-    tracks: tracks.slice(index, index + 5),
+    tracks: tracks.slice(index, index + 8),
     title: `My playlist ${index}`,
-    count: 5,
+    count: 8,
     artwork: tracks[index].artwork as string
   })
 );

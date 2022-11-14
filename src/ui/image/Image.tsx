@@ -4,9 +4,8 @@ import { Image as _Image, ImageProps, makeStyles } from '@rneui/themed';
 
 export const Image = (props: ImageProps) => {
   const styles = useStyles();
-
   if (!props?.source) {
-    return <View style={props?.style} />;
+    return <View style={[styles.image, props?.containerStyle, props?.style]} />;
   }
 
   return (
@@ -24,7 +23,8 @@ export const Image = (props: ImageProps) => {
 
 const useStyles = makeStyles((theme) => ({
   image: {
-    borderRadius: 6
+    borderRadius: 6,
+    backgroundColor: theme.colors.background
   },
   loader: {
     height: '100%',

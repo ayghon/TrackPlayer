@@ -37,11 +37,10 @@ export const PlayerModal: FC<
     return () => {
       TrackPlayer.reset();
     };
-  }, [setQueue, tracks]);
+  }, [position, setQueue, tracks]);
 
   return (
     <ScreenContainer>
-      {/*<Button title="Add tracks" onPress={addTracks} />*/}
       {currentTrack && (
         <TrackView
           artwork={currentTrack?.artwork as string}

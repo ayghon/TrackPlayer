@@ -45,7 +45,8 @@ export const PlaylistViewScreen: FC<
         renderItem={({ item, index }) => (
           <TouchableOpacity
             style={styles.trackButton}
-            onPress={() => navigateToPlayer(index)}>
+            onPress={() => navigateToPlayer(index)}
+          >
             <TrackItem {...item} />
           </TouchableOpacity>
         )}
