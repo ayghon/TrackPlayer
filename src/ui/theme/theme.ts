@@ -1,11 +1,14 @@
 import { createTheme } from '@rneui/themed';
 import { Colors } from '@rneui/themed/dist/config/colors';
 import { RecursivePartial } from '@rneui/themed/dist/config/theme';
+import { DEFAULT_THEME_MODE } from '../../utils';
 
-const colors: {
+type ThemeColors = {
   lightColors: RecursivePartial<Colors>;
   darkColors: RecursivePartial<Colors>;
-} = {
+};
+
+const colors: ThemeColors = {
   darkColors: {
     primary: '#424242',
     secondary: '#1de9b6',
@@ -20,5 +23,5 @@ const colors: {
 
 export const theme = createTheme({
   ...colors,
-  mode: 'dark'
+  mode: DEFAULT_THEME_MODE
 });

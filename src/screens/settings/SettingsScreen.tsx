@@ -5,6 +5,8 @@ import { Icon, makeStyles, Switch, Text, useTheme } from '@rneui/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Routes } from '../../services/routes/routes.types';
 import { useColorScheme } from '../../services';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StorageKeys } from '../../utils';
 
 export const SettingsScreen: FC<
   NativeStackScreenProps<RootStackParamList, Routes.SETTINGS>
@@ -14,8 +16,10 @@ export const SettingsScreen: FC<
   const { theme, updateTheme } = useTheme();
   const isDarkMode = theme.mode === 'dark';
 
-  const toggleDarkMode = () => {
-    updateTheme({ mode: isDarkMode ? 'light' : 'dark' });
+  const toggleDarkMode = async () => {
+    const newValue = isDarkMode ? 'light' : 'dark';
+    updateTheme({ mode: newValue });
+    await AsyncStorage.setItem(StorageKeys.DARK_MODE, newValue);
   };
 
   return (

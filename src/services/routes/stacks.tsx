@@ -14,10 +14,12 @@ import {
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { Horizontal } from '../../ui';
 import { Platform } from 'react-native';
+import { useInitStorage } from '../storage/storage.utils';
 
 const BaseStack = createNativeStackNavigator<RootStackParamList>();
 
 export const BaseStackNavigation = () => {
+  useInitStorage();
   const { theme } = useTheme();
 
   return (
@@ -34,7 +36,7 @@ export const BaseStackNavigation = () => {
         }
       }}>
       <BaseStack.Navigator>
-        <BaseStack.Group screenOptions={{ animation: 'fade' }}>
+        <BaseStack.Group screenOptions={{ animation: 'slide_from_right' }}>
           <BaseStack.Screen
             name={Routes.ROOT}
             component={TabNavigator}
@@ -73,7 +75,7 @@ export const BaseStackNavigation = () => {
         <BaseStack.Group
           screenOptions={{
             presentation: 'modal',
-            animation: 'fade'
+            animation: 'slide_from_right'
           }}>
           <BaseStack.Screen
             name={Routes.COLOR_SCHEME}
