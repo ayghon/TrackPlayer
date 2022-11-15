@@ -1,75 +1,65 @@
-import { useThemeMode } from '@rneui/themed';
-import { useState } from 'react';
-import { ColorSchemeSetting } from './settings.types';
-import { theme } from '../../ui';
-
-const colorSchemeToText: Record<ColorSchemeSetting, string> = {
-  [ColorSchemeSetting.DEFAULT_DARK]: 'Default Dark',
-  [ColorSchemeSetting.DEFAULT_LIGHT]: 'Default Light'
-};
+import { useCallback, useState } from 'react';
+import {
+  getColorSchemeConfiguration,
+  ThemeColorScheme,
+  useThemeManager
+} from '../../ui';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { StorageKeys } from '../../utils';
+import { useFocusEffect } from '@react-navigation/native';
 
 type UseColorSchemeResponse = {
-  colorScheme: ColorSchemeSetting;
-  colorSchemeToText: Record<ColorSchemeSetting, string>;
+  colorScheme: ThemeColorScheme;
   activeColorSchemeText: string;
-  changeColorScheme: (scheme: ColorSchemeSetting) => void;
-  colorSchemeList: { name: ColorSchemeSetting; title: string }[];
+  changeColorScheme: (scheme: ThemeColorScheme) => void;
+  colorSchemeList: { name: ThemeColorScheme; title: string }[];
 };
 
-const colorSchemeList = Object.values(ColorSchemeSetting).map((value) => ({
-  name: value,
-  title: colorSchemeToText[value]
-}));
+const colorSchemeList = Object.values(ThemeColorScheme).map((value) => {
+  const { label } = getColorSchemeConfiguration(value);
+
+  return {
+    name: value,
+    title: label
+  };
+});
 
 export const useColorScheme = (): UseColorSchemeResponse => {
-  const { mode, setMode } = useThemeMode();
-  const isDarkMode = mode === 'dark';
-
-  const [colorScheme, setColorScheme] = useState<ColorSchemeSetting>(
-    isDarkMode
-      ? ColorSchemeSetting.DEFAULT_DARK
-      : ColorSchemeSetting.DEFAULT_LIGHT
+  const { changeTheme } = useThemeManager();
+  const [colorScheme, setColorScheme] = useState<ThemeColorScheme>(
+    ThemeColorScheme.DEFAULT
   );
 
-  const activeColorSchemeText = colorSchemeToText[colorScheme];
+  const { label: activeColorSchemeText } =
+    getColorSchemeConfiguration(colorScheme);
 
-  const changeColorScheme = (scheme: ColorSchemeSetting) => {
-    switch (scheme) {
-      case ColorSchemeSetting.DEFAULT_DARK:
-        setColorScheme(ColorSchemeSetting.DEFAULT_DARK);
-        setMode('dark');
-        break;
-      case ColorSchemeSetting.DEFAULT_LIGHT:
-      default:
-        setColorScheme(ColorSchemeSetting.DEFAULT_LIGHT);
-        setMode('light');
-        break;
-    }
+  const changeColorScheme = async (scheme: ThemeColorScheme) => {
+    await AsyncStorage.setItem(StorageKeys.COLOR_SCHEME, scheme);
+    changeTheme(scheme);
+    setColorScheme(scheme);
   };
+
+  useFocusEffect(
+    useCallback(() => {
+      const getStorageColorScheme = async () => {
+        const storageColorScheme = (await AsyncStorage.getItem(
+          StorageKeys.COLOR_SCHEME
+        )) as ThemeColorScheme | null;
+
+        if (storageColorScheme) {
+          setColorScheme(storageColorScheme);
+          changeTheme(storageColorScheme);
+        }
+      };
+
+      getStorageColorScheme();
+    }, [changeTheme])
+  );
 
   return {
     colorScheme,
-    colorSchemeToText,
     activeColorSchemeText,
     changeColorScheme,
     colorSchemeList
   };
-};
-
-export const getColorSchemePalette = (scheme: ColorSchemeSetting) => {
-  switch (scheme) {
-    case ColorSchemeSetting.DEFAULT_DARK:
-      return [
-        theme.darkColors?.primary,
-        theme.darkColors?.secondary,
-        theme.darkColors?.background
-      ];
-    case ColorSchemeSetting.DEFAULT_LIGHT:
-    default:
-      return [
-        theme.lightColors?.primary,
-        theme.lightColors?.secondary,
-        theme.lightColors?.background
-      ];
-  }
 };

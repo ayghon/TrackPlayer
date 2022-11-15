@@ -1,13 +1,13 @@
 import { ListItem, makeStyles, useTheme } from '@rneui/themed';
 import { View } from 'react-native';
 import React, { FC } from 'react';
-import { ColorSchemeSetting, getColorSchemePalette } from '../../../services';
 import { ColorPaletteItem } from './ColorPaletteItem';
+import { getColorSchemeConfiguration, ThemeColorScheme } from '../../../ui';
 
 export type ColorSchemeListItemProps = {
   title: string;
-  name: ColorSchemeSetting;
-  handleChange: (name: ColorSchemeSetting) => void;
+  name: ThemeColorScheme;
+  handleChange: (name: ThemeColorScheme) => void;
   checked: boolean;
 };
 
@@ -20,7 +20,7 @@ export const ColorSchemeListItem: FC<ColorSchemeListItemProps> = ({
   const { theme } = useTheme();
   const styles = useStyles();
 
-  const colorPalette = getColorSchemePalette(name);
+  const { palette: colorPalette } = getColorSchemeConfiguration(name);
 
   return (
     <ListItem bottomDivider>

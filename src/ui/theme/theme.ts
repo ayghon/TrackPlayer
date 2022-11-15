@@ -1,27 +1,35 @@
-import { createTheme } from '@rneui/themed';
-import { Colors } from '@rneui/themed/dist/config/colors';
-import { RecursivePartial } from '@rneui/themed/dist/config/theme';
+import {
+  createTheme,
+  CreateThemeOptions,
+  ThemeMode,
+  useTheme
+} from '@rneui/themed';
 import { DEFAULT_THEME_MODE } from '../../utils';
+import { useCallback, useState } from 'react';
+import {
+  defaultSchemeColors,
+  getColorSchemeConfiguration,
+  ThemeColorScheme
+} from './schemes';
 
-type ThemeColors = {
-  lightColors: RecursivePartial<Colors>;
-  darkColors: RecursivePartial<Colors>;
-};
-
-const colors: ThemeColors = {
-  darkColors: {
-    primary: '#424242',
-    secondary: '#1de9b6',
-    background: '#1b1b1b'
-  },
-  lightColors: {
-    primary: '#f5f5f5',
-    secondary: '#AD1457',
-    background: '#c2c2c2'
-  }
-};
-
-export const theme = createTheme({
-  ...colors,
+export const initialTheme = createTheme({
+  ...defaultSchemeColors,
   mode: DEFAULT_THEME_MODE
 });
+
+export const useThemeManager = () => {
+  const [theme, setTheme] = useState<CreateThemeOptions>(initialTheme);
+  const { updateTheme } = useTheme();
+
+  const changeTheme = useCallback(
+    (scheme: ThemeColorScheme, mode?: ThemeMode) => {
+      const { theme: themeByColorScheme } = getColorSchemeConfiguration(scheme);
+      const newTheme = createTheme({ ...themeByColorScheme, mode });
+      updateTheme(newTheme);
+      setTheme(newTheme);
+    },
+    [updateTheme]
+  );
+
+  return { theme, changeTheme };
+};

@@ -1,20 +1,17 @@
 import React from 'react';
 import { ModalContainer } from '../../ui';
 import { View } from 'react-native';
-import { ColorSchemeSetting, useColorScheme } from '../../services';
+import { useColorScheme } from '../../services';
 import { ColorSchemeListItem } from './components/ColorSchemeListItem';
+import { ThemeColorScheme } from '../../ui/theme/theme.types';
 
 export const ColorSchemeModal = () => {
   const { colorSchemeList, changeColorScheme, colorScheme } = useColorScheme();
 
-  const handleColorChange = (name: ColorSchemeSetting) => {
+  const handleColorChange = (name: ThemeColorScheme) => {
     const isActive = colorScheme === name;
     if (!isActive) {
-      changeColorScheme(
-        name === ColorSchemeSetting.DEFAULT_DARK
-          ? ColorSchemeSetting.DEFAULT_DARK
-          : ColorSchemeSetting.DEFAULT_LIGHT
-      );
+      changeColorScheme(name);
     }
   };
 
