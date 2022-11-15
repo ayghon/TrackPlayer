@@ -1,16 +1,12 @@
-import {
-  createTheme,
-  CreateThemeOptions,
-  ThemeMode,
-  useTheme
-} from '@rneui/themed';
-import { DEFAULT_THEME_MODE } from '../../utils';
-import { useCallback, useState } from 'react';
+import { createTheme, CreateThemeOptions, useTheme } from '@rneui/themed';
+import { DEFAULT_THEME_MODE, StorageKeys } from '../../utils';
+import { useCallback, useEffect, useState } from 'react';
 import {
   defaultSchemeColors,
   getColorSchemeConfiguration,
   ThemeColorScheme
 } from './schemes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const initialTheme = createTheme({
   ...defaultSchemeColors,
@@ -22,14 +18,29 @@ export const useThemeManager = () => {
   const { updateTheme } = useTheme();
 
   const changeTheme = useCallback(
-    (scheme: ThemeColorScheme, mode?: ThemeMode) => {
-      const { theme: themeByColorScheme } = getColorSchemeConfiguration(scheme);
-      const newTheme = createTheme({ ...themeByColorScheme, mode });
-      updateTheme(newTheme);
+    (scheme: ThemeColorScheme) => {
+      const { theme: newTheme } = getColorSchemeConfiguration(scheme);
+      if (updateTheme) {
+        updateTheme(newTheme);
+      }
       setTheme(newTheme);
     },
     [updateTheme]
   );
+
+  useEffect(() => {
+    const getStorageColorScheme = async () => {
+      const storageColorScheme = (await AsyncStorage.getItem(
+        StorageKeys.COLOR_SCHEME
+      )) as ThemeColorScheme | null;
+
+      if (storageColorScheme) {
+        changeTheme(storageColorScheme);
+      }
+    };
+
+    getStorageColorScheme();
+  }, [changeTheme]);
 
   return { theme, changeTheme };
 };

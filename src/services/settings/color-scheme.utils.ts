@@ -48,12 +48,11 @@ export const useColorScheme = (): UseColorSchemeResponse => {
 
         if (storageColorScheme) {
           setColorScheme(storageColorScheme);
-          changeTheme(storageColorScheme);
         }
       };
 
       getStorageColorScheme();
-    }, [changeTheme])
+    }, [])
   );
 
   return {

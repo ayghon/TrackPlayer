@@ -24,6 +24,6 @@ const useStyles = makeStyles((theme) => ({
     marginEnd: 8
   },
   icon: {
-    color: theme.colors.primary
+    color: theme.colors.white
   }
 }));

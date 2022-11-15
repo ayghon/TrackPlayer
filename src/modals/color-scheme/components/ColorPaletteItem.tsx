@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     height: 20,
     borderRadius: 100,
-    borderColor: theme.colors.white,
+    borderColor: theme.colors.black,
     borderStyle: 'solid',
     borderWidth: 2
   }

@@ -3,7 +3,7 @@ import { FlatList, TouchableOpacity } from 'react-native';
 import React, { FC } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Routes } from '../../services/routes/routes.types';
-import { FAB, Icon, makeStyles, Text } from '@rneui/themed';
+import { FAB, Icon, makeStyles, Text, useTheme } from '@rneui/themed';
 import { Playlist } from '../../services';
 import { AddTracksButton } from './components/AddTracksButton';
 import { Track } from 'react-native-track-player';
@@ -21,6 +21,7 @@ export const PlaylistViewScreen: FC<
   }
 }) => {
   const styles = useStyles();
+  const { theme } = useTheme();
 
   const navigateToPlayer = (position?: number) => {
     navigate(Routes.PLAYER, { tracks, position, playlist: { title } });
@@ -33,7 +34,8 @@ export const PlaylistViewScreen: FC<
         <Text style={styles.playlistTitle}>{title}</Text>
         <FAB
           onPress={() => navigateToPlayer()}
-          icon={<Icon name="play-arrow" color="black" />}
+          buttonStyle={styles.fab}
+          icon={<Icon name="play-arrow" color={theme.colors.white} size={32} />}
           visible={tracks.length > 0}
         />
       </Horizontal>
@@ -82,5 +84,6 @@ const useStyles = makeStyles({
   },
   button: {
     marginBottom: 16
-  }
+  },
+  fab: { margin: 0, padding: 0 }
 });

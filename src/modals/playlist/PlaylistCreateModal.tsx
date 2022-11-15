@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { Input, makeStyles, useTheme } from '@rneui/themed';
-import { Button, ModalContainer } from '../../ui';
+import { Button, ScreenContainer } from '../../ui';
 import { View } from 'react-native';
 import { usePlaylists } from '../../services';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -24,7 +24,7 @@ export const PlaylistCreateModal: FC<
   };
 
   return (
-    <ModalContainer>
+    <ScreenContainer hasCloseButton>
       <View style={styles.container}>
         <Input
           selectionColor={theme.colors.secondary}
@@ -37,7 +37,7 @@ export const PlaylistCreateModal: FC<
           Create
         </Button>
       </View>
-    </ModalContainer>
+    </ScreenContainer>
   );
 };
 

@@ -4,3 +4,7 @@ export * from './dark-red.scheme';
 export * from './dark-blue.scheme';
 export * from './schemes.utils';
 export * from './schemes.types';
+export * from './light-blue.scheme';
+export * from './light-red.scheme';
+export * from './light-purple.scheme';
+export * from './light-turquoise.scheme';

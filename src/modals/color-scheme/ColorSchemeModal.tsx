@@ -1,9 +1,8 @@
 import React from 'react';
-import { ModalContainer } from '../../ui';
-import { View } from 'react-native';
+import { ScreenContainer, ThemeColorScheme } from '../../ui';
+import { FlatList } from 'react-native';
 import { useColorScheme } from '../../services';
 import { ColorSchemeListItem } from './components/ColorSchemeListItem';
-import { ThemeColorScheme } from '../../ui/theme/theme.types';
 
 export const ColorSchemeModal = () => {
   const { colorSchemeList, changeColorScheme, colorScheme } = useColorScheme();
@@ -16,18 +15,19 @@ export const ColorSchemeModal = () => {
   };
 
   return (
-    <ModalContainer>
-      <View>
-        {colorSchemeList.map(({ name, title }) => (
+    <ScreenContainer>
+      <FlatList
+        data={colorSchemeList}
+        renderItem={({ item: { name, title } }) => (
           <ColorSchemeListItem
             checked={colorScheme === name}
             handleChange={handleColorChange}
             name={name}
             title={title}
-            key={name}
           />
-        ))}
-      </View>
-    </ModalContainer>
+        )}
+        keyExtractor={({ name }) => name}
+      />
+    </ScreenContainer>
   );
 };

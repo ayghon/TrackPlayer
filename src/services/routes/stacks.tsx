@@ -34,7 +34,8 @@ export const BaseStackNavigation = () => {
           card: theme.colors.background,
           notification: theme.colors.secondary
         }
-      }}>
+      }}
+    >
       <BaseStack.Navigator>
         <BaseStack.Group screenOptions={{ animation: 'slide_from_right' }}>
           <BaseStack.Screen
@@ -76,13 +77,15 @@ export const BaseStackNavigation = () => {
           screenOptions={{
             presentation: 'modal',
             animation: 'slide_from_right'
-          }}>
+          }}
+        >
           <BaseStack.Screen
             name={Routes.COLOR_SCHEME}
             component={ColorSchemeModal}
-            options={{
+            options={({ navigation: { goBack } }) => ({
+              headerRight: () => <Icon name="close" onPress={() => goBack()} />,
               headerTitle: 'Color scheme'
-            }}
+            })}
           />
           <BaseStack.Screen
             name={Routes.PLAYLIST_CREATE}
