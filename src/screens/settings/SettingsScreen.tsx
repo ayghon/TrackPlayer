@@ -3,8 +3,7 @@ import React, { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { Icon, makeStyles, Text } from '@rneui/themed';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Routes } from '../../services/routes/routes.types';
-import { useColorScheme } from '../../services';
+import { RootStackParamList, Routes, useColorScheme } from '../../services';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StorageKeys } from '../../utils';
 

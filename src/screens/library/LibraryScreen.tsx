@@ -1,13 +1,25 @@
-import { Grid, PlaylistItem, ScreenContainer } from '../../ui';
-import { Playlist, usePlaylists } from '../../services';
+import { Grid, LayoutVariant, ScreenContainer } from '../../ui';
+import {
+  Playlist,
+  RootStackParamList,
+  Routes,
+  usePlaylists
+} from '../../services';
 import React, { FC } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Routes } from '../../services/routes/routes.types';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, FlatList } from 'react-native';
+import { LibraryListItem } from './components/LibraryListItem';
 
-export const LibraryScreen: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.LIBRARY>
-> = ({ navigation: { navigate } }) => {
+export type LibraryScreenProps = NativeStackScreenProps<
+  RootStackParamList,
+  Routes.LIBRARY
+> & {
+  variant?: LayoutVariant;
+};
+
+export const LibraryScreen: FC<LibraryScreenProps> = ({
+  variant = LayoutVariant.LIST
+}) => {
   const { playlists, isLoading } = usePlaylists();
 
   if (isLoading) {
@@ -18,20 +30,26 @@ export const LibraryScreen: FC<
     );
   }
 
+  if (variant === LayoutVariant.LIST) {
+    return (
+      <ScreenContainer>
+        <FlatList
+          data={playlists}
+          renderItem={({ item }) => <LibraryListItem item={item} />}
+          keyExtractor={({ title }) => title}
+          initialNumToRender={6}
+        />
+      </ScreenContainer>
+    );
+  }
+
   return (
     <ScreenContainer>
       <Grid<Playlist>
         data={playlists}
         initialNumToRender={6}
         keyExtractor={({ title }) => title}
-        renderItem={({ item }) => (
-          <PlaylistItem
-            artwork={item.artwork}
-            title={item.title}
-            trackCount={item.count}
-            onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
-          />
-        )}
+        renderItem={({ item }) => <LibraryListItem item={item} />}
       />
     </ScreenContainer>
   );

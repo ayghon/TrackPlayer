@@ -3,6 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@rneui/themed';
 import { useThemeManager } from './ui';
 import { BaseStackNavigation, useInitPlayer } from './services';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export const App = () => {
   useInitPlayer();
@@ -11,7 +12,9 @@ export const App = () => {
   return (
     <SafeAreaProvider>
       <ThemeProvider theme={theme}>
-        <BaseStackNavigation />
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <BaseStackNavigation />
+        </GestureHandlerRootView>
       </ThemeProvider>
     </SafeAreaProvider>
   );

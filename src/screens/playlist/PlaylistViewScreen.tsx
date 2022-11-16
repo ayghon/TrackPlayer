@@ -2,9 +2,8 @@ import { Horizontal, Image, ScreenContainer, TrackItem } from '../../ui';
 import { FlatList, TouchableOpacity } from 'react-native';
 import React, { FC } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Routes } from '../../services/routes/routes.types';
+import { Playlist, RootStackParamList, Routes } from '../../services';
 import { FAB, Icon, makeStyles, Text, useTheme } from '@rneui/themed';
-import { Playlist } from '../../services';
 import { AddTracksButton } from './components/AddTracksButton';
 import { Track } from 'react-native-track-player';
 

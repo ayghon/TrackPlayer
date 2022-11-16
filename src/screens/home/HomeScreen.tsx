@@ -1,8 +1,17 @@
-import { Carousel, PlaylistItem, ScreenContainer } from '../../ui';
+import {
+  Carousel,
+  LayoutVariant,
+  PlaylistItem,
+  ScreenContainer
+} from '../../ui';
 import React, { FC } from 'react';
-import { RootStackParamList, Routes } from '../../services/routes/routes.types';
+import {
+  Playlist,
+  RootStackParamList,
+  Routes,
+  usePlaylists
+} from '../../services';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Playlist, usePlaylists } from '../../services';
 import { makeStyles, Text } from '@rneui/themed';
 
 export const HomeScreen: FC<
@@ -21,6 +30,7 @@ export const HomeScreen: FC<
         keyExtractor={({ title }) => title}
         renderItem={({ item }) => (
           <PlaylistItem
+            variant={LayoutVariant.GRID}
             artwork={item.artwork}
             title={item.title}
             trackCount={item.count}
