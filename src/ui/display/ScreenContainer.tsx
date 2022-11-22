@@ -12,12 +12,14 @@ import { useNavigation } from '@react-navigation/native';
 export type ScreenContainerProps = {
   hasCloseButton?: boolean;
   style?: StyleProp<ViewStyle>;
+  onClose?: () => void;
 };
 
 export const ScreenContainer: FC<PropsWithChildren<ScreenContainerProps>> = ({
   children,
   hasCloseButton = false,
-  style
+  style,
+  onClose
 }) => {
   const { goBack } = useNavigation();
   const styles = useStyles();
@@ -35,7 +37,12 @@ export const ScreenContainer: FC<PropsWithChildren<ScreenContainerProps>> = ({
           <Icon
             style={styles.closeButton}
             name="close"
-            onPress={() => goBack()}
+            onPress={() => {
+              if (onClose) {
+                onClose();
+              }
+              goBack();
+            }}
           />
         )}
         {children}

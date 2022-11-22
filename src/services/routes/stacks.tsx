@@ -10,7 +10,8 @@ import {
   ColorSchemeModal,
   PlayerModal,
   PlaylistCreateModal,
-  PlaylistSettingsModal
+  PlaylistSettingsModal,
+  PlaylistTracksSelectionModal
 } from '../../modals';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { Horizontal } from '../../ui';
@@ -132,7 +133,15 @@ export const BaseStackNavigation = () => {
             name={Routes.PLAYLIST_SETTINGS}
             component={PlaylistSettingsModal}
             options={{
-              presentation: 'containedTransparentModal',
+              headerTitle: '',
+              title: '',
+              headerShown: Platform.OS === 'android'
+            }}
+          />
+          <BaseStack.Screen
+            name={Routes.PLAYLIST_TRACKS_SELECTION}
+            component={PlaylistTracksSelectionModal}
+            options={{
               headerTitle: '',
               title: '',
               headerShown: Platform.OS === 'android'

@@ -1,5 +1,5 @@
 import { Track } from 'react-native-track-player';
-import { tracks } from '../tracks';
+import { tracksMocks } from '../tracks';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StorageKeys } from '../../utils';
 import { useCallback, useState } from 'react';
@@ -15,10 +15,10 @@ export type Playlist = {
 
 export const playlistsMock: Playlist[] = Array.from(Array(4)).map(
   (_, index) => ({
-    tracks: tracks.slice(index, index + 8),
+    tracks: tracksMocks.slice(index, index + 8),
     title: `My playlist ${index}`,
     count: 8,
-    artwork: tracks[index].artwork as string
+    artwork: tracksMocks[index].artwork as string
   })
 );
 
@@ -75,11 +75,37 @@ export const usePlaylists = () => {
     [playlists]
   );
 
+  const editPlaylist = useCallback(
+    async (title: string, data: Partial<Playlist>) => {
+      setLoading(true);
+      const newList = playlists.map((item) =>
+        item.title === title ? { ...item, ...data } : item
+      );
+
+      await AsyncStorage.setItem(
+        StorageKeys.PLAYLISTS,
+        JSON.stringify(newList)
+      );
+      setPlaylists(newList);
+      setLoading(false);
+
+      return newList;
+    },
+    [playlists]
+  );
+
   useFocusEffect(
     useCallback(() => {
       getPlaylists();
     }, [getPlaylists])
   );
 
-  return { playlists, addPlaylist, removePlaylist, isLoading, getPlaylists };
+  return {
+    playlists,
+    addPlaylist,
+    removePlaylist,
+    isLoading,
+    getPlaylists,
+    editPlaylist
+  };
 };

@@ -1,5 +1,9 @@
 import { PlaylistViewScreenProps } from '../../screens';
-import { PlayerModalProps, PlaylistSettingsModalProps } from '../../modals';
+import {
+  PlayerModalProps,
+  PlaylistSettingsModalProps,
+  PlaylistTracksSelectionModalProps
+} from '../../modals';
 
 export enum Routes {
   ROOT = 'root',
@@ -10,7 +14,8 @@ export enum Routes {
   COLOR_SCHEME = 'color-scheme',
   PLAYLIST_CREATE = 'playlist-create',
   PLAYLIST_VIEW = 'playlist-view',
-  PLAYLIST_SETTINGS = 'playlist-settings'
+  PLAYLIST_SETTINGS = 'playlist-settings',
+  PLAYLIST_TRACKS_SELECTION = 'playlist-tracks-selection'
 }
 
 export type RootStackParamList = {
@@ -23,4 +28,5 @@ export type RootStackParamList = {
   [Routes.PLAYLIST_CREATE]: undefined;
   [Routes.PLAYLIST_VIEW]: PlaylistViewScreenProps;
   [Routes.PLAYLIST_SETTINGS]: PlaylistSettingsModalProps;
+  [Routes.PLAYLIST_TRACKS_SELECTION]: PlaylistTracksSelectionModalProps;
 };

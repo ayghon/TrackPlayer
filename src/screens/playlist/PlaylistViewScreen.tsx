@@ -14,11 +14,10 @@ export const PlaylistViewScreen: FC<
 > = ({
   navigation: { navigate },
   route: {
-    params: {
-      playlist: { tracks, title, artwork }
-    }
+    params: { playlist }
   }
 }) => {
+  const { tracks, title, artwork } = playlist;
   const styles = useStyles();
   const { theme } = useTheme();
 
@@ -41,7 +40,10 @@ export const PlaylistViewScreen: FC<
           visible={tracks.length > 0}
         />
       </Horizontal>
-      <AddTracksButton style={styles.button} />
+      <AddTracksButton
+        onPress={() => navigate(Routes.PLAYLIST_TRACKS_SELECTION, { playlist })}
+        style={styles.button}
+      />
       <FlatList<Track>
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
