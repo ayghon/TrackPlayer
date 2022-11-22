@@ -9,7 +9,8 @@ import { Icon, useTheme } from '@rneui/themed';
 import {
   ColorSchemeModal,
   PlayerModal,
-  PlaylistCreateModal
+  PlaylistCreateModal,
+  PlaylistSettingsModal
 } from '../../modals';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { Horizontal } from '../../ui';
@@ -66,10 +67,25 @@ export const BaseStackNavigation = () => {
           <BaseStack.Screen
             name={Routes.PLAYLIST_VIEW}
             component={PlaylistViewScreen}
-            options={() => ({
+            options={({
+              navigation: { navigate },
+              route: {
+                params: { playlist }
+              }
+            }) => ({
               headerTitle: '',
               headerBackTitle: '',
-              title: ''
+              title: '',
+              headerRight: () => (
+                <Icon
+                  name="more-vert"
+                  onPress={() =>
+                    navigate(Routes.PLAYLIST_SETTINGS, {
+                      playlist
+                    })
+                  }
+                />
+              )
             })}
           />
         </BaseStack.Group>
@@ -111,6 +127,16 @@ export const BaseStackNavigation = () => {
               },
               title: playlist?.title ?? ''
             })}
+          />
+          <BaseStack.Screen
+            name={Routes.PLAYLIST_SETTINGS}
+            component={PlaylistSettingsModal}
+            options={{
+              presentation: 'containedTransparentModal',
+              headerTitle: '',
+              title: '',
+              headerShown: Platform.OS === 'android'
+            }}
           />
         </BaseStack.Group>
       </BaseStack.Navigator>

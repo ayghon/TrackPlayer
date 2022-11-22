@@ -28,7 +28,10 @@ export const PlaylistViewScreen: FC<
 
   return (
     <ScreenContainer>
-      <Image containerStyle={styles.image} source={{ uri: artwork }} />
+      <Image
+        containerStyle={styles.image}
+        source={artwork ? { uri: artwork } : undefined}
+      />
       <Horizontal alignCenter style={styles.playlistTitleSection}>
         <Text style={styles.playlistTitle}>{title}</Text>
         <FAB
@@ -57,7 +60,7 @@ export const PlaylistViewScreen: FC<
   );
 };
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   trackButton: {
     paddingVertical: 4,
     marginBottom: 16
@@ -70,7 +73,8 @@ const useStyles = makeStyles({
     height: 200,
     width: 200,
     alignSelf: 'center',
-    marginVertical: 16
+    marginVertical: 16,
+    backgroundColor: theme.colors.white
   },
   playlistTitleSection: {
     marginBottom: 16,
@@ -85,4 +89,4 @@ const useStyles = makeStyles({
     marginBottom: 16
   },
   fab: { margin: 0, padding: 0 }
-});
+}));

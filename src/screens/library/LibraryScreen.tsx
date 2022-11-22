@@ -10,19 +10,17 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { ActivityIndicator, FlatList } from 'react-native';
 import { LibraryListItem } from './components/LibraryListItem';
 
-export type LibraryScreenProps = NativeStackScreenProps<
-  RootStackParamList,
-  Routes.LIBRARY
-> & {
+export type LibraryScreenProps = {
   variant?: LayoutVariant;
 };
 
-export const LibraryScreen: FC<LibraryScreenProps> = ({
-  variant = LayoutVariant.LIST
-}) => {
+export const LibraryScreen: FC<
+  NativeStackScreenProps<RootStackParamList, Routes.LIBRARY> &
+    LibraryScreenProps
+> = ({ variant = LayoutVariant.LIST }) => {
   const { playlists, isLoading } = usePlaylists();
 
-  if (isLoading) {
+  if (isLoading && playlists.length === 0) {
     return (
       <ScreenContainer>
         <ActivityIndicator />

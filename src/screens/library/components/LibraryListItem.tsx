@@ -9,9 +9,13 @@ export const LibraryListItem: FC<{
 }> = ({ item, variant = LayoutVariant.LIST }) => {
   const { navigate } =
     useNavigation<NavigationProp<RootStackParamList, Routes.LIBRARY>>();
+  // const { removePlaylist } = usePlaylists();
+
+  // FIXME screen is not re-rendered when playlists state is updated with `removePlaylist`
 
   return (
     <PlaylistItem
+      // onDelete={() => removePlaylist(item)}
       variant={variant}
       artwork={item.artwork}
       title={item.title}

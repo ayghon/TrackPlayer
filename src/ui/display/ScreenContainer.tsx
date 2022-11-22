@@ -1,15 +1,23 @@
-import { SafeAreaView, StatusBar, View } from 'react-native';
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleProp,
+  View,
+  ViewStyle
+} from 'react-native';
 import React, { FC, PropsWithChildren } from 'react';
 import { Icon, makeStyles, useTheme } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
 
 export type ScreenContainerProps = {
   hasCloseButton?: boolean;
+  style?: StyleProp<ViewStyle>;
 };
 
 export const ScreenContainer: FC<PropsWithChildren<ScreenContainerProps>> = ({
   children,
-  hasCloseButton = false
+  hasCloseButton = false,
+  style
 }) => {
   const { goBack } = useNavigation();
   const styles = useStyles();
@@ -22,7 +30,7 @@ export const ScreenContainer: FC<PropsWithChildren<ScreenContainerProps>> = ({
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={theme.colors.background}
       />
-      <View style={styles.container}>
+      <View style={[styles.container, style]}>
         {hasCloseButton && (
           <Icon
             style={styles.closeButton}

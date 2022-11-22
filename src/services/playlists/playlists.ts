@@ -13,7 +13,7 @@ export type Playlist = {
   tracks: Track[];
 };
 
-export const playlistsMock: Playlist[] = Array.from(Array(3)).map(
+export const playlistsMock: Playlist[] = Array.from(Array(4)).map(
   (_, index) => ({
     tracks: tracks.slice(index, index + 8),
     title: `My playlist ${index}`,
@@ -46,11 +46,31 @@ export const usePlaylists = () => {
   const addPlaylist = useCallback(
     async (playlist: Playlist) => {
       setLoading(true);
+      const newList = [...playlists, playlist];
       await AsyncStorage.setItem(
         StorageKeys.PLAYLISTS,
-        JSON.stringify([...playlists, playlist])
+        JSON.stringify(newList)
       );
+      setPlaylists(newList);
       setLoading(false);
+
+      return newList;
+    },
+    [playlists]
+  );
+
+  const removePlaylist = useCallback(
+    async (playlist: Playlist) => {
+      setLoading(true);
+      const newList = playlists.filter(({ title }) => title !== playlist.title);
+      await AsyncStorage.setItem(
+        StorageKeys.PLAYLISTS,
+        JSON.stringify(newList)
+      );
+      setPlaylists(newList);
+      setLoading(false);
+
+      return newList;
     },
     [playlists]
   );
@@ -61,5 +81,5 @@ export const usePlaylists = () => {
     }, [getPlaylists])
   );
 
-  return { playlists, addPlaylist, isLoading };
+  return { playlists, addPlaylist, removePlaylist, isLoading, getPlaylists };
 };
