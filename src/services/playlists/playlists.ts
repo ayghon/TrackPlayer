@@ -47,9 +47,12 @@ export const usePlaylists = () => {
   }, []);
 
   const addPlaylist = useCallback(
-    async (playlist: Playlist) => {
+    async (playlist: Omit<Playlist, 'id'>) => {
       setLoading(true);
-      const newList = [...playlists, playlist];
+      const newList: Playlist[] = [
+        ...playlists,
+        { ...playlist, id: faker.datatype.uuid() }
+      ];
       await AsyncStorage.setItem(
         StorageKeys.PLAYLISTS,
         JSON.stringify(newList)
