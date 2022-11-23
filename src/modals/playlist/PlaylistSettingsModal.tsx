@@ -26,7 +26,7 @@ export const PlaylistSettingsModal: FC<
   const { removePlaylist } = usePlaylists();
 
   const deleteHandler = async () => {
-    await removePlaylist(playlist);
+    await removePlaylist(playlist.id);
     pop(2);
   };
 

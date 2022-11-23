@@ -44,7 +44,7 @@ export const PlaylistTracksSelectionModal: FC<
         )
       ).length > 0
     ) {
-      const newList = await editPlaylist(playlist.title, {
+      const newList = await editPlaylist(playlist.id, {
         tracks: selectedTracks,
         count: selectedTracks.length
       });

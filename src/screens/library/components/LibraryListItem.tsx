@@ -15,7 +15,7 @@ export const LibraryListItem: FC<{
 
   return (
     <PlaylistItem
-      // onDelete={() => removePlaylist(item)}
+      // onDelete={() => removePlaylist(item.id)}
       variant={variant}
       artwork={item.artwork}
       title={item.title}

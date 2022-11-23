@@ -38,7 +38,7 @@ export const PlaylistViewScreen: FC<
     });
 
     if (newArtWork) {
-      const newList = await editPlaylist(playlist.title, {
+      const newList = await editPlaylist(playlist.id, {
         artwork: newArtWork.uri
       });
 

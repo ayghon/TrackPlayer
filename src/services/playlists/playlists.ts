@@ -4,8 +4,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StorageKeys } from '../../utils';
 import { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+import { faker } from '@faker-js/faker';
 
 export type Playlist = {
+  id: string;
   title: string;
   artwork?: string;
   count: number;
@@ -15,8 +17,9 @@ export type Playlist = {
 
 export const playlistsMock: Playlist[] = Array.from(Array(4)).map(
   (_, index) => ({
+    id: faker.datatype.uuid(),
     tracks: tracksMocks.slice(index, index + 8),
-    title: `My playlist ${index}`,
+    title: faker.random.words(3),
     count: 8,
     artwork: tracksMocks[index].artwork as string
   })
@@ -60,9 +63,9 @@ export const usePlaylists = () => {
   );
 
   const removePlaylist = useCallback(
-    async (playlist: Playlist) => {
+    async (playlistId: string) => {
       setLoading(true);
-      const newList = playlists.filter(({ title }) => title !== playlist.title);
+      const newList = playlists.filter(({ id }) => id !== playlistId);
       await AsyncStorage.setItem(
         StorageKeys.PLAYLISTS,
         JSON.stringify(newList)
@@ -76,10 +79,10 @@ export const usePlaylists = () => {
   );
 
   const editPlaylist = useCallback(
-    async (title: string, data: Partial<Playlist>) => {
+    async (playlistId: string, data: Partial<Playlist>) => {
       setLoading(true);
       const newList = playlists.map((item) =>
-        item.title === title ? { ...item, ...data } : item
+        item.id === playlistId ? { ...item, ...data } : item
       );
 
       await AsyncStorage.setItem(
