@@ -21,13 +21,13 @@ export const GridPlaylistItem: FC<GridPlaylistItemProps> = ({
 
   return (
     <TouchableOpacity
-      style={styles.buttonGrid}
+      style={styles.button}
       activeOpacity={0.75}
       onPress={onPress}
     >
-      <Card containerStyle={styles.containerGrid}>
+      <Card containerStyle={styles.container}>
         <Image
-          containerStyle={styles.imageGrid}
+          containerStyle={styles.image}
           source={artwork ? { uri: artwork } : undefined}
         />
         <PlaylistTitleSection title={title} trackCount={trackCount} />
@@ -37,15 +37,15 @@ export const GridPlaylistItem: FC<GridPlaylistItemProps> = ({
 };
 
 const useStyles = makeStyles((theme) => ({
-  imageGrid: {
+  image: {
     height: 128,
     width: 128
   },
-  buttonGrid: {
-    height: 220,
+  button: {
+    height: 232,
     width: 160
   },
-  containerGrid: {
+  container: {
     margin: 0,
     borderRadius: 6,
     backgroundColor: `${theme.colors.white}80`,

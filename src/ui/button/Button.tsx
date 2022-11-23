@@ -25,7 +25,8 @@ export const Button: FC<ButtonProps> = ({
     <_Button
       {...props}
       buttonStyle={[styles.button, props.buttonStyle]}
-      titleStyle={[styles.buttonTitle, props.titleStyle]}>
+      titleStyle={[styles.buttonTitle, props.titleStyle]}
+    >
       {children}
     </_Button>
   );

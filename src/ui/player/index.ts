@@ -1,2 +1,2 @@
-export * from './TrackControls';
+export * from './controls';
 export * from './TrackView';

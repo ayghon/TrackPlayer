@@ -5,6 +5,7 @@ import { HomeScreen, LibraryScreen } from '../../screens';
 import { TabBarIcon } from './components/TabBarIcon';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
+import { CustomBottomTabBar } from './components/CustomBottomTabBar';
 
 const TabStack = createBottomTabNavigator();
 
@@ -37,7 +38,7 @@ const tabs: TabScreenProps[] = [
 
 export const TabNavigator = () => {
   return (
-    <TabStack.Navigator>
+    <TabStack.Navigator tabBar={CustomBottomTabBar}>
       {tabs.map(
         ({ name, component, iconName, title, headerRight, headerShown }) => (
           <TabStack.Screen

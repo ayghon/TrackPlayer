@@ -1,7 +1,7 @@
 import { Icon, makeStyles, Slider, useTheme } from '@rneui/themed';
 import React from 'react';
 import { View } from 'react-native';
-import { Horizontal } from '../display';
+import { Horizontal } from '../../display';
 
 type TrackControlButton = {
   disabled: boolean;

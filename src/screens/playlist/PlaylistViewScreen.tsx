@@ -29,7 +29,7 @@ export const PlaylistViewScreen: FC<
   const { editPlaylist } = usePlaylists();
 
   const navigateToPlayer = (position?: number) => {
-    navigate(Routes.PLAYER, { tracks, position, playlist: { title } });
+    navigate(Routes.PLAYER, { tracks, position, playlist });
   };
 
   const changeArtworkHandler = async () => {

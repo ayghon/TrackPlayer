@@ -9,6 +9,7 @@ import TrackPlayer, {
   useTrackPlayerEvents
 } from 'react-native-track-player';
 import { TrackControlsCapability, TrackControlsProps } from '../../ui';
+import { Playlist } from '../playlists';
 
 export const useInitPlayer = () => {
   useEffect(() => {
@@ -62,12 +63,15 @@ export type UsePlayerControlsResponse = {
   currentTrack?: TrackInQueue;
   setCurrentTrack: Dispatch<SetStateAction<TrackInQueue | undefined>>;
   controlsProps: TrackControlsProps;
+  playlist?: Playlist;
+  setPlaylist?: Dispatch<SetStateAction<Playlist | undefined>>;
 };
 
 export const usePlayerControls = (): UsePlayerControlsResponse => {
   const [playerState, setPlayerState] = useState<State>();
   const [currentTrack, setCurrentTrack] = useState<TrackInQueue>();
   const [queue, setQueue] = useState<Track[]>([]);
+  const [playlist, setPlaylist] = useState<Playlist>();
 
   useTrackPlayerEvents(
     [Event.PlaybackTrackChanged, Event.RemotePlay, Event.RemotePause],
@@ -108,6 +112,8 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   return {
     queue,
     setQueue,
+    playlist,
+    setPlaylist,
     currentTrack,
     setCurrentTrack,
     controlsProps: {

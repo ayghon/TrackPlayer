@@ -36,7 +36,7 @@ export const SwipeablePlaylistItem: FC<SwipeablePlaylistItemProps> = ({
 
   return (
     <TouchableOpacity
-      style={styles.buttonList}
+      style={styles.button}
       activeOpacity={0.75}
       onPress={onPress}
     >
@@ -45,16 +45,13 @@ export const SwipeablePlaylistItem: FC<SwipeablePlaylistItemProps> = ({
         renderRightActions={() => <DeleteSwipeAction />}
         onSwipeableOpen={onSwipeOpen}
       >
-        <Card
-          containerStyle={styles.containerList}
-          wrapperStyle={styles.wrapperList}
-        >
+        <Card containerStyle={styles.container} wrapperStyle={styles.wrapper}>
           <Image
-            containerStyle={styles.imageList}
+            containerStyle={styles.image}
             source={artwork ? { uri: artwork } : undefined}
           />
           <PlaylistTitleSection
-            style={styles.titleSectionList}
+            style={styles.titleSection}
             title={title}
             trackCount={trackCount}
           />
@@ -65,23 +62,23 @@ export const SwipeablePlaylistItem: FC<SwipeablePlaylistItemProps> = ({
 };
 
 const useStyles = makeStyles((theme) => ({
-  imageList: {
+  image: {
     height: 40,
     width: 40
   },
-  buttonList: {
+  button: {
     marginBottom: 8
   },
-  titleSectionList: {
+  titleSection: {
     marginStart: 16
   },
-  wrapperList: {
+  wrapper: {
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center'
   },
-  containerList: {
+  container: {
     width: '100%',
     margin: 0,
     borderRadius: 6,
