@@ -1,8 +1,8 @@
-import { RouteProp } from '@react-navigation/core/lib/typescript/src/types';
 import {
-  getFocusedRouteNameFromRoute,
-  ParamListBase
+  ParamListBase,
+  getFocusedRouteNameFromRoute
 } from '@react-navigation/native';
+import { RouteProp } from '@react-navigation/core/lib/typescript/src/types';
 import { Routes } from './routes.types';
 import { getWelcomeMessageByPeriod } from '../../utils';
 

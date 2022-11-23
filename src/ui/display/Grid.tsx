@@ -1,6 +1,6 @@
 import { FlatList, FlatListProps, View } from 'react-native';
-import React from 'react';
 import { makeStyles } from '@rneui/themed';
+import React from 'react';
 
 type GridProps<TItem> = FlatListProps<TItem>;
 
@@ -10,9 +10,9 @@ export function Grid<TItem>(props: GridProps<TItem>) {
   return (
     <View>
       <FlatList<TItem>
+        columnWrapperStyle={styles.column}
         key={2}
         numColumns={2}
-        columnWrapperStyle={styles.column}
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         {...props}

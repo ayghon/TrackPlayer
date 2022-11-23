@@ -1,11 +1,3 @@
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { NavigationContainer } from '@react-navigation/native';
-import { RootStackParamList, Routes } from './routes.types';
-import { PlaylistViewScreen, SettingsScreen } from '../../screens';
-import React from 'react';
-import { TabNavigator } from './tabs';
-import { getHeaderTitle } from './routes.utils';
-import { Icon, useTheme } from '@rneui/themed';
 import {
   ColorSchemeModal,
   PlayerModal,
@@ -13,10 +5,18 @@ import {
   PlaylistSettingsModal,
   PlaylistTracksSelectionModal
 } from '../../modals';
-import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { Horizontal } from '../../ui';
+import { Icon, useTheme } from '@rneui/themed';
+import { LibraryHeaderRight } from './components/LibraryHeaderRight';
+import { NavigationContainer } from '@react-navigation/native';
 import { Platform } from 'react-native';
+import { PlaylistViewScreen, SettingsScreen } from '../../screens';
+import { RootStackParamList, Routes } from './routes.types';
+import { TabNavigator } from './tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { getHeaderTitle } from './routes.utils';
 import { useInitStorage } from '../storage/storage.utils';
+import React from 'react';
 
 const BaseStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -27,56 +27,54 @@ export const BaseStackNavigation = () => {
   return (
     <NavigationContainer
       theme={{
-        dark: theme.mode === 'dark',
         colors: {
           background: theme.colors.background,
-          primary: theme.colors.black,
-          text: theme.colors.black,
           border: theme.colors.background,
           card: theme.colors.background,
-          notification: theme.colors.secondary
-        }
+          notification: theme.colors.secondary,
+          primary: theme.colors.black,
+          text: theme.colors.black
+        },
+        dark: theme.mode === 'dark'
       }}
     >
       <BaseStack.Navigator>
         <BaseStack.Group screenOptions={{ animation: 'slide_from_right' }}>
           <BaseStack.Screen
-            name={Routes.ROOT}
             component={TabNavigator}
+            name={Routes.ROOT}
             options={({ navigation, route }) => ({
-              headerTitle: getHeaderTitle(route),
               headerRight: () => (
                 <Horizontal>
                   <LibraryHeaderRight />
                   <Icon
-                    onPress={() => navigation.navigate(Routes.SETTINGS)}
-                    name="settings"
                     color={theme.colors.black}
+                    name="settings"
+                    onPress={() => navigation.navigate(Routes.SETTINGS)}
                   />
                 </Horizontal>
-              )
+              ),
+              headerTitle: getHeaderTitle(route)
             })}
           />
           <BaseStack.Screen
-            name={Routes.SETTINGS}
             component={SettingsScreen}
+            name={Routes.SETTINGS}
             options={{
               headerBackTitle: '',
               title: 'Settings'
             }}
           />
           <BaseStack.Screen
-            name={Routes.PLAYLIST_VIEW}
             component={PlaylistViewScreen}
+            name={Routes.PLAYLIST_VIEW}
             options={({
               navigation: { navigate },
               route: {
                 params: { playlist }
               }
             }) => ({
-              headerTitle: '',
               headerBackTitle: '',
-              title: '',
               headerRight: () => (
                 <Icon
                   name="more-vert"
@@ -86,65 +84,67 @@ export const BaseStackNavigation = () => {
                     })
                   }
                 />
-              )
+              ),
+              headerTitle: '',
+              title: ''
             })}
           />
         </BaseStack.Group>
         <BaseStack.Group
           screenOptions={{
-            presentation: 'modal',
-            animation: 'slide_from_right'
+            animation: 'slide_from_right',
+            presentation: 'modal'
           }}
         >
           <BaseStack.Screen
-            name={Routes.COLOR_SCHEME}
             component={ColorSchemeModal}
+            name={Routes.COLOR_SCHEME}
             options={({ navigation: { goBack } }) => ({
               headerRight: () => <Icon name="close" onPress={() => goBack()} />,
               headerTitle: 'Color scheme'
             })}
           />
           <BaseStack.Screen
-            name={Routes.PLAYLIST_CREATE}
             component={PlaylistCreateModal}
+            name={Routes.PLAYLIST_CREATE}
             options={{
+              headerShown: Platform.OS === 'android',
               headerTitle: '',
-              title: '',
-              headerShown: Platform.OS === 'android'
+              title: ''
             }}
           />
           <BaseStack.Screen
-            name={Routes.PLAYER}
             component={PlayerModal}
+            name={Routes.PLAYER}
             options={({
               navigation: { goBack },
               route: {
                 params: { playlist }
               }
             }) => ({
-              headerRight: () => <Icon name="close" onPress={() => goBack()} />,
               contentStyle: {
                 paddingTop: playlist?.title ? 0 : 16
               },
+              headerRight: () => <Icon name="close" onPress={() => goBack()} />,
               title: playlist?.title ?? ''
             })}
           />
           <BaseStack.Screen
-            name={Routes.PLAYLIST_SETTINGS}
             component={PlaylistSettingsModal}
+            name={Routes.PLAYLIST_SETTINGS}
             options={{
+              headerShown: Platform.OS === 'android',
               headerTitle: '',
-              title: '',
-              headerShown: Platform.OS === 'android'
+              title: ''
             }}
           />
           <BaseStack.Screen
-            name={Routes.PLAYLIST_TRACKS_SELECTION}
             component={PlaylistTracksSelectionModal}
+            name={Routes.PLAYLIST_TRACKS_SELECTION}
             options={{
+              headerShown: Platform.OS === 'android',
               headerTitle: '',
-              title: '',
-              headerShown: Platform.OS === 'android'
+              title: ''
             }}
           />
         </BaseStack.Group>

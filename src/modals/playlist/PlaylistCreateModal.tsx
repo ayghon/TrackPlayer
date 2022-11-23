@@ -1,13 +1,15 @@
-import React, { FC, useState } from 'react';
-import { Input, makeStyles, useTheme } from '@rneui/themed';
 import { Button, ScreenContainer } from '../../ui';
+import { Input, makeStyles, useTheme } from '@rneui/themed';
 import { Platform, View } from 'react-native';
+import {
+  RootStackScreenProps,
+  Routes
+} from '../../services/routes/routes.types';
 import { usePlaylists } from '../../services';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Routes } from '../../services/routes/routes.types';
+import React, { FC, useState } from 'react';
 
 export const PlaylistCreateModal: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.PLAYLIST_CREATE>
+  RootStackScreenProps<Routes.PLAYLIST_CREATE>
 > = ({ navigation: { goBack } }) => {
   const [playlistName, setPlaylistName] = useState('');
   const { theme } = useTheme();
@@ -16,9 +18,9 @@ export const PlaylistCreateModal: FC<
 
   const createHandler = async () => {
     await addPlaylist({
+      count: 0,
       title: playlistName,
-      tracks: [],
-      count: 0
+      tracks: []
     });
     goBack();
   };
@@ -27,11 +29,11 @@ export const PlaylistCreateModal: FC<
     <ScreenContainer hasCloseButton={Platform.OS === 'ios'}>
       <View style={styles.container}>
         <Input
-          selectionColor={theme.colors.secondary}
           autoFocus
-          value={playlistName}
-          placeholder="Name your playlist"
           onChangeText={(text) => setPlaylistName(text)}
+          placeholder="Name your playlist"
+          selectionColor={theme.colors.secondary}
+          value={playlistName}
         />
         <Button loading={isLoading} onPress={createHandler}>
           Create
@@ -43,11 +45,11 @@ export const PlaylistCreateModal: FC<
 
 const useStyles = makeStyles({
   container: {
+    alignItems: 'center',
     alignSelf: 'center',
     height: '80%',
-    width: '100%',
-    paddingHorizontal: 40,
     justifyContent: 'center',
-    alignItems: 'center'
+    paddingHorizontal: 40,
+    width: '100%'
   }
 });

@@ -1,22 +1,21 @@
-import { Horizontal, Image, ScreenContainer, TrackItem } from '../../ui';
+import { AddTracksButton } from './components/AddTracksButton';
+import { FAB, Icon, Text, makeStyles, useTheme } from '@rneui/themed';
 import { FlatList, TouchableOpacity } from 'react-native';
-import React, { FC } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Horizontal, Image, ScreenContainer, TrackItem } from '../../ui';
 import {
   Playlist,
-  RootStackParamList,
+  RootStackScreenProps,
   Routes,
   usePlaylists
 } from '../../services';
-import { FAB, Icon, makeStyles, Text, useTheme } from '@rneui/themed';
-import { AddTracksButton } from './components/AddTracksButton';
 import { Track } from 'react-native-track-player';
 import { pickSingle, types } from 'react-native-document-picker';
+import React, { FC } from 'react';
 
 export type PlaylistViewScreenProps = { playlist: Playlist };
 
 export const PlaylistViewScreen: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.PLAYLIST_VIEW>
+  RootStackScreenProps<Routes.PLAYLIST_VIEW>
 > = ({
   navigation: { navigate },
   route: {
@@ -29,7 +28,7 @@ export const PlaylistViewScreen: FC<
   const { editPlaylist } = usePlaylists();
 
   const navigateToPlayer = (position?: number) => {
-    navigate(Routes.PLAYER, { tracks, position, playlist });
+    navigate(Routes.PLAYER, { playlist, position, tracks });
   };
 
   const changeArtworkHandler = async () => {
@@ -60,9 +59,9 @@ export const PlaylistViewScreen: FC<
       <Horizontal alignCenter style={styles.playlistTitleSection}>
         <Text style={styles.playlistTitle}>{title}</Text>
         <FAB
-          onPress={() => navigateToPlayer()}
           buttonStyle={styles.fab}
-          icon={<Icon name="play-arrow" color={theme.colors.white} size={32} />}
+          icon={<Icon color={theme.colors.white} name="play-arrow" size={32} />}
+          onPress={() => navigateToPlayer()}
           visible={tracks.length > 0}
         />
       </Horizontal>
@@ -71,50 +70,50 @@ export const PlaylistViewScreen: FC<
         style={styles.button}
       />
       <FlatList<Track>
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
         data={tracks}
+        keyExtractor={(t) => t.title || t.url.toString()}
         renderItem={({ item, index }) => (
           <TouchableOpacity
-            style={styles.trackButton}
             onPress={() => navigateToPlayer(index)}
+            style={styles.trackButton}
           >
             <TrackItem {...item} />
           </TouchableOpacity>
         )}
-        keyExtractor={(t) => t.title || t.url.toString()}
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
       />
     </ScreenContainer>
   );
 };
 
 const useStyles = makeStyles((theme) => ({
-  trackButton: {
-    paddingVertical: 4,
-    marginBottom: 16
-  },
-  trackList: {
-    justifyContent: 'space-between',
-    height: '100%'
-  },
-  image: {
-    height: 200,
-    width: 200,
-    alignSelf: 'center',
-    marginVertical: 16,
-    backgroundColor: theme.colors.white
-  },
-  playlistTitleSection: {
-    marginBottom: 16,
-    width: '100%',
-    justifyContent: 'space-between'
-  },
-  playlistTitle: {
-    fontWeight: 'bold',
-    fontSize: 24
-  },
   button: {
     marginBottom: 16
   },
-  fab: { margin: 0, padding: 0 }
+  fab: { margin: 0, padding: 0 },
+  image: {
+    alignSelf: 'center',
+    backgroundColor: theme.colors.white,
+    height: 200,
+    marginVertical: 16,
+    width: 200
+  },
+  playlistTitle: {
+    fontSize: 24,
+    fontWeight: 'bold'
+  },
+  playlistTitleSection: {
+    justifyContent: 'space-between',
+    marginBottom: 16,
+    width: '100%'
+  },
+  trackButton: {
+    marginBottom: 16,
+    paddingVertical: 4
+  },
+  trackList: {
+    height: '100%',
+    justifyContent: 'space-between'
+  }
 }));

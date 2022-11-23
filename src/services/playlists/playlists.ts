@@ -1,10 +1,10 @@
-import { Track } from 'react-native-track-player';
-import { tracksMocks } from '../tracks';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StorageKeys } from '../../utils';
+import { Track } from 'react-native-track-player';
+import { faker } from '@faker-js/faker';
+import { tracksMocks } from '../tracks';
 import { useCallback, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { faker } from '@faker-js/faker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export type Playlist = {
   id: string;
@@ -17,11 +17,11 @@ export type Playlist = {
 
 export const playlistsMock: Playlist[] = Array.from(Array(4)).map(
   (_, index) => ({
-    id: faker.datatype.uuid(),
-    tracks: tracksMocks.slice(index, index + 8),
-    title: faker.random.words(3),
+    artwork: tracksMocks[index].artwork as string,
     count: 8,
-    artwork: tracksMocks[index].artwork as string
+    id: faker.datatype.uuid(),
+    title: faker.random.words(3),
+    tracks: tracksMocks.slice(index, index + 8)
   })
 );
 
@@ -107,11 +107,11 @@ export const usePlaylists = () => {
   );
 
   return {
-    playlists,
     addPlaylist,
-    removePlaylist,
-    isLoading,
+    editPlaylist,
     getPlaylists,
-    editPlaylist
+    isLoading,
+    playlists,
+    removePlaylist
   };
 };

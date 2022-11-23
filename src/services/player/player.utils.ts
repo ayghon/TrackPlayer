@@ -1,4 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Playlist } from '../playlists';
+import { TrackControlsCapability, TrackControlsProps } from '../../ui';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -8,8 +10,6 @@ import TrackPlayer, {
   useProgress,
   useTrackPlayerEvents
 } from 'react-native-track-player';
-import { TrackControlsCapability, TrackControlsProps } from '../../ui';
-import { Playlist } from '../playlists';
 
 export const useInitPlayer = () => {
   useEffect(() => {
@@ -110,18 +110,7 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   };
 
   return {
-    queue,
-    setQueue,
-    playlist,
-    setPlaylist,
-    currentTrack,
-    setCurrentTrack,
     controlsProps: {
-      position,
-      duration: duration || 26,
-      isPlaying:
-        playerState !== State.Playing && playerState !== State.Buffering,
-      onProgressChange: TrackPlayer.seekTo,
       capabilities: {
         [TrackControlsCapability.JUMP_BACKWARD]: {
           disabled: !currentTrack,
@@ -144,7 +133,18 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
           disabled: !currentTrack || isFirstTrack(currentTrack.index),
           onPress: skipToPreviousTrack
         }
-      }
-    }
+      },
+      duration: duration || 26,
+      isPlaying:
+        playerState !== State.Playing && playerState !== State.Buffering,
+      onProgressChange: TrackPlayer.seekTo,
+      position
+    },
+    currentTrack,
+    playlist,
+    queue,
+    setCurrentTrack,
+    setPlaylist,
+    setQueue
   };
 };

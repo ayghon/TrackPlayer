@@ -1,11 +1,11 @@
-import { View } from 'react-native';
-import { Icon, makeStyles, Slider, useTheme } from '@rneui/themed';
-import React from 'react';
-import { TrackViewProps } from '../TrackView';
 import { Horizontal } from '../../display';
+import { Icon, Slider, makeStyles, useTheme } from '@rneui/themed';
 import { Image } from '../../image';
-import { TrackTitle } from './TrackTitle';
 import { TrackControlsCapability } from '../controls';
+import { TrackTitle } from './TrackTitle';
+import { TrackViewProps } from '../TrackView';
+import { View } from 'react-native';
+import React from 'react';
 
 export type MinimalTrackViewProps = Omit<TrackViewProps, 'minimal'>;
 
@@ -30,50 +30,56 @@ export const MinimalTrackView = ({
             source={artwork ? { uri: artwork } : undefined}
           />
           <TrackTitle
+            artist={artist}
             minimal
             style={styles.title}
             title={title}
-            artist={artist}
           />
         </Horizontal>
         <Icon
-          size={32}
+          disabled={capabilities[TrackControlsCapability.PLAY_PAUSE].disabled}
           disabledStyle={styles.icon}
           name={isPlaying ? 'play-arrow' : 'pause'}
-          disabled={capabilities[TrackControlsCapability.PLAY_PAUSE].disabled}
           onPress={capabilities[TrackControlsCapability.PLAY_PAUSE].onPress}
+          size={32}
         />
       </Horizontal>
       <Slider
-        style={styles.minimalSlider}
-        value={position}
-        maximumValue={duration}
-        minimumValue={0}
         maximumTrackTintColor={theme.colors.primary}
+        maximumValue={duration}
         minimumTrackTintColor={theme.colors.secondary}
-        thumbTintColor={theme.colors.secondary}
-        thumbTouchSize={{ width: 2, height: 2 }}
-        trackStyle={styles.minimalSliderTrack}
-        thumbStyle={styles.minimalSliderThumb}
+        minimumValue={0}
         onSlidingComplete={onProgressChange}
+        style={styles.minimalSlider}
+        thumbStyle={styles.minimalSliderThumb}
+        thumbTintColor={theme.colors.secondary}
+        thumbTouchSize={{ height: 2, width: 2 }}
+        trackStyle={styles.minimalSliderTrack}
+        value={position}
       />
     </View>
   );
 };
 
 const useStyles = makeStyles((theme) => ({
-  image: {
-    width: 40,
-    height: 40
+  icon: {
+    backgroundColor: theme.colors.background
   },
-  title: {
-    backgroundColor: 'green'
+  image: {
+    height: 40,
+    width: 40
   },
   minimalContentContainer: {
-    marginHorizontal: 12,
-    marginTop: 8,
+    justifyContent: 'space-between',
     marginBottom: 6,
-    justifyContent: 'space-between'
+    marginHorizontal: 12,
+    marginTop: 8
+  },
+  minimalControlsContainer: {
+    backgroundColor: theme.colors.white
+  },
+  minimalSlider: {
+    height: 6
   },
   minimalSliderThumb: {
     height: 2,
@@ -82,13 +88,7 @@ const useStyles = makeStyles((theme) => ({
   minimalSliderTrack: {
     height: 4
   },
-  minimalSlider: {
-    height: 6
-  },
-  icon: {
-    backgroundColor: theme.colors.background
-  },
-  minimalControlsContainer: {
-    backgroundColor: theme.colors.white
+  title: {
+    backgroundColor: 'green'
   }
 }));

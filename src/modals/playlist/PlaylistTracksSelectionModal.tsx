@@ -1,23 +1,22 @@
-import { ScreenContainer, TrackItem } from '../../ui';
-import React, { FC, useState } from 'react';
+import { FlatList, Platform, TouchableOpacity, View } from 'react-native';
 import {
   Playlist,
-  RootStackParamList,
+  RootStackScreenProps,
   Routes,
   tracksMocks,
   usePlaylists
 } from '../../services';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FlatList, Platform, TouchableOpacity, View } from 'react-native';
+import { ScreenContainer, TrackItem } from '../../ui';
 import { Track } from 'react-native-track-player';
 import { makeStyles } from '@rneui/themed';
+import React, { FC, useState } from 'react';
 
 export type PlaylistTracksSelectionModalProps = {
   playlist: Playlist;
 };
 
 export const PlaylistTracksSelectionModal: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.PLAYLIST_TRACKS_SELECTION>
+  RootStackScreenProps<Routes.PLAYLIST_TRACKS_SELECTION>
 > = ({
   navigation: { navigate, goBack },
   route: {
@@ -45,8 +44,8 @@ export const PlaylistTracksSelectionModal: FC<
       ).length > 0
     ) {
       const newList = await editPlaylist(playlist.id, {
-        tracks: selectedTracks,
-        count: selectedTracks.length
+        count: selectedTracks.length,
+        tracks: selectedTracks
       });
       navigate(Routes.PLAYLIST_VIEW, {
         playlist:
@@ -64,15 +63,10 @@ export const PlaylistTracksSelectionModal: FC<
     >
       <View>
         <FlatList<Track>
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
           data={tracksMocks}
+          keyExtractor={(t) => t.title || t.url.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
-              style={[
-                styles.trackButton,
-                item.title ? getSelectedStyle(item.title) : undefined
-              ]}
               onPress={() => {
                 if (
                   selectedTracks.find(
@@ -86,11 +80,16 @@ export const PlaylistTracksSelectionModal: FC<
                   setSelectedTracks((state) => [...state, item]);
                 }
               }}
+              style={[
+                styles.trackButton,
+                item.title ? getSelectedStyle(item.title) : undefined
+              ]}
             >
               <TrackItem {...item} />
             </TouchableOpacity>
           )}
-          keyExtractor={(t) => t.title || t.url.toString()}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </ScreenContainer>
@@ -98,11 +97,11 @@ export const PlaylistTracksSelectionModal: FC<
 };
 
 const useStyles = makeStyles({
-  trackButton: {
-    paddingVertical: 4,
-    marginBottom: 16
-  },
   selectedTrack: {
     opacity: 0.5
+  },
+  trackButton: {
+    marginBottom: 16,
+    paddingVertical: 4
   }
 });

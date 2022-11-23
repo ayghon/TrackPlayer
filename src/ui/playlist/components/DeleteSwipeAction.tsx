@@ -1,4 +1,4 @@
-import { Card, makeStyles, Text } from '@rneui/themed';
+import { Card, Text, makeStyles } from '@rneui/themed';
 import React from 'react';
 
 export const DeleteSwipeAction = () => {
@@ -13,13 +13,13 @@ export const DeleteSwipeAction = () => {
 
 const useStyles = makeStyles((theme) => ({
   deleteContainer: {
-    width: '25%',
-    height: '100%',
-    margin: 0,
-    borderRadius: 6,
+    alignItems: 'center',
     backgroundColor: theme.colors.error,
     borderColor: `${theme.colors.white}80`,
-    alignItems: 'center',
-    justifyContent: 'center'
+    borderRadius: 6,
+    height: '100%',
+    justifyContent: 'center',
+    margin: 0,
+    width: '25%'
   }
 }));

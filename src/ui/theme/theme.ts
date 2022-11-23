@@ -1,11 +1,11 @@
-import { createTheme, CreateThemeOptions, useTheme } from '@rneui/themed';
+import { CreateThemeOptions, createTheme, useTheme } from '@rneui/themed';
 import { DEFAULT_THEME_MODE, StorageKeys } from '../../utils';
-import { useCallback, useEffect, useState } from 'react';
 import {
+  ThemeColorScheme,
   defaultSchemeColors,
-  getColorSchemeConfiguration,
-  ThemeColorScheme
+  getColorSchemeConfiguration
 } from './schemes';
+import { useCallback, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const initialTheme = createTheme({
@@ -42,5 +42,5 @@ export const useThemeManager = () => {
     getStorageColorScheme();
   }, [changeTheme]);
 
-  return { theme, changeTheme };
+  return { changeTheme, theme };
 };

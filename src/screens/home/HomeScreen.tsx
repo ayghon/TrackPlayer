@@ -4,19 +4,18 @@ import {
   PlaylistItem,
   ScreenContainer
 } from '../../ui';
-import React, { FC } from 'react';
 import {
   Playlist,
-  RootStackParamList,
+  RootStackScreenProps,
   Routes,
   usePlaylists
 } from '../../services';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { makeStyles, Text } from '@rneui/themed';
+import { Text, makeStyles } from '@rneui/themed';
+import React, { FC } from 'react';
 
-export const HomeScreen: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.HOME>
-> = ({ navigation: { navigate } }) => {
+export const HomeScreen: FC<RootStackScreenProps<Routes.HOME>> = ({
+  navigation: { navigate }
+}) => {
   const styles = useStyles();
   const { playlists } = usePlaylists();
 
@@ -24,17 +23,17 @@ export const HomeScreen: FC<
     <ScreenContainer>
       <Text style={styles.recentlyPlayed}>Recently played</Text>
       <Carousel<Playlist>
-        enableGradient={false}
         data={playlists.slice(0, 3)}
+        enableGradient={false}
         initialNumToRender={3}
         keyExtractor={({ title }) => title}
         renderItem={({ item }) => (
           <PlaylistItem
-            variant={LayoutVariant.GRID}
             artwork={item.artwork}
+            onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
             title={item.title}
             trackCount={item.count}
-            onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
+            variant={LayoutVariant.GRID}
           />
         )}
       />
@@ -43,5 +42,5 @@ export const HomeScreen: FC<
 };
 
 const useStyles = makeStyles({
-  recentlyPlayed: { marginBottom: 8, fontWeight: '600', fontSize: 16 }
+  recentlyPlayed: { fontSize: 16, fontWeight: '600', marginBottom: 8 }
 });

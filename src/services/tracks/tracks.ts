@@ -4,11 +4,11 @@ const ARTWORK_BASE_URL = 'https://source.unsplash.com/random/400?animals&sig=';
 const TRACK_BASE_URL = 'https://bigsoundbank.com/UPLOAD/mp3/';
 
 export const tracksMocks: Track[] = Array.from(Array(15)).map((_, index) => ({
-  artwork: `${ARTWORK_BASE_URL}${index}`,
-  url: `${TRACK_BASE_URL}${(index + 1).toString().padStart(4, '0')}.mp3`,
-  title: (index + 1).toString().padStart(4, '0'),
-  artist: 'bigsoundbank',
   album: 'free sound',
+  artist: 'bigsoundbank',
+  artwork: `${ARTWORK_BASE_URL}${index}`,
   date: new Date().toISOString(),
-  duration: 26
+  duration: 26,
+  title: (index + 1).toString().padStart(4, '0'),
+  url: `${TRACK_BASE_URL}${(index + 1).toString().padStart(4, '0')}.mp3`
 }));

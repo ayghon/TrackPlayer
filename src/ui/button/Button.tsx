@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
 import {
-  Button as _Button,
+  Button as RNEButton,
   ButtonProps as _ButtonProps,
   makeStyles
 } from '@rneui/themed';
+import React, { FC } from 'react';
 
 export enum ButtonVariant {
   PRIMARY = 'primary',
@@ -22,24 +22,24 @@ export const Button: FC<ButtonProps> = ({
   const styles = useStyles({ variant });
 
   return (
-    <_Button
+    <RNEButton
       {...props}
       buttonStyle={[styles.button, props.buttonStyle]}
       titleStyle={[styles.buttonTitle, props.titleStyle]}
     >
       {children}
-    </_Button>
+    </RNEButton>
   );
 };
 
 const useStyles = makeStyles((theme, { variant }: ButtonProps) => ({
   button: {
-    paddingHorizontal: 32,
     backgroundColor:
       variant === ButtonVariant.PRIMARY
         ? theme.colors.secondary
         : theme.colors.primary,
-    borderRadius: 100
+    borderRadius: 100,
+    paddingHorizontal: 32
   },
   buttonTitle: {
     color:

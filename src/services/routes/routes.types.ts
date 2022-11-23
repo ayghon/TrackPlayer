@@ -1,9 +1,10 @@
-import { PlaylistViewScreenProps } from '../../screens';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   PlayerModalProps,
   PlaylistSettingsModalProps,
   PlaylistTracksSelectionModalProps
 } from '../../modals';
+import { PlaylistViewScreenProps } from '../../screens';
 
 export enum Routes {
   ROOT = 'root',
@@ -30,3 +31,6 @@ export type RootStackParamList = {
   [Routes.PLAYLIST_SETTINGS]: PlaylistSettingsModalProps;
   [Routes.PLAYLIST_TRACKS_SELECTION]: PlaylistTracksSelectionModalProps;
 };
+
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>;

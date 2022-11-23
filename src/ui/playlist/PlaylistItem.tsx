@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import { GridPlaylistItem } from './components/GridPlaylistItem';
 import { LayoutVariant } from './playlist.types';
 import { SwipeablePlaylistItem } from './components/SwipeablePlaylistItem';
-import { GridPlaylistItem } from './components/GridPlaylistItem';
+import React, { FC } from 'react';
 
 export type PlaylistItemProps = {
   trackCount: number;
@@ -25,22 +25,22 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
   if (variant === LayoutVariant.LIST) {
     return (
       <SwipeablePlaylistItem
-        onPress={onPress}
-        trackCount={trackCount}
-        title={title}
-        onDelete={onDelete}
         artwork={artwork}
+        onDelete={onDelete}
+        onPress={onPress}
         onSwipeLeft={onSwipeLeft}
+        title={title}
+        trackCount={trackCount}
       />
     );
   }
 
   return (
     <GridPlaylistItem
-      title={title}
-      trackCount={trackCount}
       artwork={artwork}
       onPress={onPress}
+      title={title}
+      trackCount={trackCount}
     />
   );
 };

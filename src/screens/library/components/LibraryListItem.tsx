@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
-import { Playlist, RootStackParamList, Routes } from '../../../services';
 import { LayoutVariant, PlaylistItem } from '../../../ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Playlist, RootStackParamList, Routes } from '../../../services';
+import React, { FC } from 'react';
 
 export const LibraryListItem: FC<{
   item: Playlist;
@@ -16,11 +16,11 @@ export const LibraryListItem: FC<{
   return (
     <PlaylistItem
       // onDelete={() => removePlaylist(item.id)}
-      variant={variant}
       artwork={item.artwork}
+      onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
       title={item.title}
       trackCount={item.count}
-      onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
+      variant={variant}
     />
   );
 };

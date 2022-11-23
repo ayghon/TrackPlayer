@@ -1,7 +1,7 @@
-import { Icon, makeStyles, Slider, useTheme } from '@rneui/themed';
-import React from 'react';
-import { View } from 'react-native';
 import { Horizontal } from '../../display';
+import { Icon, Slider, makeStyles, useTheme } from '@rneui/themed';
+import { View } from 'react-native';
+import React from 'react';
 
 type TrackControlButton = {
   disabled: boolean;
@@ -37,62 +37,62 @@ export const TrackControls = ({
   return (
     <View>
       <Slider
-        value={position}
-        maximumValue={duration}
-        minimumValue={0}
         maximumTrackTintColor={theme.colors.primary}
+        maximumValue={duration}
         minimumTrackTintColor={theme.colors.secondary}
-        thumbTintColor={theme.colors.secondary}
-        thumbTouchSize={{ width: 12, height: 12 }}
-        trackStyle={styles.sliderTrack}
-        thumbStyle={styles.sliderThumb}
+        minimumValue={0}
         onSlidingComplete={onProgressChange}
+        thumbStyle={styles.sliderThumb}
+        thumbTintColor={theme.colors.secondary}
+        thumbTouchSize={{ height: 12, width: 12 }}
+        trackStyle={styles.sliderTrack}
+        value={position}
       />
       <Horizontal alignCenter style={styles.container}>
         <Icon
-          size={56}
           containerStyle={styles.outerIconStart}
-          name="skip-previous"
-          disabledStyle={styles.icon}
           disabled={
             capabilities[TrackControlsCapability.SKIP_TO_PREVIOUS].disabled
           }
+          disabledStyle={styles.icon}
+          name="skip-previous"
           onPress={
             capabilities[TrackControlsCapability.SKIP_TO_PREVIOUS].onPress
           }
+          size={56}
         />
         <Icon
           containerStyle={styles.innerIconStart}
-          size={32}
-          disabledStyle={styles.icon}
-          name="fast-rewind"
           disabled={
             capabilities[TrackControlsCapability.JUMP_BACKWARD].disabled
           }
+          disabledStyle={styles.icon}
+          name="fast-rewind"
           onPress={capabilities[TrackControlsCapability.JUMP_BACKWARD].onPress}
+          size={32}
         />
         <Icon
-          size={56}
+          disabled={capabilities[TrackControlsCapability.PLAY_PAUSE].disabled}
           disabledStyle={styles.icon}
           name={isPlaying ? 'play-arrow' : 'pause'}
-          disabled={capabilities[TrackControlsCapability.PLAY_PAUSE].disabled}
           onPress={capabilities[TrackControlsCapability.PLAY_PAUSE].onPress}
+          size={56}
         />
         <Icon
           containerStyle={styles.innerIconEnd}
-          size={32}
+          disabled={capabilities[TrackControlsCapability.JUMP_FORWARD].disabled}
           disabledStyle={styles.icon}
           name="fast-forward"
-          disabled={capabilities[TrackControlsCapability.JUMP_FORWARD].disabled}
           onPress={capabilities[TrackControlsCapability.JUMP_FORWARD].onPress}
+          size={32}
         />
         <Icon
           containerStyle={styles.outerIconEnd}
-          size={56}
+          disabled={capabilities[TrackControlsCapability.SKIP_TO_NEXT].disabled}
           disabledStyle={styles.icon}
           name="skip-next"
-          disabled={capabilities[TrackControlsCapability.SKIP_TO_NEXT].disabled}
           onPress={capabilities[TrackControlsCapability.SKIP_TO_NEXT].onPress}
+          size={56}
         />
       </Horizontal>
     </View>
@@ -100,16 +100,11 @@ export const TrackControls = ({
 };
 
 const useStyles = makeStyles((theme) => ({
-  sliderTrack: { height: 6 },
-  sliderThumb: { height: 16, width: 16 },
   container: {
     justifyContent: 'center'
   },
-  outerIconEnd: {
-    paddingStart: 16
-  },
-  outerIconStart: {
-    paddingEnd: 16
+  icon: {
+    backgroundColor: theme.colors.background
   },
   innerIconEnd: {
     paddingStart: 8
@@ -117,7 +112,12 @@ const useStyles = makeStyles((theme) => ({
   innerIconStart: {
     paddingEnd: 8
   },
-  icon: {
-    backgroundColor: theme.colors.background
-  }
+  outerIconEnd: {
+    paddingStart: 16
+  },
+  outerIconStart: {
+    paddingEnd: 16
+  },
+  sliderThumb: { height: 16, width: 16 },
+  sliderTrack: { height: 6 }
 }));

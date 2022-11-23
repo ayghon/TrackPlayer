@@ -1,22 +1,20 @@
+import { ActivityIndicator, FlatList } from 'react-native';
 import { Grid, LayoutVariant, ScreenContainer } from '../../ui';
+import { LibraryListItem } from './components/LibraryListItem';
 import {
   Playlist,
-  RootStackParamList,
+  RootStackScreenProps,
   Routes,
   usePlaylists
 } from '../../services';
 import React, { FC } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { ActivityIndicator, FlatList } from 'react-native';
-import { LibraryListItem } from './components/LibraryListItem';
 
 export type LibraryScreenProps = {
   variant?: LayoutVariant;
 };
 
 export const LibraryScreen: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.LIBRARY> &
-    LibraryScreenProps
+  RootStackScreenProps<Routes.LIBRARY> & LibraryScreenProps
 > = ({ variant = LayoutVariant.LIST }) => {
   const { playlists, isLoading } = usePlaylists();
 
@@ -33,9 +31,9 @@ export const LibraryScreen: FC<
       <ScreenContainer>
         <FlatList
           data={playlists}
-          renderItem={({ item }) => <LibraryListItem item={item} />}
-          keyExtractor={({ title }) => title}
           initialNumToRender={6}
+          keyExtractor={({ title }) => title}
+          renderItem={({ item }) => <LibraryListItem item={item} />}
         />
       </ScreenContainer>
     );

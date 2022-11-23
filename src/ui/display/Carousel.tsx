@@ -1,7 +1,7 @@
 import { FlatList, FlatListProps, View } from 'react-native';
 import { makeStyles } from '@rneui/themed';
-import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import React from 'react';
 
 const ItemSeparator = () => {
   const styles = useStyles();
@@ -20,17 +20,17 @@ export function Carousel<TItem>({
   return (
     <View>
       <FlatList
-        showsHorizontalScrollIndicator={false}
         ItemSeparatorComponent={ItemSeparator}
         horizontal
+        showsHorizontalScrollIndicator={false}
         {...props}
       />
       {enableGradient && (
         <LinearGradient
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 0 }}
-          style={styles.linearGradient}
           colors={['transparent', 'rgba(0,0,0,0.85)']}
+          end={{ x: 1, y: 0 }}
+          start={{ x: 0, y: 0 }}
+          style={styles.linearGradient}
         />
       )}
     </View>
@@ -39,12 +39,12 @@ export function Carousel<TItem>({
 
 const useStyles = makeStyles({
   linearGradient: {
-    position: 'absolute',
-    top: 0,
-    left: 300,
     borderRadius: 6,
+    bottom: 0,
+    left: 300,
+    position: 'absolute',
     right: 0,
-    bottom: 0
+    top: 0
   },
   separator: {
     margin: 4

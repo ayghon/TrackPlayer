@@ -1,6 +1,6 @@
 import { Card, makeStyles } from '@rneui/themed';
-import React, { FC } from 'react';
 import { StyleProp, View, ViewStyle } from 'react-native';
+import React, { FC } from 'react';
 
 export type PlaylistTitleSectionProps = {
   title: string;
@@ -24,17 +24,17 @@ export const PlaylistTitleSection: FC<PlaylistTitleSectionProps> = ({
 };
 
 const useStyles = makeStyles({
-  title: {
-    textAlign: 'left',
-    marginTop: 12,
-    marginBottom: 0,
-    fontWeight: 'bold',
-    fontSize: 16
-  },
   count: {
-    marginTop: 4,
-    textAlign: 'left',
+    fontSize: 14,
     fontWeight: 'normal',
-    fontSize: 14
+    marginTop: 4,
+    textAlign: 'left'
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 0,
+    marginTop: 12,
+    textAlign: 'left'
   }
 });

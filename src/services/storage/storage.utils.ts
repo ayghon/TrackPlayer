@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StorageKeys } from '../../utils';
-import { useCallback, useEffect } from 'react';
 import { playlistsMock } from '../playlists';
+import { useCallback, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const useInitStorage = () => {
   const handlePlaylists = useCallback(async () => {

@@ -1,10 +1,10 @@
-import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ThemeProvider } from '@rneui/themed';
-import { useThemeManager } from './ui';
 import { BaseStackNavigation, PlayerProvider, useInitPlayer } from './services';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StyleSheet } from 'react-native';
+import { ThemeProvider } from '@rneui/themed';
+import { useThemeManager } from './ui';
+import React from 'react';
 
 export const App = () => {
   useInitPlayer();

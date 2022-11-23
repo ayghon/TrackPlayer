@@ -1,9 +1,9 @@
-import React, { FC } from 'react';
 import { Horizontal } from '../display';
 import { Image } from '../image';
-import { View } from 'react-native';
-import { makeStyles, Text } from '@rneui/themed';
+import { Text, makeStyles } from '@rneui/themed';
 import { Track } from 'react-native-track-player';
+import { View } from 'react-native';
+import React, { FC } from 'react';
 
 export const TrackItem: FC<Track> = ({ artist, title, artwork }) => {
   const styles = useStyles();
@@ -11,8 +11,8 @@ export const TrackItem: FC<Track> = ({ artist, title, artwork }) => {
   return (
     <Horizontal alignCenter>
       <Image
-        source={artwork ? { uri: artwork.toString() } : undefined}
         containerStyle={styles.image}
+        source={artwork ? { uri: artwork.toString() } : undefined}
       />
       <View>
         <Text style={styles.title}>{title}</Text>
@@ -23,17 +23,17 @@ export const TrackItem: FC<Track> = ({ artist, title, artwork }) => {
 };
 
 const useStyles = makeStyles({
-  image: {
-    width: 40,
-    height: 40,
-    marginEnd: 8
-  },
-  title: {
-    fontWeight: 'bold',
-    fontSize: 14,
-    marginBottom: 4
-  },
   artist: {
     fontSize: 12
+  },
+  image: {
+    height: 40,
+    marginEnd: 8,
+    width: 40
+  },
+  title: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 4
   }
 });

@@ -1,11 +1,10 @@
+import { CustomBottomTabBar } from './components/CustomBottomTabBar';
+import { HomeScreen, LibraryScreen } from '../../screens';
+import { LibraryHeaderRight } from './components/LibraryHeaderRight';
+import { RootStackScreenProps, Routes } from './routes.types';
+import { TabBarIcon } from './components/TabBarIcon';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { FC, ReactNode } from 'react';
-import { RootStackParamList, Routes } from './routes.types';
-import { HomeScreen, LibraryScreen } from '../../screens';
-import { TabBarIcon } from './components/TabBarIcon';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { LibraryHeaderRight } from './components/LibraryHeaderRight';
-import { CustomBottomTabBar } from './components/CustomBottomTabBar';
 
 const TabStack = createBottomTabNavigator();
 
@@ -13,26 +12,28 @@ type TabScreenProps = {
   iconName: string;
   name: Routes;
   title: string;
-  component: FC<NativeStackScreenProps<RootStackParamList, any>>;
+  // FIXME use correct typing
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  component: FC<RootStackScreenProps<any>>;
   headerRight?: () => ReactNode;
   headerShown?: boolean;
 };
 
 const tabs: TabScreenProps[] = [
   {
-    name: Routes.HOME,
     component: HomeScreen,
+    headerShown: false,
     iconName: 'home',
-    title: 'Home',
-    headerShown: false
+    name: Routes.HOME,
+    title: 'Home'
   },
   {
-    name: Routes.LIBRARY,
     component: LibraryScreen,
-    iconName: 'list',
-    title: 'Library',
+    headerRight: LibraryHeaderRight,
     headerShown: false,
-    headerRight: LibraryHeaderRight
+    iconName: 'list',
+    name: Routes.LIBRARY,
+    title: 'Library'
   }
 ];
 
@@ -42,16 +43,16 @@ export const TabNavigator = () => {
       {tabs.map(
         ({ name, component, iconName, title, headerRight, headerShown }) => (
           <TabStack.Screen
+            component={component}
             key={name}
             name={name}
             options={{
-              headerShown,
               headerRight,
+              headerShown,
+              headerTitle: '',
               tabBarIcon: (props) => <TabBarIcon {...props} name={iconName} />,
-              title,
-              headerTitle: ''
+              title
             }}
-            component={component}
           />
         )
       )}

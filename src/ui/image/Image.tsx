@@ -1,6 +1,6 @@
-import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
-import { Image as _Image, ImageProps, makeStyles } from '@rneui/themed';
+import { ImageProps, Image as RNEImage, makeStyles } from '@rneui/themed';
+import React from 'react';
 
 export const Image = (props: ImageProps) => {
   const styles = useStyles();
@@ -9,12 +9,12 @@ export const Image = (props: ImageProps) => {
   }
 
   return (
-    <_Image
-      resizeMode="cover"
+    <RNEImage
+      PlaceholderContent={<ActivityIndicator />}
       placeholderStyle={styles.loader}
+      resizeMode="cover"
       transition
       transitionDuration={200}
-      PlaceholderContent={<ActivityIndicator />}
       {...props}
       containerStyle={[styles.image, props.containerStyle]}
     />
@@ -23,12 +23,12 @@ export const Image = (props: ImageProps) => {
 
 const useStyles = makeStyles((theme) => ({
   image: {
-    borderRadius: 6,
-    backgroundColor: theme.colors.background
+    backgroundColor: theme.colors.background,
+    borderRadius: 6
   },
   loader: {
+    backgroundColor: theme.colors.background,
     height: '100%',
-    width: '100%',
-    backgroundColor: theme.colors.background
+    width: '100%'
   }
 }));

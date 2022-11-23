@@ -1,13 +1,12 @@
-import React, { FC, useEffect } from 'react';
-import { ScreenContainer, TrackView } from '../../ui';
 import {
   Playlist,
-  RootStackParamList,
+  RootStackScreenProps,
   Routes,
   usePlayerState
 } from '../../services';
+import { ScreenContainer, TrackView } from '../../ui';
+import React, { FC, useEffect } from 'react';
 import TrackPlayer, { Track } from 'react-native-track-player';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 export type PlayerModalProps = {
   tracks: Track[];
@@ -15,9 +14,7 @@ export type PlayerModalProps = {
   playlist?: Playlist;
 };
 
-export const PlayerModal: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.PLAYER>
-> = ({
+export const PlayerModal: FC<RootStackScreenProps<Routes.PLAYER>> = ({
   route: {
     params: { tracks, position = 0, playlist }
   }
@@ -46,10 +43,10 @@ export const PlayerModal: FC<
     <ScreenContainer>
       {currentTrack && (
         <TrackView
-          artwork={currentTrack?.artwork as string}
           artist={currentTrack.artist}
-          title={currentTrack.title}
+          artwork={currentTrack?.artwork as string}
           controlsProps={controlsProps}
+          title={currentTrack.title}
         />
       )}
     </ScreenContainer>

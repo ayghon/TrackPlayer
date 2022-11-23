@@ -1,15 +1,14 @@
 import { Button, Horizontal, ScreenContainer } from '../../ui';
-import React, { FC } from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Icon, makeStyles, Text } from '@rneui/themed';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList, Routes, useColorScheme } from '../../services';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Icon, Text, makeStyles } from '@rneui/themed';
+import { RootStackScreenProps, Routes, useColorScheme } from '../../services';
 import { StorageKeys } from '../../utils';
+import { TouchableOpacity } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { FC } from 'react';
 
-export const SettingsScreen: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.SETTINGS>
-> = ({ navigation: { navigate } }) => {
+export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
+  navigation: { navigate }
+}) => {
   const styles = useStyles();
   const { activeColorSchemeText } = useColorScheme();
 
@@ -18,8 +17,8 @@ export const SettingsScreen: FC<
       <Horizontal alignCenter style={styles.setting}>
         <Text style={styles.switchTitle}>Color scheme</Text>
         <TouchableOpacity
-          style={styles.settingAction}
           onPress={() => navigate(Routes.COLOR_SCHEME)}
+          style={styles.settingAction}
         >
           <Text style={styles.settingValue}>{activeColorSchemeText}</Text>
           <Icon name="chevron-right" />
@@ -44,18 +43,18 @@ export const SettingsScreen: FC<
 };
 
 const useStyles = makeStyles((theme) => ({
-  settingAction: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center'
-  },
-  settingValue: {
-    marginEnd: 4,
-    color: theme.colors.secondary
-  },
   setting: {
     justifyContent: 'space-between',
     marginBottom: 32
+  },
+  settingAction: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  settingValue: {
+    color: theme.colors.secondary,
+    marginEnd: 4
   },
   switchTitle: {
     fontWeight: 'bold'

@@ -1,8 +1,8 @@
-import { TouchableOpacity } from 'react-native';
 import { Card, makeStyles } from '@rneui/themed';
 import { Image } from '../../image';
-import React, { FC } from 'react';
 import { PlaylistTitleSection } from './PlaylistTitleSection';
+import { TouchableOpacity } from 'react-native';
+import React, { FC } from 'react';
 
 export type GridPlaylistItemProps = {
   onPress?: () => void;
@@ -21,9 +21,9 @@ export const GridPlaylistItem: FC<GridPlaylistItemProps> = ({
 
   return (
     <TouchableOpacity
-      style={styles.button}
       activeOpacity={0.75}
       onPress={onPress}
+      style={styles.button}
     >
       <Card containerStyle={styles.container}>
         <Image
@@ -37,21 +37,21 @@ export const GridPlaylistItem: FC<GridPlaylistItemProps> = ({
 };
 
 const useStyles = makeStyles((theme) => ({
-  image: {
-    height: 128,
-    width: 128
-  },
   button: {
     height: 232,
     width: 160
   },
   container: {
-    margin: 0,
-    borderRadius: 6,
     backgroundColor: `${theme.colors.white}80`,
-    padding: 16,
+    borderColor: `${theme.colors.white}80`,
+    borderRadius: 6,
     height: '100%',
-    width: '100%',
-    borderColor: `${theme.colors.white}80`
+    margin: 0,
+    padding: 16,
+    width: '100%'
+  },
+  image: {
+    height: 128,
+    width: 128
   }
 }));

@@ -1,3 +1,4 @@
+import { Icon, makeStyles, useTheme } from '@rneui/themed';
 import {
   SafeAreaView,
   StatusBar,
@@ -5,9 +6,8 @@ import {
   View,
   ViewStyle
 } from 'react-native';
-import React, { FC, PropsWithChildren } from 'react';
-import { Icon, makeStyles, useTheme } from '@rneui/themed';
 import { useNavigation } from '@react-navigation/native';
+import React, { FC, PropsWithChildren } from 'react';
 
 export type ScreenContainerProps = {
   hasCloseButton?: boolean;
@@ -29,13 +29,12 @@ export const ScreenContainer: FC<PropsWithChildren<ScreenContainerProps>> = ({
   return (
     <SafeAreaView>
       <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={theme.colors.background}
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       />
       <View style={[styles.container, style]}>
         {hasCloseButton && (
           <Icon
-            style={styles.closeButton}
             name="close"
             onPress={() => {
               if (onClose) {
@@ -43,6 +42,7 @@ export const ScreenContainer: FC<PropsWithChildren<ScreenContainerProps>> = ({
               }
               goBack();
             }}
+            style={styles.closeButton}
           />
         )}
         {children}
@@ -52,13 +52,13 @@ export const ScreenContainer: FC<PropsWithChildren<ScreenContainerProps>> = ({
 };
 
 const useStyles = makeStyles((theme) => ({
+  closeButton: {
+    alignSelf: 'flex-end'
+  },
   container: {
     backgroundColor: theme.colors.background,
     height: '100%',
-    paddingVertical: 16,
-    paddingHorizontal: 12
-  },
-  closeButton: {
-    alignSelf: 'flex-end'
+    paddingHorizontal: 12,
+    paddingVertical: 16
   }
 }));

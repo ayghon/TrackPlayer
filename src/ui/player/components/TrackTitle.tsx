@@ -1,7 +1,7 @@
-import { StyleProp, View, ViewStyle } from 'react-native';
-import React from 'react';
-import { makeStyles, Text } from '@rneui/themed';
 import { Horizontal } from '../../display';
+import { StyleProp, View, ViewStyle } from 'react-native';
+import { Text, makeStyles } from '@rneui/themed';
+import React from 'react';
 
 export type TrackTitleProps = {
   title: string;
@@ -37,21 +37,21 @@ export const TrackTitle = ({
 };
 
 const useStyles = makeStyles((theme, { minimal }: { minimal?: boolean }) => ({
-  minimalSeparator: {
-    width: 4,
-    backgroundColor: theme.colors.black,
-    marginHorizontal: 4,
-    height: 4,
-    borderRadius: 100
+  artist: {
+    fontSize: minimal ? 14 : 16
   },
   minimalContainer: {
     marginStart: 6
   },
-  title: {
-    fontWeight: 'bold',
-    fontSize: minimal ? 16 : 24
+  minimalSeparator: {
+    backgroundColor: theme.colors.black,
+    borderRadius: 100,
+    height: 4,
+    marginHorizontal: 4,
+    width: 4
   },
-  artist: {
-    fontSize: minimal ? 14 : 16
+  title: {
+    fontSize: minimal ? 16 : 24,
+    fontWeight: 'bold'
   }
 }));

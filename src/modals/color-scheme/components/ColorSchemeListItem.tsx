@@ -1,8 +1,8 @@
+import { ColorPaletteItem } from './ColorPaletteItem';
 import { ListItem, makeStyles, useTheme } from '@rneui/themed';
+import { ThemeColorScheme, getColorSchemeConfiguration } from '../../../ui';
 import { View } from 'react-native';
 import React, { FC } from 'react';
-import { ColorPaletteItem } from './ColorPaletteItem';
-import { getColorSchemeConfiguration, ThemeColorScheme } from '../../../ui';
 
 export type ColorSchemeListItemProps = {
   title: string;
@@ -33,10 +33,10 @@ export const ColorSchemeListItem: FC<ColorSchemeListItemProps> = ({
         )}
       </View>
       <ListItem.CheckBox
-        checkedColor={theme.colors.secondary}
-        uncheckedColor={theme.colors.black}
         checked={checked}
+        checkedColor={theme.colors.secondary}
         onPress={() => handleChange(name)}
+        uncheckedColor={theme.colors.black}
       />
     </ListItem>
   );

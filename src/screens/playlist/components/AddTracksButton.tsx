@@ -1,7 +1,7 @@
-import { Icon, makeStyles, Text } from '@rneui/themed';
+import { Horizontal } from '../../../ui';
+import { Icon, Text, makeStyles } from '@rneui/themed';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import React, { FC } from 'react';
-import { Horizontal } from '../../../ui';
 
 export const AddTracksButton: FC<TouchableOpacityProps> = (props) => {
   const styles = useStyles();
@@ -9,7 +9,7 @@ export const AddTracksButton: FC<TouchableOpacityProps> = (props) => {
   return (
     <TouchableOpacity {...props}>
       <Horizontal alignCenter>
-        <Icon name="add" style={styles.iconContainer} iconStyle={styles.icon} />
+        <Icon iconStyle={styles.icon} name="add" style={styles.iconContainer} />
         <Text>Add tracks</Text>
       </Horizontal>
     </TouchableOpacity>
@@ -17,13 +17,13 @@ export const AddTracksButton: FC<TouchableOpacityProps> = (props) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  iconContainer: {
-    backgroundColor: theme.colors.black,
-    opacity: 0.8,
-    borderRadius: 4,
-    marginEnd: 8
-  },
   icon: {
     color: theme.colors.white
+  },
+  iconContainer: {
+    backgroundColor: theme.colors.black,
+    borderRadius: 4,
+    marginEnd: 8,
+    opacity: 0.8
   }
 }));

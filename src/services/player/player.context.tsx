@@ -1,47 +1,47 @@
+import { TrackControlsCapability } from '../../ui';
+import { UsePlayerControlsResponse, usePlayerControls } from './player.utils';
 import React, {
-  createContext,
   FC,
   PropsWithChildren,
+  createContext,
   useContext,
   useEffect
 } from 'react';
-import { usePlayerControls, UsePlayerControlsResponse } from './player.utils';
-import { TrackControlsCapability } from '../../ui';
 import TrackPlayer from 'react-native-track-player';
 
 const initialValue: UsePlayerControlsResponse = {
-  queue: [],
   controlsProps: {
-    position: 0,
-    duration: 0,
-    isPlaying: false,
     capabilities: {
       [TrackControlsCapability.JUMP_BACKWARD]: {
         disabled: false,
-        onPress: () => {}
+        onPress: () => null
       },
       [TrackControlsCapability.JUMP_FORWARD]: {
         disabled: false,
-        onPress: () => {}
+        onPress: () => null
       },
       [TrackControlsCapability.SKIP_TO_NEXT]: {
         disabled: false,
-        onPress: () => {}
+        onPress: () => null
       },
       [TrackControlsCapability.PLAY_PAUSE]: {
         disabled: false,
-        onPress: () => {}
+        onPress: () => null
       },
       [TrackControlsCapability.SKIP_TO_PREVIOUS]: {
         disabled: false,
-        onPress: () => {}
+        onPress: () => null
       }
     },
-    onProgressChange: () => {}
+    duration: 0,
+    isPlaying: false,
+    onProgressChange: () => null,
+    position: 0
   },
   currentTrack: undefined,
-  setCurrentTrack: () => {},
-  setQueue: () => {}
+  queue: [],
+  setCurrentTrack: () => null,
+  setQueue: () => null
 };
 
 const PlayerContext = createContext<UsePlayerControlsResponse>(initialValue);

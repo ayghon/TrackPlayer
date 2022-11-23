@@ -1,6 +1,6 @@
 import { View, ViewProps } from 'react-native';
-import React, { FC } from 'react';
 import { makeStyles } from '@rneui/themed';
+import React, { FC } from 'react';
 
 export type HorizontalProps = ViewProps & { alignCenter?: boolean };
 

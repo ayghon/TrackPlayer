@@ -1,8 +1,8 @@
-import React from 'react';
-import { ScreenContainer, ThemeColorScheme } from '../../ui';
-import { FlatList } from 'react-native';
-import { useColorScheme } from '../../services';
 import { ColorSchemeListItem } from './components/ColorSchemeListItem';
+import { FlatList } from 'react-native';
+import { ScreenContainer, ThemeColorScheme } from '../../ui';
+import { useColorScheme } from '../../services';
+import React from 'react';
 
 export const ColorSchemeModal = () => {
   const { colorSchemeList, changeColorScheme, colorScheme } = useColorScheme();
@@ -18,6 +18,7 @@ export const ColorSchemeModal = () => {
     <ScreenContainer>
       <FlatList
         data={colorSchemeList}
+        keyExtractor={({ name }) => name}
         renderItem={({ item: { name, title } }) => (
           <ColorSchemeListItem
             checked={colorScheme === name}
@@ -26,7 +27,6 @@ export const ColorSchemeModal = () => {
             title={title}
           />
         )}
-        keyExtractor={({ name }) => name}
       />
     </ScreenContainer>
   );

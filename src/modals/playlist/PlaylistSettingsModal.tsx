@@ -1,21 +1,20 @@
+import { Horizontal, ScreenContainer } from '../../ui';
+import { Icon, Input, Text, makeStyles, useTheme } from '@rneui/themed';
 import { Platform, TouchableOpacity, View } from 'react-native';
-import React, { FC, useState } from 'react';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
   Playlist,
-  RootStackParamList,
+  RootStackScreenProps,
   Routes,
   usePlaylists
 } from '../../services';
-import { Horizontal, ScreenContainer } from '../../ui';
-import { Icon, Input, makeStyles, Text, useTheme } from '@rneui/themed';
+import React, { FC, useState } from 'react';
 
 export type PlaylistSettingsModalProps = {
   playlist: Playlist;
 };
 
 export const PlaylistSettingsModal: FC<
-  NativeStackScreenProps<RootStackParamList, Routes.PLAYLIST_SETTINGS>
+  RootStackScreenProps<Routes.PLAYLIST_SETTINGS>
 > = ({
   navigation: { pop, navigate },
   route: {
@@ -50,19 +49,19 @@ export const PlaylistSettingsModal: FC<
       <View>
         <Horizontal alignCenter style={styles.renamePlaylistSection}>
           <Input
-            leftIcon={<Icon name="edit" />}
+            autoFocus
             label="Rename the playlist"
             labelStyle={styles.renamePlaylistLabel}
-            selectionColor={theme.colors.secondary}
-            autoFocus
-            value={playlistName}
-            placeholder="Name your playlist"
+            leftIcon={<Icon name="edit" />}
             onChangeText={(text) => setPlaylistName(text)}
+            placeholder="Name your playlist"
+            selectionColor={theme.colors.secondary}
+            value={playlistName}
           />
         </Horizontal>
         <TouchableOpacity onPress={deleteHandler} style={styles.textButton}>
           <Horizontal alignCenter>
-            <Icon name="delete" color="red" />
+            <Icon color="red" name="delete" />
             <Text style={styles.deleteText}>Delete playlist</Text>
           </Horizontal>
         </TouchableOpacity>
@@ -72,21 +71,21 @@ export const PlaylistSettingsModal: FC<
 };
 
 const useStyles = makeStyles((theme) => ({
-  textButton: {
-    padding: 8,
-    alignSelf: 'flex-start'
-  },
   deleteText: {
     color: 'red',
-    fontWeight: 'bold',
     fontSize: 16,
+    fontWeight: 'bold',
     marginStart: 4
-  },
-  renamePlaylistSection: {
-    marginVertical: 16
   },
   renamePlaylistLabel: {
     color: theme.colors.black,
     fontSize: 16
+  },
+  renamePlaylistSection: {
+    marginVertical: 16
+  },
+  textButton: {
+    alignSelf: 'flex-start',
+    padding: 8
   }
 }));

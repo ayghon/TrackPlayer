@@ -1,10 +1,10 @@
-import { View } from 'react-native';
-import { TrackControls, TrackControlsProps } from './controls';
-import React from 'react';
-import { makeStyles } from '@rneui/themed';
-import { TrackTitle } from './components/TrackTitle';
 import { Image } from '../image';
 import { MinimalTrackView } from './components/MinimalTrackView';
+import { TrackControls, TrackControlsProps } from './controls';
+import { TrackTitle } from './components/TrackTitle';
+import { View } from 'react-native';
+import { makeStyles } from '@rneui/themed';
+import React from 'react';
 
 export type TrackViewProps = {
   controlsProps: TrackControlsProps;
@@ -27,9 +27,9 @@ export const TrackView = ({
     return (
       <MinimalTrackView
         artist={artist}
-        title={title}
         artwork={artwork}
         controlsProps={controlsProps}
+        title={title}
       />
     );
   }
@@ -40,7 +40,7 @@ export const TrackView = ({
         containerStyle={styles.image}
         source={artwork ? { uri: artwork } : undefined}
       />
-      <TrackTitle style={styles.title} title={title} artist={artist} />
+      <TrackTitle artist={artist} style={styles.title} title={title} />
       <TrackControls {...controlsProps} />
     </View>
   );
@@ -48,9 +48,9 @@ export const TrackView = ({
 
 const useStyles = makeStyles({
   image: {
-    width: '100%',
     height: 400,
-    marginBottom: 16
+    marginBottom: 16,
+    width: '100%'
   },
   title: {
     marginBottom: 24
