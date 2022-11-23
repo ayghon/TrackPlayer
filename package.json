@@ -7,7 +7,12 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "format:write": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky install",
+    "clean:android": "(cd android && ./gradlew clean)",
+    "start:nocache": "npm run start -- --reset-cache"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
@@ -41,7 +46,9 @@
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
     "babel-jest": "^26.6.3",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^7.32.0",
+    "husky": "^8.0.2",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "0.72.3",
     "react-test-renderer": "18.1.0",
@@ -57,5 +64,13 @@
       "json",
       "node"
     ]
+  },
+  "volta": {
+    "node": "16.14.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
