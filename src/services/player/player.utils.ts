@@ -74,7 +74,12 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   const [playlist, setPlaylist] = useState<Playlist>();
 
   useTrackPlayerEvents(
-    [Event.PlaybackTrackChanged, Event.RemotePlay, Event.RemotePause],
+    [
+      Event.PlaybackTrackChanged,
+      Event.RemotePlay,
+      Event.RemotePause,
+      Event.PlaybackState
+    ],
     async (event) => {
       if (
         event.type === Event.PlaybackTrackChanged &&
@@ -86,6 +91,9 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
         if (track) {
           setCurrentTrack({ ...track, index: index || 0 });
         }
+      }
+      if (event.type === Event.PlaybackState) {
+        setPlayerState(event.state);
       }
     }
   );
@@ -104,9 +112,6 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
     } else {
       await TrackPlayer.pause();
     }
-
-    const newState = await TrackPlayer.getState();
-    setPlayerState(newState);
   };
 
   return {
