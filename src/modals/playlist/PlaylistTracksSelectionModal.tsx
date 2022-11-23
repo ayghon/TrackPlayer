@@ -8,7 +8,7 @@ import {
   usePlaylists
 } from '../../services';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { FlatList, TouchableOpacity, View } from 'react-native';
+import { FlatList, Platform, TouchableOpacity, View } from 'react-native';
 import { Track } from 'react-native-track-player';
 import { makeStyles } from '@rneui/themed';
 
@@ -58,7 +58,10 @@ export const PlaylistTracksSelectionModal: FC<
   };
 
   return (
-    <ScreenContainer hasCloseButton onClose={onModalClose}>
+    <ScreenContainer
+      hasCloseButton={Platform.OS === 'ios'}
+      onClose={onModalClose}
+    >
       <View>
         <FlatList<Track>
           showsHorizontalScrollIndicator={false}

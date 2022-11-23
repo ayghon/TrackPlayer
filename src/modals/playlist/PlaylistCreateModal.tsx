@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import { Input, makeStyles, useTheme } from '@rneui/themed';
 import { Button, ScreenContainer } from '../../ui';
-import { View } from 'react-native';
+import { Platform, View } from 'react-native';
 import { usePlaylists } from '../../services';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList, Routes } from '../../services/routes/routes.types';
@@ -24,7 +24,7 @@ export const PlaylistCreateModal: FC<
   };
 
   return (
-    <ScreenContainer hasCloseButton>
+    <ScreenContainer hasCloseButton={Platform.OS === 'ios'}>
       <View style={styles.container}>
         <Input
           selectionColor={theme.colors.secondary}

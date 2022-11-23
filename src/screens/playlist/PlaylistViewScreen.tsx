@@ -2,10 +2,16 @@ import { Horizontal, Image, ScreenContainer, TrackItem } from '../../ui';
 import { FlatList, TouchableOpacity } from 'react-native';
 import React, { FC } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Playlist, RootStackParamList, Routes } from '../../services';
+import {
+  Playlist,
+  RootStackParamList,
+  Routes,
+  usePlaylists
+} from '../../services';
 import { FAB, Icon, makeStyles, Text, useTheme } from '@rneui/themed';
 import { AddTracksButton } from './components/AddTracksButton';
 import { Track } from 'react-native-track-player';
+import { pickSingle, types } from 'react-native-document-picker';
 
 export type PlaylistViewScreenProps = { playlist: Playlist };
 
@@ -20,17 +26,37 @@ export const PlaylistViewScreen: FC<
   const { tracks, title, artwork } = playlist;
   const styles = useStyles();
   const { theme } = useTheme();
+  const { editPlaylist } = usePlaylists();
 
   const navigateToPlayer = (position?: number) => {
     navigate(Routes.PLAYER, { tracks, position, playlist: { title } });
   };
 
+  const changeArtworkHandler = async () => {
+    const newArtWork = await pickSingle({ type: [types.images] }).catch(() => {
+      // TODO handle error
+    });
+
+    if (newArtWork) {
+      const newList = await editPlaylist(playlist.title, {
+        artwork: newArtWork.uri
+      });
+
+      navigate(Routes.PLAYLIST_VIEW, {
+        playlist:
+          newList.find((item) => item.title === playlist.title) || playlist
+      });
+    }
+  };
+
   return (
     <ScreenContainer>
-      <Image
-        containerStyle={styles.image}
-        source={artwork ? { uri: artwork } : undefined}
-      />
+      <TouchableOpacity onPress={changeArtworkHandler}>
+        <Image
+          containerStyle={styles.image}
+          source={artwork ? { uri: artwork } : undefined}
+        />
+      </TouchableOpacity>
       <Horizontal alignCenter style={styles.playlistTitleSection}>
         <Text style={styles.playlistTitle}>{title}</Text>
         <FAB

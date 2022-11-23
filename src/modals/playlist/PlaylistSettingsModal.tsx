@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { Platform, TouchableOpacity, View } from 'react-native';
 import React, { FC } from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import {
@@ -31,7 +31,7 @@ export const PlaylistSettingsModal: FC<
   };
 
   return (
-    <ScreenContainer hasCloseButton>
+    <ScreenContainer hasCloseButton={Platform.OS === 'ios'}>
       <View>
         <TouchableOpacity onPress={deleteHandler} style={styles.textButton}>
           <Horizontal alignCenter>
