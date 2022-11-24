@@ -17,21 +17,24 @@ jobs:
         run: yarn format:check
       - name: Lint project
         run: yarn lint
+      - name: Cache
+        uses: actions/cache@v3.0.11
+        with:
+          path: 'node_modules'
+          key: 'yarn.lock'
 
   build-android:
     needs: install-and-test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install dependencies
-        run: yarn
+      - uses: actions/cache@v3.0.11
+        with:
+          path: 'node_modules'
+          key: 'yarn.lock'
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
-      - name: Grant execute permission for gradlew
-        run: (cd android && chmod +x gradlew)
-      - name: Build with Gradle
-        run: (cd android && ./gradlew build)
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
