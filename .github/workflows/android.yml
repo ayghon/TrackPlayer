@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ "development" ]
+    branches: ['development']
   pull_request:
-    branches: [ "development" ]
+    branches: ['development']
 
 jobs:
   install-and-test:
@@ -17,11 +17,11 @@ jobs:
         run: yarn format:check
       - name: Lint project
         run: yarn lint
-      
+
   build-android:
     needs: install-and-test
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: yarn
