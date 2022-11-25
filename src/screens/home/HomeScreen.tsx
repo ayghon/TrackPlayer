@@ -8,20 +8,25 @@ import {
   Playlist,
   RootStackScreenProps,
   Routes,
+  i18nKeys,
   usePlaylists
 } from '../../services';
 import { Text, makeStyles } from '@rneui/themed';
+import { useTranslation } from 'react-i18next';
 import React, { FC } from 'react';
 
 export const HomeScreen: FC<RootStackScreenProps<Routes.HOME>> = ({
   navigation: { navigate }
 }) => {
+  const { t } = useTranslation();
   const styles = useStyles();
   const { playlists } = usePlaylists();
 
   return (
     <ScreenContainer>
-      <Text style={styles.recentlyPlayed}>Recently played</Text>
+      <Text style={styles.recentlyPlayed}>
+        {t(i18nKeys.screens.home.section.recently_played.title)}
+      </Text>
       <Carousel<Playlist>
         data={playlists.slice(0, 3)}
         enableGradient={false}

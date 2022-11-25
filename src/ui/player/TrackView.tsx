@@ -3,7 +3,9 @@ import { MinimalTrackView } from './components/MinimalTrackView';
 import { TrackControls, TrackControlsProps } from './controls';
 import { TrackTitle } from './components/TrackTitle';
 import { View } from 'react-native';
+import { i18nKeys } from '../../services';
 import { makeStyles } from '@rneui/themed';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 export type TrackViewProps = {
@@ -16,12 +18,16 @@ export type TrackViewProps = {
 
 export const TrackView = ({
   controlsProps,
-  title = 'Unknown',
-  artist = 'Unknown',
+  title: _title,
+  artist: _artist,
   artwork,
   minimal = false
 }: TrackViewProps) => {
+  const { t } = useTranslation();
   const styles = useStyles({ minimal });
+
+  const artist = _artist || t(i18nKeys.ui.player.track_view.label.unknown);
+  const title = _title || t(i18nKeys.ui.player.track_view.label.unknown);
 
   if (minimal) {
     return (

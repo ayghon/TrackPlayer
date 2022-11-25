@@ -1,0 +1,21 @@
+{
+  "modals.playlist.create.input.name_playlist.placeholder": "Name your playlist",
+  "modals.playlist.settings.button.delete_playlist": "Delete playlist",
+  "modals.playlist.settings.input.rename_playlist.label": "Rename the playlist",
+  "modals.playlist.settings.input.rename_playlist.placeholder": "Name your playlist",
+  "routes.modals.color_scheme.header_title": "Color scheme",
+  "routes.stacks.settings.title": "Settings",
+  "routes.tabs.home.header_title.period.afternoon": "Good afternoon",
+  "routes.tabs.home.header_title.period.default": "Hello World",
+  "routes.tabs.home.header_title.period.evening": "Good evening",
+  "routes.tabs.home.header_title.period.morning": "Good morning",
+  "routes.tabs.home.header_title.period.night": "Good morning",
+  "routes.tabs.home.tab_bar.button.title": "Home",
+  "routes.tabs.library.header_title": "Your library",
+  "routes.tabs.library.tab_bar.button.title": "Library",
+  "screens.home.section.recently_played.title": "Recently played",
+  "screens.settings.clear_cache.button": "Clear",
+  "screens.settings.clear_cache.label": "Clear app cache",
+  "screens.settings.color_scheme.label": "Color scheme",
+  "ui.player.track_view.label.unknown": "Unknown"
+}

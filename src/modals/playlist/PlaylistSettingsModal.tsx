@@ -1,12 +1,15 @@
 import { Horizontal, ScreenContainer } from '../../ui';
 import { Icon, Input, Text, makeStyles, useTheme } from '@rneui/themed';
-import { Platform, TouchableOpacity, View } from 'react-native';
 import {
   Playlist,
   RootStackScreenProps,
   Routes,
+  i18nKeys,
   usePlaylists
 } from '../../services';
+import { TouchableOpacity, View } from 'react-native';
+import { isIOS } from '../../utils';
+import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
 
 export type PlaylistSettingsModalProps = {
@@ -25,6 +28,7 @@ export const PlaylistSettingsModal: FC<
   const styles = useStyles();
   const { removePlaylist, editPlaylist } = usePlaylists();
   const { theme } = useTheme();
+  const { t } = useTranslation();
 
   const deleteHandler = async () => {
     await removePlaylist(playlist.id);
@@ -42,19 +46,21 @@ export const PlaylistSettingsModal: FC<
   };
 
   return (
-    <ScreenContainer
-      hasCloseButton={Platform.OS === 'ios'}
-      onClose={closeModalHandler}
-    >
+    <ScreenContainer hasCloseButton={isIOS} onClose={closeModalHandler}>
       <View>
         <Horizontal alignCenter style={styles.renamePlaylistSection}>
           <Input
             autoFocus
-            label="Rename the playlist"
+            label={t(
+              i18nKeys.modals.playlist.settings.input.rename_playlist.label
+            )}
             labelStyle={styles.renamePlaylistLabel}
             leftIcon={<Icon name="edit" />}
             onChangeText={(text) => setPlaylistName(text)}
-            placeholder="Name your playlist"
+            placeholder={t(
+              i18nKeys.modals.playlist.settings.input.rename_playlist
+                .placeholder
+            )}
             selectionColor={theme.colors.secondary}
             value={playlistName}
           />
@@ -62,7 +68,9 @@ export const PlaylistSettingsModal: FC<
         <TouchableOpacity onPress={deleteHandler} style={styles.textButton}>
           <Horizontal alignCenter>
             <Icon color="red" name="delete" />
-            <Text style={styles.deleteText}>Delete playlist</Text>
+            <Text style={styles.deleteText}>
+              {t(i18nKeys.modals.playlist.settings.button.delete_playlist)}
+            </Text>
           </Horizontal>
         </TouchableOpacity>
       </View>

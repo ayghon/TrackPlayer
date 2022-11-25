@@ -4,6 +4,8 @@ import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { RootStackScreenProps, Routes } from './routes.types';
 import { TabBarIcon } from './components/TabBarIcon';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { i18nKeys } from '../i18n';
+import { useTranslation } from 'react-i18next';
 import React, { FC, ReactNode } from 'react';
 
 const TabStack = createBottomTabNavigator();
@@ -11,7 +13,7 @@ const TabStack = createBottomTabNavigator();
 type TabScreenProps = {
   iconName: string;
   name: Routes;
-  title: string;
+  titleKey: string;
   // FIXME use correct typing
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: FC<RootStackScreenProps<any>>;
@@ -25,7 +27,7 @@ const tabs: TabScreenProps[] = [
     headerShown: false,
     iconName: 'home',
     name: Routes.HOME,
-    title: 'Home'
+    titleKey: i18nKeys.routes.tabs.home.tab_bar.button.title
   },
   {
     component: LibraryScreen,
@@ -33,15 +35,17 @@ const tabs: TabScreenProps[] = [
     headerShown: false,
     iconName: 'list',
     name: Routes.LIBRARY,
-    title: 'Library'
+    titleKey: i18nKeys.routes.tabs.library.tab_bar.button.title
   }
 ];
 
 export const TabNavigator = () => {
+  const { t } = useTranslation();
+
   return (
     <TabStack.Navigator tabBar={CustomBottomTabBar}>
       {tabs.map(
-        ({ name, component, iconName, title, headerRight, headerShown }) => (
+        ({ name, component, iconName, titleKey, headerRight, headerShown }) => (
           <TabStack.Screen
             component={component}
             key={name}
@@ -51,7 +55,7 @@ export const TabNavigator = () => {
               headerShown,
               headerTitle: '',
               tabBarIcon: (props) => <TabBarIcon {...props} name={iconName} />,
-              title
+              title: t(titleKey)
             }}
           />
         )

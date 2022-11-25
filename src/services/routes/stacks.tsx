@@ -9,20 +9,24 @@ import { Horizontal } from '../../ui';
 import { Icon, useTheme } from '@rneui/themed';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { NavigationContainer } from '@react-navigation/native';
-import { Platform } from 'react-native';
 import { PlaylistViewScreen, SettingsScreen } from '../../screens';
 import { RootStackParamList, Routes } from './routes.types';
 import { TabNavigator } from './tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getHeaderTitle } from './routes.utils';
+import { i18nKeys } from '../i18n';
+import { isAndroid } from '../../utils';
 import { useInitStorage } from '../storage/storage.utils';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 const BaseStack = createNativeStackNavigator<RootStackParamList>();
 
 export const BaseStackNavigation = () => {
-  useInitStorage();
   const { theme } = useTheme();
+  const { t } = useTranslation();
+
+  useInitStorage();
 
   return (
     <NavigationContainer
@@ -54,7 +58,7 @@ export const BaseStackNavigation = () => {
                   />
                 </Horizontal>
               ),
-              headerTitle: getHeaderTitle(route)
+              headerTitle: t(getHeaderTitle(route))
             })}
           />
           <BaseStack.Screen
@@ -62,7 +66,7 @@ export const BaseStackNavigation = () => {
             name={Routes.SETTINGS}
             options={{
               headerBackTitle: '',
-              title: 'Settings'
+              title: t(i18nKeys.routes.stacks.settings.title)
             }}
           />
           <BaseStack.Screen
@@ -101,14 +105,14 @@ export const BaseStackNavigation = () => {
             name={Routes.COLOR_SCHEME}
             options={({ navigation: { goBack } }) => ({
               headerRight: () => <Icon name="close" onPress={() => goBack()} />,
-              headerTitle: 'Color scheme'
+              headerTitle: t(i18nKeys.routes.modals.color_scheme.header_title)
             })}
           />
           <BaseStack.Screen
             component={PlaylistCreateModal}
             name={Routes.PLAYLIST_CREATE}
             options={{
-              headerShown: Platform.OS === 'android',
+              headerShown: isAndroid,
               headerTitle: '',
               title: ''
             }}
@@ -133,7 +137,7 @@ export const BaseStackNavigation = () => {
             component={PlaylistSettingsModal}
             name={Routes.PLAYLIST_SETTINGS}
             options={{
-              headerShown: Platform.OS === 'android',
+              headerShown: isAndroid,
               headerTitle: '',
               title: ''
             }}
@@ -142,7 +146,7 @@ export const BaseStackNavigation = () => {
             component={PlaylistTracksSelectionModal}
             name={Routes.PLAYLIST_TRACKS_SELECTION}
             options={{
-              headerShown: Platform.OS === 'android',
+              headerShown: isAndroid,
               headerTitle: '',
               title: ''
             }}

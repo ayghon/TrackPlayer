@@ -1,21 +1,35 @@
 import { Button, Horizontal, ScreenContainer } from '../../ui';
 import { Icon, Text, makeStyles } from '@rneui/themed';
-import { RootStackScreenProps, Routes, useColorScheme } from '../../services';
+import {
+  RootStackScreenProps,
+  Routes,
+  i18nKeys,
+  useColorScheme
+} from '../../services';
 import { StorageKeys } from '../../utils';
 import { TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { FC } from 'react';
 
 export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
   navigation: { navigate }
 }) => {
+  const { t } = useTranslation();
   const styles = useStyles();
   const { activeColorSchemeText } = useColorScheme();
+
+  const clearCacheHandler = () => {
+    AsyncStorage.removeItem(StorageKeys.PLAYLISTS);
+    AsyncStorage.removeItem(StorageKeys.COLOR_SCHEME);
+  };
 
   return (
     <ScreenContainer>
       <Horizontal alignCenter style={styles.setting}>
-        <Text style={styles.switchTitle}>Color scheme</Text>
+        <Text style={styles.switchTitle}>
+          {t(i18nKeys.screens.settings.color_scheme.label)}
+        </Text>
         <TouchableOpacity
           onPress={() => navigate(Routes.COLOR_SCHEME)}
           style={styles.settingAction}
@@ -25,17 +39,11 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
         </TouchableOpacity>
       </Horizontal>
       <Horizontal alignCenter style={styles.setting}>
-        <Text style={styles.switchTitle}>Playlists in storage</Text>
-        <Button onPress={() => AsyncStorage.removeItem(StorageKeys.PLAYLISTS)}>
-          Clear
-        </Button>
-      </Horizontal>
-      <Horizontal alignCenter style={styles.setting}>
-        <Text style={styles.switchTitle}>Color scheme in storage</Text>
-        <Button
-          onPress={() => AsyncStorage.removeItem(StorageKeys.COLOR_SCHEME)}
-        >
-          Clear
+        <Text style={styles.switchTitle}>
+          {t(i18nKeys.screens.settings.clear_cache.label)}
+        </Text>
+        <Button onPress={clearCacheHandler}>
+          {t(i18nKeys.screens.settings.clear_cache.button)}
         </Button>
       </Horizontal>
     </ScreenContainer>

@@ -1,0 +1,21 @@
+{
+  "modals.playlist.create.input.name_playlist.placeholder": "Name your playlist!MISSING!",
+  "modals.playlist.settings.button.delete_playlist": "Delete playlist!MISSING!",
+  "modals.playlist.settings.input.rename_playlist.label": "Rename the playlist!MISSING!",
+  "modals.playlist.settings.input.rename_playlist.placeholder": "Name your playlist!MISSING!",
+  "routes.modals.color_scheme.header_title": "Color scheme!MISSING!",
+  "routes.stacks.settings.title": "Settings!MISSING!",
+  "routes.tabs.home.header_title.period.afternoon": "Good afternoon!MISSING!",
+  "routes.tabs.home.header_title.period.default": "Hello World!MISSING!",
+  "routes.tabs.home.header_title.period.evening": "Good evening!MISSING!",
+  "routes.tabs.home.header_title.period.morning": "Good morning!MISSING!",
+  "routes.tabs.home.header_title.period.night": "Good morning!MISSING!",
+  "routes.tabs.home.tab_bar.button.title": "Home!MISSING!",
+  "routes.tabs.library.header_title": "Your library!MISSING!",
+  "routes.tabs.library.tab_bar.button.title": "Library!MISSING!",
+  "screens.home.section.recently_played.title": "Recently played!MISSING!",
+  "screens.settings.clear_cache.button": "Clear!MISSING!",
+  "screens.settings.clear_cache.label": "Clear app cache!MISSING!",
+  "screens.settings.color_scheme.label": "Color scheme!MISSING!",
+  "ui.player.track_view.label.unknown": "Unknown!MISSING!"
+}

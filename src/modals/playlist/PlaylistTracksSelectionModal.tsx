@@ -1,4 +1,4 @@
-import { FlatList, Platform, TouchableOpacity, View } from 'react-native';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import {
   Playlist,
   RootStackScreenProps,
@@ -8,6 +8,7 @@ import {
 } from '../../services';
 import { ScreenContainer, TrackItem } from '../../ui';
 import { Track } from 'react-native-track-player';
+import { isIOS } from '../../utils';
 import { makeStyles } from '@rneui/themed';
 import React, { FC, useState } from 'react';
 
@@ -57,10 +58,7 @@ export const PlaylistTracksSelectionModal: FC<
   };
 
   return (
-    <ScreenContainer
-      hasCloseButton={Platform.OS === 'ios'}
-      onClose={onModalClose}
-    >
+    <ScreenContainer hasCloseButton={isIOS} onClose={onModalClose}>
       <View>
         <FlatList<Track>
           data={tracksMocks}
