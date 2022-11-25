@@ -1,16 +1,19 @@
 import { Horizontal } from '../../../ui';
 import { Icon, Text, makeStyles } from '@rneui/themed';
 import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { i18nKeys } from '../../../services';
+import { useTranslation } from 'react-i18next';
 import React, { FC } from 'react';
 
 export const AddTracksButton: FC<TouchableOpacityProps> = (props) => {
   const styles = useStyles();
+  const { t } = useTranslation();
 
   return (
     <TouchableOpacity {...props}>
       <Horizontal alignCenter>
         <Icon iconStyle={styles.icon} name="add" style={styles.iconContainer} />
-        <Text>Add tracks</Text>
+        <Text>{t(i18nKeys.screens.playlist.button.add_tracks)}</Text>
       </Horizontal>
     </TouchableOpacity>
   );

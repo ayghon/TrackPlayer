@@ -42,7 +42,7 @@ export const PlaylistCreateModal: FC<
           value={playlistName}
         />
         <Button loading={isLoading} onPress={createHandler}>
-          Create
+          {t(i18nKeys.modals.playlist.create.button)}
         </Button>
       </View>
     </ScreenContainer>

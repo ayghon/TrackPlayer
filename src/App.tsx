@@ -1,21 +1,24 @@
+import { ActivityIndicator, StyleSheet } from 'react-native';
 import {
   BaseStackNavigation,
   PlayerProvider,
-  initI18n,
+  useInitI18n,
   useInitPlayer
 } from './services';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { StyleSheet } from 'react-native';
 import { ThemeProvider } from '@rneui/themed';
 import { useThemeManager } from './ui';
 import React from 'react';
 
-initI18n();
-
 export const App = () => {
+  const { isLoading } = useInitI18n();
   useInitPlayer();
   const { theme } = useThemeManager();
+
+  if (isLoading) {
+    return <ActivityIndicator style={styles.loader} />;
+  }
 
   return (
     <SafeAreaProvider>
@@ -31,5 +34,9 @@ export const App = () => {
 };
 
 const styles = StyleSheet.create({
+  loader: {
+    height: '100%',
+    width: '100%'
+  },
   rootView: { flex: 1 }
 });

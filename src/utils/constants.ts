@@ -3,7 +3,8 @@ import { ThemeMode } from '@rneui/themed';
 
 export enum StorageKeys {
   COLOR_SCHEME = 'color-scheme',
-  PLAYLISTS = 'playlists'
+  PLAYLISTS = 'playlists',
+  LANGUAGE = 'language'
 }
 
 export const DEFAULT_THEME_MODE: ThemeMode = 'dark';

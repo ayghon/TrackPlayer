@@ -1,5 +1,6 @@
 import {
   ColorSchemeModal,
+  LanguageModal,
   PlayerModal,
   PlaylistCreateModal,
   PlaylistSettingsModal,
@@ -106,6 +107,14 @@ export const BaseStackNavigation = () => {
             options={({ navigation: { goBack } }) => ({
               headerRight: () => <Icon name="close" onPress={() => goBack()} />,
               headerTitle: t(i18nKeys.routes.modals.color_scheme.header_title)
+            })}
+          />
+          <BaseStack.Screen
+            component={LanguageModal}
+            name={Routes.LANGUAGE}
+            options={({ navigation: { goBack } }) => ({
+              headerRight: () => <Icon name="close" onPress={() => goBack()} />,
+              headerTitle: t(i18nKeys.routes.modals.language.header_title)
             })}
           />
           <BaseStack.Screen

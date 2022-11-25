@@ -1,12 +1,15 @@
 import { Card, Text, makeStyles } from '@rneui/themed';
+import { i18nKeys } from '../../../services';
+import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 export const DeleteSwipeAction = () => {
   const styles = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Card containerStyle={styles.deleteContainer}>
-      <Text>Delete</Text>
+      <Text>{t(i18nKeys.ui.playlist.swipe_action.delete)}</Text>
     </Card>
   );
 };

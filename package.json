@@ -13,7 +13,7 @@
     "prepare": "husky install",
     "clean:android": "(cd android && ./gradlew clean)",
     "start:nocache": "npm run start -- --reset-cache",
-    "gen:i18n": "./src/services/i18n/generate-i18n-keys.ts"
+    "gen:i18n": "./src/services/i18n/utils/generate-i18n-keys.ts"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

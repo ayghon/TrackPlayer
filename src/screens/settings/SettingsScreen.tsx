@@ -1,13 +1,13 @@
-import { Button, Horizontal, ScreenContainer } from '../../ui';
-import { Icon, Text, makeStyles } from '@rneui/themed';
+import { Button, Horizontal, ScreenContainer, ValueButton } from '../../ui';
 import {
   RootStackScreenProps,
   Routes,
   i18nKeys,
+  i18nLanguageKeyToTranslation,
   useColorScheme
 } from '../../services';
 import { StorageKeys } from '../../utils';
-import { TouchableOpacity } from 'react-native';
+import { Text, makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { FC } from 'react';
@@ -15,7 +15,7 @@ import React, { FC } from 'react';
 export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
   navigation: { navigate }
 }) => {
-  const { t } = useTranslation();
+  const [t, { language }] = useTranslation();
   const styles = useStyles();
   const { activeColorSchemeText } = useColorScheme();
 
@@ -26,18 +26,18 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
 
   return (
     <ScreenContainer>
-      <Horizontal alignCenter style={styles.setting}>
-        <Text style={styles.switchTitle}>
-          {t(i18nKeys.screens.settings.color_scheme.label)}
-        </Text>
-        <TouchableOpacity
-          onPress={() => navigate(Routes.COLOR_SCHEME)}
-          style={styles.settingAction}
-        >
-          <Text style={styles.settingValue}>{activeColorSchemeText}</Text>
-          <Icon name="chevron-right" />
-        </TouchableOpacity>
-      </Horizontal>
+      <ValueButton
+        onPress={() => navigate(Routes.LANGUAGE)}
+        value={t(i18nLanguageKeyToTranslation[language])}
+      >
+        {t(i18nKeys.screens.settings.language.label)}
+      </ValueButton>
+      <ValueButton
+        onPress={() => navigate(Routes.COLOR_SCHEME)}
+        value={activeColorSchemeText}
+      >
+        {t(i18nKeys.screens.settings.color_scheme.label)}
+      </ValueButton>
       <Horizontal alignCenter style={styles.setting}>
         <Text style={styles.switchTitle}>
           {t(i18nKeys.screens.settings.clear_cache.label)}
@@ -54,15 +54,6 @@ const useStyles = makeStyles((theme) => ({
   setting: {
     justifyContent: 'space-between',
     marginBottom: 32
-  },
-  settingAction: {
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'row'
-  },
-  settingValue: {
-    color: theme.colors.secondary,
-    marginEnd: 4
   },
   switchTitle: {
     fontWeight: 'bold'

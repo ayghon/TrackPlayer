@@ -1,9 +1,14 @@
 // This file is auto-generated, manual edits in this file will be overwritten!
 
 export const i18nKeys = {
+  language: {
+    en: 'language.en',
+    fr: 'language.fr'
+  },
   modals: {
     playlist: {
       create: {
+        button: 'modals.playlist.create.button',
         input: {
           name_playlist: {
             placeholder:
@@ -29,6 +34,9 @@ export const i18nKeys = {
     modals: {
       color_scheme: {
         header_title: 'routes.modals.color_scheme.header_title'
+      },
+      language: {
+        header_title: 'routes.modals.language.header_title'
       }
     },
     stacks: {
@@ -71,6 +79,11 @@ export const i18nKeys = {
         }
       }
     },
+    playlist: {
+      button: {
+        add_tracks: 'screens.playlist.button.add_tracks'
+      }
+    },
     settings: {
       clear_cache: {
         button: 'screens.settings.clear_cache.button',
@@ -78,6 +91,9 @@ export const i18nKeys = {
       },
       color_scheme: {
         label: 'screens.settings.color_scheme.label'
+      },
+      language: {
+        label: 'screens.settings.language.label'
       }
     }
   },
@@ -88,6 +104,13 @@ export const i18nKeys = {
           unknown: 'ui.player.track_view.label.unknown'
         }
       }
+    },
+    playlist: {
+      swipe_action: {
+        delete: 'ui.playlist.swipe_action.delete'
+      },
+      track_count: 'ui.playlist.track_count',
+      track_count_plural: 'ui.playlist.track_count_plural'
     }
   }
 };

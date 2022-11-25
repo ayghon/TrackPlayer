@@ -1,5 +1,7 @@
 import { Card, makeStyles } from '@rneui/themed';
 import { StyleProp, View, ViewStyle } from 'react-native';
+import { i18nKeys } from '../../../services';
+import { useTranslation } from 'react-i18next';
 import React, { FC } from 'react';
 
 export type PlaylistTitleSectionProps = {
@@ -13,12 +15,15 @@ export const PlaylistTitleSection: FC<PlaylistTitleSectionProps> = ({
   trackCount,
   style
 }) => {
+  const { t } = useTranslation();
   const styles = useStyles();
 
   return (
     <View style={[style]}>
       <Card.Title style={styles.title}>{title}</Card.Title>
-      <Card.Title style={styles.count}>{trackCount} tracks</Card.Title>
+      <Card.Title style={styles.count}>
+        {t(i18nKeys.ui.playlist.track_count, { count: trackCount })}
+      </Card.Title>
     </View>
   );
 };

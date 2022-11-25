@@ -1,16 +1,19 @@
 #!/usr/bin/env ts-node
 
-import { DEFAULT_LANGUAGE } from './i18n.constants';
-import { Language } from './i18n.types';
+import { DEFAULT_LANGUAGE } from '../i18n.constants';
+import { Language } from '../i18n.types';
 import { execSync } from 'child_process';
-import { generateKeysAndClean, transformObjectToKeys } from './i18n.utils';
-import { en as translations } from './locales';
+import {
+  generateKeysAndClean,
+  transformObjectToKeys
+} from './i18n-generator.utils';
+import { en as translations } from '../locales';
 import fs from 'fs';
 import path from 'path';
 
 const KEYS_FILE_EXPORT_NAME = 'i18nKeys';
-const KEYS_FILE_PATH = './keys.ts';
-const LOCALES_BASE_PATH = './locales';
+const KEYS_FILE_PATH = '../keys.ts';
+const LOCALES_BASE_PATH = '../locales';
 const TRANSLATIONS_FILE_PATH = `${LOCALES_BASE_PATH}/en.json`;
 
 const targetPaths = Object.values(Language)
