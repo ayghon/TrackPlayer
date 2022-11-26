@@ -13,10 +13,6 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install dependencies
         run: yarn
-      - name: Format project
-        run: yarn format:check
-      - name: Lint project
-        run: yarn lint
       - name: Cache
         uses: actions/cache@v3.0.11
         with:
