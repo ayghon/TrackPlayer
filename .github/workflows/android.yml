@@ -2,36 +2,21 @@ name: Android CI
 
 on:
   push:
-    branches: ['development']
+    branches: ['development', 'master']
   pull_request:
     branches: ['development']
 
 jobs:
-  install-and-test:
+  build-android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Install dependencies
         run: yarn
-      - name: Format project
+      - name: Check project format
         run: yarn format:check
       - name: Lint project
         run: yarn lint
-      - name: Cache
-        uses: actions/cache@v3.0.11
-        with:
-          path: 'node_modules'
-          key: 'yarn.lock'
-
-  build-android:
-    needs: install-and-test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3.0.11
-        with:
-          path: 'node_modules'
-          key: 'yarn.lock'
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
