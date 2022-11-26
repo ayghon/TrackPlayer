@@ -1,10 +1,5 @@
 import { ActivityIndicator, StyleSheet } from 'react-native';
-import {
-  BaseStackNavigation,
-  PlayerProvider,
-  useInitI18n,
-  useInitPlayer
-} from './services';
+import { BaseStackNavigation, PlayerProvider, useInitI18n } from './services';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { ThemeProvider } from '@rneui/themed';
@@ -13,7 +8,6 @@ import React from 'react';
 
 export const App = () => {
   const { isLoading } = useInitI18n();
-  useInitPlayer();
   const { theme } = useThemeManager();
 
   if (isLoading) {

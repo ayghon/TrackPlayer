@@ -1,5 +1,9 @@
 import { TrackControlsCapability } from '../../ui';
-import { UsePlayerControlsResponse, usePlayerControls } from './player.utils';
+import {
+  UsePlayerControlsResponse,
+  useInitPlayer,
+  usePlayerControls
+} from './player.utils';
 import React, {
   FC,
   PropsWithChildren,
@@ -48,6 +52,7 @@ const PlayerContext = createContext<UsePlayerControlsResponse>(initialValue);
 
 export const PlayerProvider: FC<PropsWithChildren> = ({ children }) => {
   const value = usePlayerControls();
+  useInitPlayer();
 
   useEffect(() => {
     return () => {
@@ -61,5 +66,11 @@ export const PlayerProvider: FC<PropsWithChildren> = ({ children }) => {
 };
 
 export const usePlayerState = () => {
-  return useContext(PlayerContext);
+  const context = useContext(PlayerContext);
+
+  if (!context) {
+    throw new Error('Player Context: Provider is missing');
+  }
+
+  return context;
 };

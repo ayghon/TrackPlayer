@@ -5,24 +5,24 @@ import { TrackControlsCapability } from '../controls';
 import { TrackTitle } from './TrackTitle';
 import { TrackViewProps } from '../TrackView';
 import { View } from 'react-native';
-import { i18nKeys } from '../../../services';
-import { useTranslation } from 'react-i18next';
 import React from 'react';
 
-export type MinimalTrackViewProps = Omit<TrackViewProps, 'minimal'>;
+export type MinimalTrackViewProps = Omit<
+  TrackViewProps,
+  'minimal' | 'title' | 'artist'
+> & {
+  artist: string;
+  title: string;
+};
 
 export const MinimalTrackView = ({
   controlsProps,
-  title: _title,
-  artist: _artist,
+  title,
+  artist,
   artwork
 }: MinimalTrackViewProps) => {
   const styles = useStyles();
   const { theme } = useTheme();
-  const { t } = useTranslation();
-
-  const artist = _artist || t(i18nKeys.ui.player.track_view.label.unknown);
-  const title = _title || t(i18nKeys.ui.player.track_view.label.unknown);
 
   const { position, onProgressChange, capabilities, isPlaying, duration } =
     controlsProps;

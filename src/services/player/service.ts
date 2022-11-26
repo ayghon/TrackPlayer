@@ -1,6 +1,8 @@
 import TrackPlayer, { Event } from 'react-native-track-player';
 
-export const playbackService = function () {
+// async necessary for this function, otherwise android crashes on player init
+// eslint-disable-next-line require-await
+export async function PlaybackService() {
   TrackPlayer.addEventListener(Event.RemotePlay, () => TrackPlayer.play());
   TrackPlayer.addEventListener(Event.RemotePause, () => TrackPlayer.pause());
   TrackPlayer.addEventListener(Event.RemoteNext, () =>
@@ -18,4 +20,4 @@ export const playbackService = function () {
   TrackPlayer.addEventListener(Event.RemoteJumpBackward, (event) =>
     TrackPlayer.seekTo(-event.interval)
   );
-};
+}

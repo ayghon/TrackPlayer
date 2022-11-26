@@ -38,6 +38,14 @@ export const useInitPlayer = () => {
           Capability.Pause,
           Capability.SkipToNext,
           Capability.SkipToPrevious
+        ],
+
+        // The buttons that it will show in the notification on Android
+        notificationCapabilities: [
+          Capability.Play,
+          Capability.Pause,
+          Capability.SkipToNext,
+          Capability.SkipToPrevious
         ]
       });
     };
