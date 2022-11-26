@@ -11,9 +11,9 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          cache: yarn install --frozen-lockfile
+          cache: yarn
           node-version: 16
-      - run: yarn
+      - run: yarn install --frozen-lockfile
       - run: yarn semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
