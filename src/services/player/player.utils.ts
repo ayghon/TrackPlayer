@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState
+} from 'react';
 import { Playlist } from '../playlists';
 import { TrackControlsCapability, TrackControlsProps } from '../../ui';
 import TrackPlayer, {
@@ -11,6 +17,9 @@ import TrackPlayer, {
   useProgress,
   useTrackPlayerEvents
 } from 'react-native-track-player';
+
+const getRandomPositionInQueue = (queueLength: number) =>
+  Math.ceil(Math.random() * queueLength);
 
 export const useInitPlayer = () => {
   useEffect(() => {
@@ -82,6 +91,7 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   const [currentTrack, setCurrentTrack] = useState<TrackInQueue>();
   const [queue, setQueue] = useState<Track[]>([]);
   const [repeatMode, setRepeatMode] = useState(RepeatMode.Queue);
+  const [shuffle, setShuffle] = useState(false);
   const [playlist, setPlaylist] = useState<Playlist>();
 
   useTrackPlayerEvents(
@@ -111,11 +121,11 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
 
   const { position, duration = 26 } = useProgress();
 
+  // BASIC handlers
   const skipToNextTrack = () => TrackPlayer.skipToNext();
   const skipToPreviousTrack = () => TrackPlayer.skipToPrevious();
   const jumpForwardInTrack = () => TrackPlayer.seekTo(position + 15);
   const jumpBackwardInTrack = () => TrackPlayer.seekTo(position - 15);
-
   const startTrack = async () => {
     const state = await TrackPlayer.getState();
     if (state !== State.Playing) {
@@ -125,10 +135,22 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
     }
   };
 
+  // REPEAT MODE handlers
   const repeatModeHandler = async (mode: RepeatMode) => {
     await TrackPlayer.setRepeatMode(mode);
     setRepeatMode(mode);
   };
+
+  // SHUFFLE handlers
+  const getShuffledPosition = useCallback((): number => {
+    const randomPositionInQueue = getRandomPositionInQueue(queue.length);
+
+    return randomPositionInQueue !== position
+      ? randomPositionInQueue
+      : getShuffledPosition();
+  }, [position, queue.length]);
+  const toggleShuffle = () => setShuffle((state) => !state);
+  const shuffleTrack = () => TrackPlayer.skip(getShuffledPosition());
 
   return {
     controlsProps: {
@@ -150,11 +172,11 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
             !currentTrack ||
             (isLastTrack(currentTrack.index, queue.length) &&
               repeatMode !== RepeatMode.Queue),
-          onPress: skipToNextTrack
+          onPress: shuffle ? shuffleTrack : skipToNextTrack
         },
         [TrackControlsCapability.SKIP_TO_PREVIOUS]: {
           disabled: !currentTrack || isFirstTrack(currentTrack.index),
-          onPress: skipToPreviousTrack
+          onPress: shuffle ? shuffleTrack : skipToPreviousTrack
         }
       },
       changeRepeatMode: repeatModeHandler,
@@ -163,7 +185,9 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
         playerState !== State.Playing && playerState !== State.Buffering,
       onProgressChange: TrackPlayer.seekTo,
       position,
-      repeatMode
+      repeatMode,
+      shuffle,
+      toggleShuffle
     },
     currentTrack,
     playlist,

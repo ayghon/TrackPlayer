@@ -1,6 +1,6 @@
 import { Icon, useTheme } from '@rneui/themed';
-import { Pressable, ViewStyle } from 'react-native';
 import { RepeatMode } from 'react-native-track-player';
+import { ViewStyle } from 'react-native';
 import React, { FC } from 'react';
 
 export type RepeatModeControlsProps = {
@@ -18,14 +18,13 @@ export const RepeatModeControls: FC<RepeatModeControlsProps> = ({
 
   if (repeatMode === RepeatMode.Track) {
     return (
-      <Pressable onPress={() => onChange(RepeatMode.Off)}>
-        <Icon
-          color={theme.colors.secondary}
-          name="repeat-one"
-          size={32}
-          style={style}
-        />
-      </Pressable>
+      <Icon
+        color={theme.colors.secondary}
+        name="repeat-one"
+        onPress={() => onChange(RepeatMode.Off)}
+        size={32}
+        style={style}
+      />
     );
   }
 
@@ -40,8 +39,12 @@ export const RepeatModeControls: FC<RepeatModeControlsProps> = ({
   };
 
   return (
-    <Pressable onPress={changeHandler}>
-      <Icon color={color} name="repeat" size={32} style={style} />
-    </Pressable>
+    <Icon
+      color={color}
+      name="repeat"
+      onPress={changeHandler}
+      size={32}
+      style={style}
+    />
   );
 };

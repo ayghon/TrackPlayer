@@ -26,6 +26,8 @@ export type TrackControlsProps = {
   capabilities: Record<TrackControlsCapability, TrackControlButton>;
   repeatMode?: RepeatMode;
   changeRepeatMode?: (mode: RepeatMode) => void;
+  toggleShuffle?: () => void;
+  shuffle?: boolean;
 };
 
 export const TrackControls = ({
@@ -35,7 +37,9 @@ export const TrackControls = ({
   onProgressChange,
   capabilities,
   repeatMode = RepeatMode.Off,
-  changeRepeatMode
+  changeRepeatMode,
+  toggleShuffle,
+  shuffle = false
 }: TrackControlsProps) => {
   const styles = useStyles();
   const { theme } = useTheme();
@@ -101,18 +105,34 @@ export const TrackControls = ({
           size={56}
         />
       </Horizontal>
-      {changeRepeatMode && (
-        <RepeatModeControls
-          onChange={changeRepeatMode}
-          repeatMode={repeatMode}
-          style={styles.endIcon}
-        />
+      {(toggleShuffle || changeRepeatMode) && (
+        <Horizontal style={styles.advancedControlsContainer}>
+          {toggleShuffle && (
+            <Icon
+              color={shuffle ? theme.colors.secondary : undefined}
+              name="shuffle"
+              onPress={toggleShuffle}
+              size={32}
+              style={styles.startIcon}
+            />
+          )}
+          {changeRepeatMode && (
+            <RepeatModeControls
+              onChange={changeRepeatMode}
+              repeatMode={repeatMode}
+              style={styles.endIcon}
+            />
+          )}
+        </Horizontal>
       )}
     </View>
   );
 };
 
 const useStyles = makeStyles((theme) => ({
+  advancedControlsContainer: {
+    justifyContent: 'space-between'
+  },
   container: {
     justifyContent: 'center'
   },
@@ -135,5 +155,8 @@ const useStyles = makeStyles((theme) => ({
     paddingEnd: 16
   },
   sliderThumb: { height: 16, width: 16 },
-  sliderTrack: { height: 6 }
+  sliderTrack: { height: 6 },
+  startIcon: {
+    alignSelf: 'flex-start'
+  }
 }));
