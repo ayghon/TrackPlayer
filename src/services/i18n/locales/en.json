@@ -18,6 +18,7 @@
   "routes.tabs.library.header_title": "Your library",
   "routes.tabs.library.tab_bar.button.title": "Library",
   "screens.home.section.recently_played.title": "Recently played",
+  "screens.library.input.search.placeholder": "Search",
   "screens.playlist.button.add_tracks": "Add tracks",
   "screens.settings.clear_cache.button": "Clear",
   "screens.settings.clear_cache.label": "Clear app cache",

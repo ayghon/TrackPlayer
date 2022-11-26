@@ -79,6 +79,13 @@ export const i18nKeys = {
         }
       }
     },
+    library: {
+      input: {
+        search: {
+          placeholder: 'screens.library.input.search.placeholder'
+        }
+      }
+    },
     playlist: {
       button: {
         add_tracks: 'screens.playlist.button.add_tracks'

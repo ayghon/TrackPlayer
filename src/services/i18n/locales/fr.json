@@ -26,5 +26,6 @@
   "ui.playlist.swipe_action.delete": "Supprimer",
   "ui.playlist.track_count": "{{count}} musique",
   "ui.playlist.track_count_plural": "{{count}} musiques",
-  "screens.playlist.button.add_tracks": "Ajouter des musiques"
+  "screens.playlist.button.add_tracks": "Ajouter des musiques",
+  "screens.library.input.search.placeholder": "Rechercher"
 }
