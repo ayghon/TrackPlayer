@@ -72,7 +72,7 @@ export const LibraryScreen: FC<
   return (
     <ScreenContainer>
       <Grid<Playlist>
-        data={playlists}
+        data={list}
         initialNumToRender={6}
         keyExtractor={({ title }) => title}
         renderItem={({ item }) => <LibraryListItem item={item} />}
