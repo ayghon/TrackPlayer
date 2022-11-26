@@ -5,6 +5,7 @@ import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
   Event,
+  RepeatMode,
   State,
   Track,
   useProgress,
@@ -48,6 +49,7 @@ export const useInitPlayer = () => {
           Capability.SkipToPrevious
         ]
       });
+      await TrackPlayer.setRepeatMode(RepeatMode.Queue);
     };
     initPlayer();
 
@@ -79,6 +81,7 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   const [playerState, setPlayerState] = useState<State>();
   const [currentTrack, setCurrentTrack] = useState<TrackInQueue>();
   const [queue, setQueue] = useState<Track[]>([]);
+  const [repeatMode, setRepeatMode] = useState(RepeatMode.Queue);
   const [playlist, setPlaylist] = useState<Playlist>();
 
   useTrackPlayerEvents(
@@ -122,6 +125,11 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
     }
   };
 
+  const repeatModeHandler = async (mode: RepeatMode) => {
+    await TrackPlayer.setRepeatMode(mode);
+    setRepeatMode(mode);
+  };
+
   return {
     controlsProps: {
       capabilities: {
@@ -139,7 +147,9 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
         },
         [TrackControlsCapability.SKIP_TO_NEXT]: {
           disabled:
-            !currentTrack || isLastTrack(currentTrack.index, queue.length),
+            !currentTrack ||
+            (isLastTrack(currentTrack.index, queue.length) &&
+              repeatMode !== RepeatMode.Queue),
           onPress: skipToNextTrack
         },
         [TrackControlsCapability.SKIP_TO_PREVIOUS]: {
@@ -147,11 +157,13 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
           onPress: skipToPreviousTrack
         }
       },
+      changeRepeatMode: repeatModeHandler,
       duration: duration || 26,
       isPlaying:
         playerState !== State.Playing && playerState !== State.Buffering,
       onProgressChange: TrackPlayer.seekTo,
-      position
+      position,
+      repeatMode
     },
     currentTrack,
     playlist,

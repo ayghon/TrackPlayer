@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator \"iPhone 13 (16.1)\"",
+    "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -13,6 +13,7 @@
     "prepare": "husky install",
     "clean:android": "(cd android && ./gradlew clean)",
     "start:nocache": "npm run start -- --reset-cache",
+    "android:release": "(cd android && ./gradlew assembleRelease)",
     "gen:i18n": "./src/services/i18n/utils/generate-i18n-keys.ts"
   },
   "dependencies": {

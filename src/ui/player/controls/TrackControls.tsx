@@ -1,5 +1,7 @@
 import { Horizontal } from '../../display';
 import { Icon, Slider, makeStyles, useTheme } from '@rneui/themed';
+import { RepeatMode } from 'react-native-track-player';
+import { RepeatModeControls } from './RepeatModeControls';
 import { View } from 'react-native';
 import React from 'react';
 
@@ -22,6 +24,8 @@ export type TrackControlsProps = {
   duration: number;
   onProgressChange: (position: number) => void;
   capabilities: Record<TrackControlsCapability, TrackControlButton>;
+  repeatMode?: RepeatMode;
+  changeRepeatMode?: (mode: RepeatMode) => void;
 };
 
 export const TrackControls = ({
@@ -29,7 +33,9 @@ export const TrackControls = ({
   isPlaying,
   position,
   onProgressChange,
-  capabilities
+  capabilities,
+  repeatMode = RepeatMode.Off,
+  changeRepeatMode
 }: TrackControlsProps) => {
   const styles = useStyles();
   const { theme } = useTheme();
@@ -95,6 +101,13 @@ export const TrackControls = ({
           size={56}
         />
       </Horizontal>
+      {changeRepeatMode && (
+        <RepeatModeControls
+          onChange={changeRepeatMode}
+          repeatMode={repeatMode}
+          style={styles.endIcon}
+        />
+      )}
     </View>
   );
 };
@@ -102,6 +115,9 @@ export const TrackControls = ({
 const useStyles = makeStyles((theme) => ({
   container: {
     justifyContent: 'center'
+  },
+  endIcon: {
+    alignSelf: 'flex-end'
   },
   icon: {
     backgroundColor: theme.colors.background
