@@ -71,15 +71,8 @@ export const LibraryScreen: FC<
 
   return (
     <ScreenContainer>
-      <Input
-        leftIcon={<Icon name="search" />}
-        onChangeText={searchHandler}
-        placeholder={t(i18nKeys.screens.library.input.search.placeholder)}
-        selectionColor={theme.colors.secondary}
-        value={search}
-      />
       <Grid<Playlist>
-        data={list}
+        data={playlists}
         initialNumToRender={6}
         keyExtractor={({ title }) => title}
         renderItem={({ item }) => <LibraryListItem item={item} />}
