@@ -26,6 +26,8 @@
   "screens.settings.language.label": "Language",
   "ui.player.track_view.label.unknown": "Unknown",
   "ui.playlist.swipe_action.delete": "Delete",
+  "ui.playlist.swipe_action.pin": "Pin",
+  "ui.playlist.swipe_action.unpin": "Unpin",
   "ui.playlist.track_count": "{{count}} track",
   "ui.playlist.track_count_plural": "{{count}} tracks"
 }

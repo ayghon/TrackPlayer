@@ -4,7 +4,7 @@ import {
   RootStackScreenProps,
   Routes,
   i18nKeys,
-  usePlaylists
+  usePlaylistsState
 } from '../../services';
 import { View } from 'react-native';
 import { isIOS } from '../../utils';
@@ -18,11 +18,12 @@ export const PlaylistCreateModal: FC<
   const { t } = useTranslation();
   const { theme } = useTheme();
   const styles = useStyles();
-  const { addPlaylist, isLoading } = usePlaylists();
+  const { createPlaylist, isLoading } = usePlaylistsState();
 
   const createHandler = async () => {
-    await addPlaylist({
+    await createPlaylist({
       count: 0,
+      pinned: false,
       title: playlistName,
       tracks: []
     });

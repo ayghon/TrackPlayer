@@ -1,63 +1,86 @@
-import { Card, makeStyles } from '@rneui/themed';
-import { DeleteSwipeAction } from './DeleteSwipeAction';
+import { Card, makeStyles, useTheme } from '@rneui/themed';
 import { Image } from '../../image';
+import { PlaylistItemSwipeAction } from './PlaylistItemSwipeAction';
 import { PlaylistTitleSection } from './PlaylistTitleSection';
 import { Swipeable } from 'react-native-gesture-handler';
 import { TouchableOpacity } from 'react-native';
+import { i18nKeys } from '../../../services';
+import { useTranslation } from 'react-i18next';
 import React, { FC } from 'react';
 
 export type SwipeablePlaylistItemProps = {
   onPress?: () => void;
   onDelete?: () => void;
-  onSwipeLeft?: () => void;
+  onPin?: () => void;
   trackCount: number;
   title: string;
   artwork?: string;
+  pinned?: boolean;
 };
 
 export const SwipeablePlaylistItem: FC<SwipeablePlaylistItemProps> = ({
   onPress,
   onDelete,
-  onSwipeLeft,
+  onPin,
   artwork,
   title,
-  trackCount
+  trackCount,
+  pinned
 }) => {
   const styles = useStyles();
+  const { t } = useTranslation();
+  const { theme } = useTheme();
 
   const onSwipeOpen = (direction: 'left' | 'right', { close }: Swipeable) => {
     if (direction === 'right') {
-      onDelete?.();
+      onPin?.();
     } else {
-      onSwipeLeft?.();
+      onDelete?.();
     }
     close();
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.75}
-      onPress={onPress}
-      style={styles.button}
+    <Swipeable
+      containerStyle={styles.button}
+      enabled={!!onDelete || !!onPin}
+      onSwipeableOpen={onSwipeOpen}
+      renderLeftActions={() =>
+        onDelete && (
+          <PlaylistItemSwipeAction
+            backgroundColor={theme.colors.error}
+            label={t(i18nKeys.ui.playlist.swipe_action.delete)}
+          />
+        )
+      }
+      renderRightActions={() =>
+        onPin && (
+          <PlaylistItemSwipeAction
+            backgroundColor={theme.colors.success}
+            label={
+              pinned
+                ? t(i18nKeys.ui.playlist.swipe_action.unpin)
+                : t(i18nKeys.ui.playlist.swipe_action.pin)
+            }
+          />
+        )
+      }
     >
-      <Swipeable
-        enabled={!!onDelete || !!onSwipeLeft}
-        onSwipeableOpen={onSwipeOpen}
-        renderRightActions={() => <DeleteSwipeAction />}
-      >
+      <TouchableOpacity activeOpacity={0.75} onPress={onPress}>
         <Card containerStyle={styles.container} wrapperStyle={styles.wrapper}>
           <Image
             containerStyle={styles.image}
             source={artwork ? { uri: artwork } : undefined}
           />
           <PlaylistTitleSection
+            pinned={pinned}
             style={styles.titleSection}
             title={title}
             trackCount={trackCount}
           />
         </Card>
-      </Swipeable>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Swipeable>
   );
 };
 

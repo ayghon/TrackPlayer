@@ -1,5 +1,5 @@
 import { StorageKeys } from '../../utils';
-import { playlistsMock } from '../playlists';
+import { playlistsMock } from '../playlists/playlists';
 import { useCallback, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

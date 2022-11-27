@@ -9,7 +9,7 @@ import {
   RootStackScreenProps,
   Routes,
   i18nKeys,
-  usePlaylists
+  usePlaylistsState
 } from '../../services';
 import { Text, makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +20,7 @@ export const HomeScreen: FC<RootStackScreenProps<Routes.HOME>> = ({
 }) => {
   const { t } = useTranslation();
   const styles = useStyles();
-  const { playlists } = usePlaylists();
+  const { playlists } = usePlaylistsState();
 
   return (
     <ScreenContainer>

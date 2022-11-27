@@ -6,7 +6,7 @@ import {
   Playlist,
   RootStackScreenProps,
   Routes,
-  usePlaylists
+  usePlaylistsState
 } from '../../services';
 import { Track } from 'react-native-track-player';
 import { pickSingle, types } from 'react-native-document-picker';
@@ -25,7 +25,7 @@ export const PlaylistViewScreen: FC<
   const { tracks, title, artwork } = playlist;
   const styles = useStyles();
   const { theme } = useTheme();
-  const { editPlaylist } = usePlaylists();
+  const { editPlaylist } = usePlaylistsState();
 
   const navigateToPlayer = (position?: number) => {
     navigate(Routes.PLAYER, { playlist, position, tracks });

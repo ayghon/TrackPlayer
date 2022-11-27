@@ -114,7 +114,9 @@ export const i18nKeys = {
     },
     playlist: {
       swipe_action: {
-        delete: 'ui.playlist.swipe_action.delete'
+        delete: 'ui.playlist.swipe_action.delete',
+        pin: 'ui.playlist.swipe_action.pin',
+        unpin: 'ui.playlist.swipe_action.unpin'
       },
       track_count: 'ui.playlist.track_count',
       track_count_plural: 'ui.playlist.track_count_plural'

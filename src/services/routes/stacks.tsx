@@ -11,6 +11,7 @@ import { Icon, useTheme } from '@rneui/themed';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import { NavigationContainer } from '@react-navigation/native';
 import { PlaylistViewScreen, SettingsScreen } from '../../screens';
+import { PlaylistsProvider } from '../playlists';
 import { RootStackParamList, Routes } from './routes.types';
 import { TabNavigator } from './tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -43,125 +44,133 @@ export const BaseStackNavigation = () => {
         dark: theme.mode === 'dark'
       }}
     >
-      <BaseStack.Navigator>
-        <BaseStack.Group screenOptions={{ animation: 'slide_from_right' }}>
-          <BaseStack.Screen
-            component={TabNavigator}
-            name={Routes.ROOT}
-            options={({ navigation, route }) => ({
-              headerRight: () => (
-                <Horizontal>
-                  <LibraryHeaderRight />
+      <PlaylistsProvider>
+        <BaseStack.Navigator>
+          <BaseStack.Group screenOptions={{ animation: 'slide_from_right' }}>
+            <BaseStack.Screen
+              component={TabNavigator}
+              name={Routes.ROOT}
+              options={({ navigation, route }) => ({
+                headerRight: () => (
+                  <Horizontal>
+                    <LibraryHeaderRight />
+                    <Icon
+                      color={theme.colors.black}
+                      name="settings"
+                      onPress={() => navigation.navigate(Routes.SETTINGS)}
+                    />
+                  </Horizontal>
+                ),
+                headerTitle: t(getHeaderTitle(route))
+              })}
+            />
+            <BaseStack.Screen
+              component={SettingsScreen}
+              name={Routes.SETTINGS}
+              options={{
+                headerBackTitle: '',
+                title: t(i18nKeys.routes.stacks.settings.title)
+              }}
+            />
+            <BaseStack.Screen
+              component={PlaylistViewScreen}
+              name={Routes.PLAYLIST_VIEW}
+              options={({
+                navigation: { navigate },
+                route: {
+                  params: { playlist }
+                }
+              }) => ({
+                headerBackTitle: '',
+                headerRight: () => (
                   <Icon
-                    color={theme.colors.black}
-                    name="settings"
-                    onPress={() => navigation.navigate(Routes.SETTINGS)}
+                    name="more-vert"
+                    onPress={() =>
+                      navigate(Routes.PLAYLIST_SETTINGS, {
+                        playlist
+                      })
+                    }
                   />
-                </Horizontal>
-              ),
-              headerTitle: t(getHeaderTitle(route))
-            })}
-          />
-          <BaseStack.Screen
-            component={SettingsScreen}
-            name={Routes.SETTINGS}
-            options={{
-              headerBackTitle: '',
-              title: t(i18nKeys.routes.stacks.settings.title)
+                ),
+                headerTitle: '',
+                title: ''
+              })}
+            />
+          </BaseStack.Group>
+          <BaseStack.Group
+            screenOptions={{
+              animation: 'slide_from_right',
+              presentation: 'modal'
             }}
-          />
-          <BaseStack.Screen
-            component={PlaylistViewScreen}
-            name={Routes.PLAYLIST_VIEW}
-            options={({
-              navigation: { navigate },
-              route: {
-                params: { playlist }
-              }
-            }) => ({
-              headerBackTitle: '',
-              headerRight: () => (
-                <Icon
-                  name="more-vert"
-                  onPress={() =>
-                    navigate(Routes.PLAYLIST_SETTINGS, {
-                      playlist
-                    })
-                  }
-                />
-              ),
-              headerTitle: '',
-              title: ''
-            })}
-          />
-        </BaseStack.Group>
-        <BaseStack.Group
-          screenOptions={{
-            animation: 'slide_from_right',
-            presentation: 'modal'
-          }}
-        >
-          <BaseStack.Screen
-            component={ColorSchemeModal}
-            name={Routes.COLOR_SCHEME}
-            options={({ navigation: { goBack } }) => ({
-              headerRight: () => <Icon name="close" onPress={() => goBack()} />,
-              headerTitle: t(i18nKeys.routes.modals.color_scheme.header_title)
-            })}
-          />
-          <BaseStack.Screen
-            component={LanguageModal}
-            name={Routes.LANGUAGE}
-            options={({ navigation: { goBack } }) => ({
-              headerRight: () => <Icon name="close" onPress={() => goBack()} />,
-              headerTitle: t(i18nKeys.routes.modals.language.header_title)
-            })}
-          />
-          <BaseStack.Screen
-            component={PlaylistCreateModal}
-            name={Routes.PLAYLIST_CREATE}
-            options={{
-              headerShown: isAndroid,
-              headerTitle: '',
-              title: ''
-            }}
-          />
-          <BaseStack.Screen
-            component={PlayerModal}
-            name={Routes.PLAYER}
-            options={({
-              navigation: { goBack },
-              route: {
-                params: { playlist }
-              }
-            }) => ({
-              contentStyle: {
-                paddingTop: playlist?.title ? 0 : 16
-              },
-              headerRight: () => <Icon name="close" onPress={() => goBack()} />,
-              title: playlist?.title ?? ''
-            })}
-          />
-          <BaseStack.Screen
-            component={PlaylistSettingsModal}
-            name={Routes.PLAYLIST_SETTINGS}
-            options={{
-              headerShown: isAndroid,
-              headerTitle: '',
-              title: ''
-            }}
-          />
-          <BaseStack.Screen
-            component={PlaylistTracksSelectionModal}
-            name={Routes.PLAYLIST_TRACKS_SELECTION}
-            options={{
-              headerShown: isAndroid,
-              headerTitle: '',
-              title: ''
-            }}
-          />
-        </BaseStack.Group>
-      </BaseStack.Navigator>
+          >
+            <BaseStack.Screen
+              component={ColorSchemeModal}
+              name={Routes.COLOR_SCHEME}
+              options={({ navigation: { goBack } }) => ({
+                headerRight: () => (
+                  <Icon name="close" onPress={() => goBack()} />
+                ),
+                headerTitle: t(i18nKeys.routes.modals.color_scheme.header_title)
+              })}
+            />
+            <BaseStack.Screen
+              component={LanguageModal}
+              name={Routes.LANGUAGE}
+              options={({ navigation: { goBack } }) => ({
+                headerRight: () => (
+                  <Icon name="close" onPress={() => goBack()} />
+                ),
+                headerTitle: t(i18nKeys.routes.modals.language.header_title)
+              })}
+            />
+            <BaseStack.Screen
+              component={PlaylistCreateModal}
+              name={Routes.PLAYLIST_CREATE}
+              options={{
+                headerShown: isAndroid,
+                headerTitle: '',
+                title: ''
+              }}
+            />
+            <BaseStack.Screen
+              component={PlayerModal}
+              name={Routes.PLAYER}
+              options={({
+                navigation: { goBack },
+                route: {
+                  params: { playlist }
+                }
+              }) => ({
+                contentStyle: {
+                  paddingTop: playlist?.title ? 0 : 16
+                },
+                headerRight: () => (
+                  <Icon name="close" onPress={() => goBack()} />
+                ),
+                title: playlist?.title ?? ''
+              })}
+            />
+            <BaseStack.Screen
+              component={PlaylistSettingsModal}
+              name={Routes.PLAYLIST_SETTINGS}
+              options={{
+                headerShown: isAndroid,
+                headerTitle: '',
+                title: ''
+              }}
+            />
+            <BaseStack.Screen
+              component={PlaylistTracksSelectionModal}
+              name={Routes.PLAYLIST_TRACKS_SELECTION}
+              options={{
+                headerShown: isAndroid,
+                headerTitle: '',
+                title: ''
+              }}
+            />
+          </BaseStack.Group>
+        </BaseStack.Navigator>
+      </PlaylistsProvider>
     </NavigationContainer>
   );
 };

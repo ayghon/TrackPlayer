@@ -6,18 +6,19 @@ import React, { FC } from 'react';
 export const LibraryListItem: FC<{
   item: Playlist;
   variant?: LayoutVariant;
-}> = ({ item, variant = LayoutVariant.LIST }) => {
+  pinHandler?: (playlist: Playlist) => void;
+  deleteHandler?: (playlistId: string) => void;
+}> = ({ item, variant = LayoutVariant.LIST, pinHandler, deleteHandler }) => {
   const { navigate } =
     useNavigation<NavigationProp<RootStackParamList, Routes.LIBRARY>>();
-  // const { removePlaylist } = usePlaylists();
-
-  // FIXME screen is not re-rendered when playlists state is updated with `removePlaylist`
 
   return (
     <PlaylistItem
-      // onDelete={() => removePlaylist(item.id)}
       artwork={item.artwork}
+      onDelete={() => deleteHandler?.(item.id)}
+      onPin={() => pinHandler?.(item)}
       onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
+      pinned={item.pinned}
       title={item.title}
       trackCount={item.count}
       variant={variant}

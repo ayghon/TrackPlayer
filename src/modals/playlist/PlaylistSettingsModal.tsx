@@ -5,7 +5,7 @@ import {
   RootStackScreenProps,
   Routes,
   i18nKeys,
-  usePlaylists
+  usePlaylistsState
 } from '../../services';
 import { TouchableOpacity, View } from 'react-native';
 import { isIOS } from '../../utils';
@@ -26,7 +26,7 @@ export const PlaylistSettingsModal: FC<
 }) => {
   const [playlistName, setPlaylistName] = useState(playlist.title);
   const styles = useStyles();
-  const { removePlaylist, editPlaylist } = usePlaylists();
+  const { removePlaylist, editPlaylist } = usePlaylistsState();
   const { theme } = useTheme();
   const { t } = useTranslation();
 

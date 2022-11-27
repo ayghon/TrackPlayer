@@ -10,7 +10,8 @@ export type PlaylistItemProps = {
   onPress?: () => void;
   variant?: LayoutVariant;
   onDelete?: () => void;
-  onSwipeLeft?: () => void;
+  onPin?: () => void;
+  pinned?: boolean;
 };
 
 export const PlaylistItem: FC<PlaylistItemProps> = ({
@@ -20,15 +21,17 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
   onPress,
   variant = LayoutVariant.LIST,
   onDelete,
-  onSwipeLeft
+  onPin,
+  pinned
 }) => {
   if (variant === LayoutVariant.LIST) {
     return (
       <SwipeablePlaylistItem
         artwork={artwork}
         onDelete={onDelete}
+        onPin={onPin}
         onPress={onPress}
-        onSwipeLeft={onSwipeLeft}
+        pinned={pinned}
         title={title}
         trackCount={trackCount}
       />

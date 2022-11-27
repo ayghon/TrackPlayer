@@ -4,7 +4,7 @@ import {
   RootStackScreenProps,
   Routes,
   tracksMocks,
-  usePlaylists
+  usePlaylistsState
 } from '../../services';
 import { ScreenContainer, TrackItem } from '../../ui';
 import { Track } from 'react-native-track-player';
@@ -28,7 +28,7 @@ export const PlaylistTracksSelectionModal: FC<
   const [selectedTracks, setSelectedTracks] = useState<Track[]>(
     playlist?.tracks ?? []
   );
-  const { editPlaylist } = usePlaylists();
+  const { editPlaylist } = usePlaylistsState();
 
   const getSelectedStyle = (trackId: string) => {
     return selectedTracks.find((item) => item.title === trackId)
