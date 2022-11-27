@@ -70,6 +70,7 @@
     "lodash.setwith": "^4.3.2",
     "metro-react-native-babel-preset": "0.73.3",
     "react-test-renderer": "18.1.0",
+    "semantic-release": "^19.0.5",
     "typescript": "^4.8.3"
   },
   "jest": {
