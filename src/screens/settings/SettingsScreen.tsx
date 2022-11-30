@@ -2,11 +2,11 @@ import { Button, Horizontal, ScreenContainer, ValueButton } from '../../ui';
 import {
   RootStackScreenProps,
   Routes,
+  StorageKeys,
   i18nKeys,
   i18nLanguageKeyToTranslation,
   useColorScheme
 } from '../../services';
-import { StorageKeys } from '../../utils';
 import { Text, makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,7 +21,7 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
 
   const clearCacheHandler = () => {
     AsyncStorage.removeItem(StorageKeys.PLAYLISTS);
-    AsyncStorage.removeItem(StorageKeys.COLOR_SCHEME);
+    AsyncStorage.removeItem(StorageKeys.CUSTOM_COLOR_SCHEMES);
   };
 
   return (

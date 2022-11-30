@@ -5,7 +5,52 @@ export const i18nKeys = {
     en: 'language.en',
     fr: 'language.fr'
   },
+  modal: {
+    playlist: {
+      create: {
+        palette_color_item: {
+          empty: 'modal.playlist.create.palette_color_item.empty'
+        }
+      }
+    }
+  },
   modals: {
+    color_scheme: {
+      button: {
+        create_color_scheme: 'modals.color_scheme.button.create_color_scheme'
+      }
+    },
+    color_scheme_create: {
+      dialog: {
+        color_picker: {
+          actions: {
+            accept:
+              'modals.color_scheme_create.dialog.color_picker.actions.accept',
+            reset:
+              'modals.color_scheme_create.dialog.color_picker.actions.reset'
+          },
+          title: 'modals.color_scheme_create.dialog.color_picker.title'
+        }
+      },
+      input: {
+        color_scheme_name: {
+          error: {
+            invalid:
+              'modals.color_scheme_create.input.color_scheme_name.error.invalid',
+            used: 'modals.color_scheme_create.input.color_scheme_name.error.used'
+          },
+          placeholder:
+            'modals.color_scheme_create.input.color_scheme_name.placeholder'
+        }
+      },
+      model_item: {
+        background: 'modals.color_scheme_create.model_item.background',
+        dark: 'modals.color_scheme_create.model_item.dark',
+        light: 'modals.color_scheme_create.model_item.light',
+        primary: 'modals.color_scheme_create.model_item.primary',
+        secondary: 'modals.color_scheme_create.model_item.secondary'
+      }
+    },
     playlist: {
       create: {
         button: 'modals.playlist.create.button',
@@ -34,6 +79,9 @@ export const i18nKeys = {
     modals: {
       color_scheme: {
         header_title: 'routes.modals.color_scheme.header_title'
+      },
+      color_scheme_create: {
+        header_title: 'routes.modals.color_scheme_create.header_title'
       },
       language: {
         header_title: 'routes.modals.language.header_title'

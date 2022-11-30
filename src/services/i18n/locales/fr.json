@@ -1,6 +1,7 @@
 {
   "language.en": "Anglais",
   "language.fr": "Français",
+  "modals.color_scheme.button.create_color_scheme": "Créer un thème personnalisé",
   "modals.playlist.create.button": "Créer",
   "modals.playlist.create.input.name_playlist.placeholder": "Nommer la playlist",
   "modals.playlist.settings.button.delete_playlist": "Supprimer playlist",
@@ -29,5 +30,18 @@
   "screens.playlist.button.add_tracks": "Ajouter des musiques",
   "screens.library.input.search.placeholder": "Rechercher",
   "ui.playlist.swipe_action.pin": "Épingler",
-  "ui.playlist.swipe_action.unpin": "Détacher"
+  "ui.playlist.swipe_action.unpin": "Détacher",
+  "routes.modals.color_scheme_create.header_title": "Thème personnalisé",
+  "modals.color_scheme_create.model_item.background": "Arrière-plan",
+  "modals.color_scheme_create.model_item.primary": "Primaire",
+  "modals.color_scheme_create.model_item.secondary": "Secondaire",
+  "modal.playlist.create.palette_color_item.empty": "#######",
+  "modals.color_scheme_create.model_item.dark": "Sombre",
+  "modals.color_scheme_create.model_item.light": "Clair",
+  "modals.color_scheme_create.dialog.color_picker.title": "Sélecteur de couleur: {{label}}",
+  "modals.color_scheme_create.dialog.color_picker.actions.accept": "Choisir",
+  "modals.color_scheme_create.dialog.color_picker.actions.reset": "Réinitialiser",
+  "modals.color_scheme_create.input.color_scheme_name.placeholder": "Nom du thème",
+  "modals.color_scheme_create.input.color_scheme_name.error.invalid": "Entrez un nom valide",
+  "modals.color_scheme_create.input.color_scheme_name.error.used": "Ce nom est déjà utilisé"
 }

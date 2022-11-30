@@ -1,8 +1,8 @@
 import {
   CheckboxListItem,
+  ColorSchemeConfigurationPalette,
   Horizontal,
-  ThemeColorScheme,
-  getColorSchemeConfiguration
+  ThemeColorScheme
 } from '../../../ui';
 import { ColorPaletteItem } from './ColorPaletteItem';
 import React, { FC } from 'react';
@@ -12,16 +12,16 @@ export type ColorSchemeListItemProps = {
   name: ThemeColorScheme;
   handleChange: (name: ThemeColorScheme) => void;
   checked: boolean;
+  colorPalette: ColorSchemeConfigurationPalette;
 };
 
 export const ColorSchemeListItem: FC<ColorSchemeListItemProps> = ({
   title,
   name,
   handleChange,
-  checked
+  checked,
+  colorPalette
 }) => {
-  const { palette: colorPalette } = getColorSchemeConfiguration(name);
-
   return (
     <CheckboxListItem
       bottomDivider

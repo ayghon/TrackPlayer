@@ -8,3 +8,14 @@ export enum ThemeColorScheme {
   LIGHT_RED = 'light-red',
   LIGHT_TURQUOISE = 'light-turquoise'
 }
+
+/**
+ * @description List of colors linked to a color-scheme
+ */
+export enum ColorSchemePalette {
+  PRIMARY = 'primary',
+  SECONDARY = 'secondary',
+  BACKGROUND = 'background',
+  LIGHT = 'white',
+  DARK = 'black'
+}

@@ -1,5 +1,5 @@
-import { Horizontal, ScreenContainer } from '../../ui';
-import { Icon, Input, Text, makeStyles, useTheme } from '@rneui/themed';
+import { Horizontal, ScreenContainer, TextInput } from '../../ui';
+import { Icon, Text, makeStyles } from '@rneui/themed';
 import {
   Playlist,
   RootStackScreenProps,
@@ -27,7 +27,6 @@ export const PlaylistSettingsModal: FC<
   const [playlistName, setPlaylistName] = useState(playlist.title);
   const styles = useStyles();
   const { removePlaylist, editPlaylist } = usePlaylistsState();
-  const { theme } = useTheme();
   const { t } = useTranslation();
 
   const deleteHandler = async () => {
@@ -49,19 +48,18 @@ export const PlaylistSettingsModal: FC<
     <ScreenContainer hasCloseButton={isIOS} onClose={closeModalHandler}>
       <View>
         <Horizontal alignCenter style={styles.renamePlaylistSection}>
-          <Input
+          <TextInput
             autoFocus
             label={t(
               i18nKeys.modals.playlist.settings.input.rename_playlist.label
             )}
             labelStyle={styles.renamePlaylistLabel}
             leftIcon={<Icon name="edit" />}
-            onChangeText={(text) => setPlaylistName(text)}
+            onChange={(text) => setPlaylistName(text)}
             placeholder={t(
               i18nKeys.modals.playlist.settings.input.rename_playlist
                 .placeholder
             )}
-            selectionColor={theme.colors.secondary}
             value={playlistName}
           />
         </Horizontal>

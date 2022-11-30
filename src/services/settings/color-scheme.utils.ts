@@ -1,4 +1,4 @@
-import { StorageKeys } from '../../utils';
+import { StorageKeys } from '../storage';
 import {
   ThemeColorScheme,
   getColorSchemeConfiguration,

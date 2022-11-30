@@ -10,11 +10,13 @@ import { lightPurpleSchemeColors } from './light-purple.scheme';
 import { lightRedSchemeColors } from './light-red.scheme';
 import { lightTurquoiseSchemeColors } from './light-turquoise.scheme';
 
+export type ColorSchemeConfigurationPalette = (string | undefined)[];
+
 export const getColorSchemeConfiguration = (
   scheme: ThemeColorScheme
 ): {
   mode: ThemeMode;
-  palette: (string | undefined)[];
+  palette: ColorSchemeConfigurationPalette;
   label: string;
   theme: CreateThemeOptions;
 } => {

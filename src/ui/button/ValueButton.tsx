@@ -5,7 +5,7 @@ import React, { FC, PropsWithChildren } from 'react';
 
 export type ValueButtonProps = {
   onPress: () => void;
-  value: string;
+  value?: string;
 };
 
 export const ValueButton: FC<PropsWithChildren<ValueButtonProps>> = ({

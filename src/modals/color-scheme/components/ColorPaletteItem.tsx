@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme) => ({
   paletteColor: {
     borderColor: theme.colors.black,
     borderRadius: 100,
-    borderStyle: 'solid',
-    borderWidth: 2,
+    borderStyle: 'dotted',
+    borderWidth: 1,
     height: 20,
     margin: 0,
     padding: 0,

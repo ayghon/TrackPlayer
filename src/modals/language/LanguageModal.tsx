@@ -1,6 +1,9 @@
 import { CheckboxListItem, ScreenContainer } from '../../ui';
-import { Language, i18nLanguageKeyToTranslation } from '../../services';
-import { StorageKeys } from '../../utils';
+import {
+  Language,
+  StorageKeys,
+  i18nLanguageKeyToTranslation
+} from '../../services';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useState } from 'react';

@@ -1,5 +1,4 @@
-import { Button, ScreenContainer } from '../../ui';
-import { Input, makeStyles, useTheme } from '@rneui/themed';
+import { Button, ScreenContainer, TextInput } from '../../ui';
 import {
   RootStackScreenProps,
   Routes,
@@ -8,6 +7,7 @@ import {
 } from '../../services';
 import { View } from 'react-native';
 import { isIOS } from '../../utils';
+import { makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
 
@@ -16,7 +16,6 @@ export const PlaylistCreateModal: FC<
 > = ({ navigation: { goBack } }) => {
   const [playlistName, setPlaylistName] = useState('');
   const { t } = useTranslation();
-  const { theme } = useTheme();
   const styles = useStyles();
   const { createPlaylist, isLoading } = usePlaylistsState();
 
@@ -33,13 +32,12 @@ export const PlaylistCreateModal: FC<
   return (
     <ScreenContainer hasCloseButton={isIOS}>
       <View style={styles.container}>
-        <Input
+        <TextInput
           autoFocus
-          onChangeText={(text) => setPlaylistName(text)}
+          onChange={(text) => setPlaylistName(text)}
           placeholder={t(
             i18nKeys.modals.playlist.create.input.name_playlist.placeholder
           )}
-          selectionColor={theme.colors.secondary}
           value={playlistName}
         />
         <Button loading={isLoading} onPress={createHandler}>

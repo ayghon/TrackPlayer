@@ -1,5 +1,6 @@
-import { Icon, Input, useTheme } from '@rneui/themed';
+import { Icon } from '@rneui/themed';
 import { Playlist, i18nKeys, usePlaylistsState } from '../../../services';
+import { TextInput } from '../../../ui';
 import { useTranslation } from 'react-i18next';
 import React, { Dispatch, FC, SetStateAction, useEffect } from 'react';
 import debounce from 'lodash.debounce';
@@ -18,7 +19,6 @@ export const LibrarySearchBar: FC<LibrarySearchBarProps> = ({
   setSearchList
 }) => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
 
   const { orderedPlaylists: originalPlaylists, isLoading } =
     usePlaylistsState();
@@ -55,11 +55,10 @@ export const LibrarySearchBar: FC<LibrarySearchBarProps> = ({
   };
 
   return (
-    <Input
+    <TextInput
       leftIcon={<Icon name="search" />}
-      onChangeText={searchHandler}
+      onChange={searchHandler}
       placeholder={t(i18nKeys.screens.library.input.search.placeholder)}
-      selectionColor={theme.colors.secondary}
       value={search}
     />
   );

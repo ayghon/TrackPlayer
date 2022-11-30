@@ -3,11 +3,13 @@ import {
   ButtonProps as _ButtonProps,
   makeStyles
 } from '@rneui/themed';
+import { getStyleByVariant } from './button.utils';
 import React, { FC } from 'react';
 
 export enum ButtonVariant {
   PRIMARY = 'primary',
-  SECONDARY = 'secondary'
+  SECONDARY = 'secondary',
+  BORDERLESS = 'borderless'
 }
 
 export type ButtonProps = _ButtonProps & {
@@ -34,17 +36,8 @@ export const Button: FC<ButtonProps> = ({
 
 const useStyles = makeStyles((theme, { variant }: ButtonProps) => ({
   button: {
-    backgroundColor:
-      variant === ButtonVariant.PRIMARY
-        ? theme.colors.secondary
-        : theme.colors.primary,
-    borderRadius: 100,
+    ...getStyleByVariant(theme, variant).button,
     paddingHorizontal: 32
   },
-  buttonTitle: {
-    color:
-      variant === ButtonVariant.PRIMARY
-        ? theme.colors.white
-        : theme.colors.black
-  }
+  buttonTitle: getStyleByVariant(theme, variant).buttonTitle
 }));

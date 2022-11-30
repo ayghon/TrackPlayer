@@ -1,4 +1,5 @@
 import {
+  ColorSchemeCreateModal,
   ColorSchemeModal,
   LanguageModal,
   PlayerModal,
@@ -18,7 +19,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getHeaderTitle } from './routes.utils';
 import { i18nKeys } from '../i18n';
 import { isAndroid } from '../../utils';
-import { useInitStorage } from '../storage/storage.utils';
+import { useInitStorage } from '../storage/init-storage.hooks';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
@@ -111,6 +112,19 @@ export const BaseStackNavigation = () => {
                   <Icon name="close" onPress={() => goBack()} />
                 ),
                 headerTitle: t(i18nKeys.routes.modals.color_scheme.header_title)
+              })}
+            />
+            <BaseStack.Screen
+              component={ColorSchemeCreateModal}
+              name={Routes.COLOR_SCHEME_CREATE}
+              options={({ navigation: { goBack } }) => ({
+                headerRight: () => (
+                  <Icon name="close" onPress={() => goBack()} />
+                ),
+                headerTitle: t(
+                  i18nKeys.routes.modals.color_scheme_create.header_title
+                ),
+                presentation: 'fullScreenModal'
               })}
             />
             <BaseStack.Screen

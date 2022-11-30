@@ -1,5 +1,6 @@
 import { CreateThemeOptions, createTheme, useTheme } from '@rneui/themed';
-import { DEFAULT_THEME_MODE, StorageKeys } from '../../utils';
+import { DEFAULT_THEME_MODE } from '../../utils';
+import { StorageKeys } from '../../services';
 import {
   ThemeColorScheme,
   defaultSchemeColors,
