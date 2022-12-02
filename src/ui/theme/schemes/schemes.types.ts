@@ -6,7 +6,8 @@ export enum ThemeColorScheme {
   LIGHT_BLUE = 'light-blue',
   LIGHT_PURPLE = 'light-purple',
   LIGHT_RED = 'light-red',
-  LIGHT_TURQUOISE = 'light-turquoise'
+  LIGHT_TURQUOISE = 'light-turquoise',
+  CUSTOM = 'custom'
 }
 
 /**
@@ -19,3 +20,10 @@ export enum ColorSchemePalette {
   LIGHT = 'white',
   DARK = 'black'
 }
+
+export type ColorSchemeItem = {
+  name: ThemeColorScheme;
+  title: string;
+};
+
+export type ColorSchemeList = ColorSchemeItem[];

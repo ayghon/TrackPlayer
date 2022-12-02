@@ -1,42 +1,77 @@
 import {
-  ColorSchemeStorageData,
-  ColorSchemeStorageDataItem
-} from './color-scheme.types';
-import { StorageKeys, getParsedStorageData } from '../storage';
-import { ThemeColorScheme } from '../../ui';
+  ColorSchemeList,
+  ThemeColorScheme,
+  getColorSchemeConfiguration,
+  useThemeManager
+} from '../../ui';
+import { StorageKeys } from '../storage';
+import { useCallback, useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const createColorScheme = async (data: ColorSchemeStorageDataItem) => {
-  const initialData = await getParsedStorageData<ColorSchemeStorageData>(
-    StorageKeys.CUSTOM_COLOR_SCHEMES
-  );
-
-  let items: ColorSchemeStorageData = [data];
-  if (initialData) {
-    items = [...initialData, data];
-  }
-
-  return await AsyncStorage.setItem(
-    StorageKeys.CUSTOM_COLOR_SCHEMES,
-    JSON.stringify(items)
-  );
+type UseColorSchemeResponse = {
+  colorScheme: ThemeColorScheme;
+  activeColorSchemeText: string;
+  changeColorScheme: (scheme: ThemeColorScheme) => void;
+  colorSchemeList: ColorSchemeList;
 };
 
-export const colorSchemeExists = async (name: string) => {
-  const parsedData = await getParsedStorageData<ColorSchemeStorageData>(
-    StorageKeys.CUSTOM_COLOR_SCHEMES
+export const useColorScheme = (): UseColorSchemeResponse => {
+  const { changeTheme } = useThemeManager();
+  const [colorScheme, setColorScheme] = useState<ThemeColorScheme>(
+    ThemeColorScheme.DEFAULT
+  );
+  const [activeColorSchemeText, setActiveColorSchemeText] = useState('');
+  const [colorSchemeList, setColorSchemeList] = useState<ColorSchemeList>([]);
+
+  useEffect(() => {
+    getColorSchemeConfiguration(colorScheme).then(({ label }) =>
+      setActiveColorSchemeText(label)
+    );
+  }, [colorScheme]);
+
+  useEffect(() => {
+    Promise.all(
+      Object.values(ThemeColorScheme).map(async (value) => {
+        const { label } = await getColorSchemeConfiguration(value);
+
+        return {
+          name: value,
+          title: label
+        };
+      })
+    ).then((list) => setColorSchemeList(list));
+  }, []);
+
+  const changeColorScheme = useCallback(
+    async (scheme: ThemeColorScheme) => {
+      await AsyncStorage.setItem(StorageKeys.COLOR_SCHEME, scheme);
+      await changeTheme(scheme);
+      setColorScheme(scheme);
+    },
+    [changeTheme]
   );
 
-  const noParsedData = !parsedData || parsedData.length === 0;
+  useFocusEffect(
+    useCallback(() => {
+      const getStorageColorScheme = async () => {
+        const storageColorScheme = (await AsyncStorage.getItem(
+          StorageKeys.COLOR_SCHEME
+        )) as ThemeColorScheme | null;
 
-  if (noParsedData) {
-    return false;
-  }
+        if (storageColorScheme) {
+          setColorScheme(storageColorScheme);
+        }
+      };
 
-  const customSchemeExists = !!parsedData.find((item) => item.name === name);
-  const baseColorSchemeExists = !!Object.values(ThemeColorScheme).find(
-    (scheme) => scheme === name
+      getStorageColorScheme();
+    }, [])
   );
 
-  return !customSchemeExists && !baseColorSchemeExists;
+  return {
+    activeColorSchemeText,
+    changeColorScheme,
+    colorScheme,
+    colorSchemeList
+  };
 };

@@ -49,7 +49,6 @@ export const PlaylistSettingsModal: FC<
       <View>
         <Horizontal alignCenter style={styles.renamePlaylistSection}>
           <TextInput
-            autoFocus
             label={t(
               i18nKeys.modals.playlist.settings.input.rename_playlist.label
             )}

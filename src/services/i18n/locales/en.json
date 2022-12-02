@@ -14,6 +14,8 @@
   "modals.color_scheme_create.model_item.light": "Light",
   "modals.color_scheme_create.model_item.primary": "Primary",
   "modals.color_scheme_create.model_item.secondary": "Secondary",
+  "modals.color_scheme_create.switch.dark_mode.helper_text": "Controls text color in status bar. Dark mode will display white text over the background color you selected, otherwise it will be black.",
+  "modals.color_scheme_create.switch.dark_mode.label": "Use dark mode",
   "modals.playlist.create.button": "Create",
   "modals.playlist.create.input.name_playlist.placeholder": "Name your playlist",
   "modals.playlist.settings.button.delete_playlist": "Delete playlist",

@@ -22,10 +22,15 @@ export const ColorSchemeListItem: FC<ColorSchemeListItemProps> = ({
   checked,
   colorPalette
 }) => {
+  const [, themeColorSecondary] = colorPalette;
+
   return (
     <CheckboxListItem
       bottomDivider
       checked={checked}
+      // force component update by passing changing palette color
+      // for custom color-scheme
+      checkedColor={themeColorSecondary}
       onPress={() => handleChange(name)}
       rightContent={
         <Horizontal>

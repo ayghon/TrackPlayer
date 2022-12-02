@@ -7,19 +7,20 @@ import {
   PlaylistSettingsModal,
   PlaylistTracksSelectionModal
 } from '../../modals';
-import { Horizontal } from '../../ui';
-import { Icon, useTheme } from '@rneui/themed';
-import { LibraryHeaderRight } from './components/LibraryHeaderRight';
+import { IOSCloseButton } from './components/IOSCloseButton';
 import { NavigationContainer } from '@react-navigation/native';
+import { PlaylistSettingsButton } from './components/PlaylistSettingsButton';
 import { PlaylistViewScreen, SettingsScreen } from '../../screens';
 import { PlaylistsProvider } from '../playlists';
 import { RootStackParamList, Routes } from './routes.types';
+import { SettingsButton } from './components/SettingsButton';
 import { TabNavigator } from './tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getHeaderTitle } from './routes.utils';
 import { i18nKeys } from '../i18n';
 import { isAndroid } from '../../utils';
 import { useInitStorage } from '../storage/init-storage.hooks';
+import { useTheme } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
@@ -51,17 +52,8 @@ export const BaseStackNavigation = () => {
             <BaseStack.Screen
               component={TabNavigator}
               name={Routes.ROOT}
-              options={({ navigation, route }) => ({
-                headerRight: () => (
-                  <Horizontal>
-                    <LibraryHeaderRight />
-                    <Icon
-                      color={theme.colors.black}
-                      name="settings"
-                      onPress={() => navigation.navigate(Routes.SETTINGS)}
-                    />
-                  </Horizontal>
-                ),
+              options={({ route }) => ({
+                headerRight: SettingsButton,
                 headerTitle: t(getHeaderTitle(route))
               })}
             />
@@ -77,21 +69,13 @@ export const BaseStackNavigation = () => {
               component={PlaylistViewScreen}
               name={Routes.PLAYLIST_VIEW}
               options={({
-                navigation: { navigate },
                 route: {
                   params: { playlist }
                 }
               }) => ({
                 headerBackTitle: '',
                 headerRight: () => (
-                  <Icon
-                    name="more-vert"
-                    onPress={() =>
-                      navigate(Routes.PLAYLIST_SETTINGS, {
-                        playlist
-                      })
-                    }
-                  />
+                  <PlaylistSettingsButton playlist={playlist} />
                 ),
                 headerTitle: '',
                 title: ''
@@ -107,35 +91,29 @@ export const BaseStackNavigation = () => {
             <BaseStack.Screen
               component={ColorSchemeModal}
               name={Routes.COLOR_SCHEME}
-              options={({ navigation: { goBack } }) => ({
-                headerRight: () => (
-                  <Icon name="close" onPress={() => goBack()} />
-                ),
+              options={{
+                headerRight: IOSCloseButton,
                 headerTitle: t(i18nKeys.routes.modals.color_scheme.header_title)
-              })}
+              }}
             />
             <BaseStack.Screen
               component={ColorSchemeCreateModal}
               name={Routes.COLOR_SCHEME_CREATE}
-              options={({ navigation: { goBack } }) => ({
-                headerRight: () => (
-                  <Icon name="close" onPress={() => goBack()} />
-                ),
+              options={{
+                headerRight: IOSCloseButton,
                 headerTitle: t(
                   i18nKeys.routes.modals.color_scheme_create.header_title
                 ),
                 presentation: 'fullScreenModal'
-              })}
+              }}
             />
             <BaseStack.Screen
               component={LanguageModal}
               name={Routes.LANGUAGE}
-              options={({ navigation: { goBack } }) => ({
-                headerRight: () => (
-                  <Icon name="close" onPress={() => goBack()} />
-                ),
+              options={{
+                headerRight: IOSCloseButton,
                 headerTitle: t(i18nKeys.routes.modals.language.header_title)
-              })}
+              }}
             />
             <BaseStack.Screen
               component={PlaylistCreateModal}
@@ -150,7 +128,6 @@ export const BaseStackNavigation = () => {
               component={PlayerModal}
               name={Routes.PLAYER}
               options={({
-                navigation: { goBack },
                 route: {
                   params: { playlist }
                 }
@@ -158,9 +135,7 @@ export const BaseStackNavigation = () => {
                 contentStyle: {
                   paddingTop: playlist?.title ? 0 : 16
                 },
-                headerRight: () => (
-                  <Icon name="close" onPress={() => goBack()} />
-                ),
+                headerRight: IOSCloseButton,
                 title: playlist?.title ?? ''
               })}
             />

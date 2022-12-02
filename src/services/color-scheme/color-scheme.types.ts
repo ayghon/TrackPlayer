@@ -1,12 +1,11 @@
 import { ColorSchemePalette } from '../../ui';
+import { ThemeMode } from '@rneui/themed';
 
 export type ColorSchemeModel = {
   [x in ColorSchemePalette]: string;
 };
 
-export type ColorSchemeStorageDataItem = {
-  name: string;
+export type ColorSchemeStorageData = {
+  mode: ThemeMode;
   palette: ColorSchemeModel;
 };
-
-export type ColorSchemeStorageData = ColorSchemeStorageDataItem[];

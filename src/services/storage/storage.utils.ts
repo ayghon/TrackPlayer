@@ -19,3 +19,8 @@ export async function getParsedStorageData<
     return null;
   }
 }
+
+export const clearCache = () => {
+  AsyncStorage.removeItem(StorageKeys.PLAYLISTS);
+  AsyncStorage.removeItem(StorageKeys.CUSTOM_COLOR_SCHEMES);
+};

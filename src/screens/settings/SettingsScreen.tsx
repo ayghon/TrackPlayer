@@ -1,16 +1,25 @@
-import { Button, Horizontal, ScreenContainer, ValueButton } from '../../ui';
+import {
+  Button,
+  Horizontal,
+  ScreenContainer,
+  ThemeColorScheme,
+  ValueButton,
+  useThemeManager
+} from '../../ui';
 import {
   RootStackScreenProps,
   Routes,
   StorageKeys,
+  clearCache,
   i18nKeys,
   i18nLanguageKeyToTranslation,
   useColorScheme
 } from '../../services';
 import { Text, makeStyles } from '@rneui/themed';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 
 export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
   navigation: { navigate }
@@ -18,11 +27,18 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
   const [t, { language }] = useTranslation();
   const styles = useStyles();
   const { activeColorSchemeText } = useColorScheme();
+  const { changeTheme } = useThemeManager();
 
-  const clearCacheHandler = () => {
-    AsyncStorage.removeItem(StorageKeys.PLAYLISTS);
-    AsyncStorage.removeItem(StorageKeys.CUSTOM_COLOR_SCHEMES);
-  };
+  // update theme after custom-color scheme update
+  useFocusEffect(
+    useCallback(() => {
+      AsyncStorage.getItem(StorageKeys.COLOR_SCHEME).then((colorScheme) => {
+        if (colorScheme && colorScheme === ThemeColorScheme.CUSTOM) {
+          changeTheme(colorScheme as ThemeColorScheme);
+        }
+      });
+    }, [changeTheme])
+  );
 
   return (
     <ScreenContainer>
@@ -42,7 +58,7 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
         <Text style={styles.switchTitle}>
           {t(i18nKeys.screens.settings.clear_cache.label)}
         </Text>
-        <Button onPress={clearCacheHandler}>
+        <Button onPress={clearCache}>
           {t(i18nKeys.screens.settings.clear_cache.button)}
         </Button>
       </Horizontal>

@@ -12,8 +12,9 @@
     "format:check": "prettier --check .",
     "prepare": "husky install",
     "clean:android": "(cd android && ./gradlew clean)",
-    "start:nocache": "npm run start -- --reset-cache",
+    "start:nocache": "yarn start --reset-cache",
     "android:release": "(cd android && ./gradlew assembleRelease)",
+    "ios:pods": "(cd ios && pod install)",
     "gen:i18n": "./src/services/i18n/utils/generate-i18n-keys.ts"
   },
   "dependencies": {

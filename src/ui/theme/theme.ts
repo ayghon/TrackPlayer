@@ -19,8 +19,9 @@ export const useThemeManager = () => {
   const { updateTheme } = useTheme();
 
   const changeTheme = useCallback(
-    (scheme: ThemeColorScheme) => {
-      const { theme: newTheme } = getColorSchemeConfiguration(scheme);
+    async (scheme: ThemeColorScheme) => {
+      const { theme: newTheme } = await getColorSchemeConfiguration(scheme);
+
       if (updateTheme) {
         updateTheme(newTheme);
       }
@@ -36,7 +37,7 @@ export const useThemeManager = () => {
       )) as ThemeColorScheme | null;
 
       if (storageColorScheme) {
-        changeTheme(storageColorScheme);
+        await changeTheme(storageColorScheme);
       }
     };
 

@@ -49,6 +49,13 @@ export const i18nKeys = {
         light: 'modals.color_scheme_create.model_item.light',
         primary: 'modals.color_scheme_create.model_item.primary',
         secondary: 'modals.color_scheme_create.model_item.secondary'
+      },
+      switch: {
+        dark_mode: {
+          helper_text:
+            'modals.color_scheme_create.switch.dark_mode.helper_text',
+          label: 'modals.color_scheme_create.switch.dark_mode.label'
+        }
       }
     },
     playlist: {

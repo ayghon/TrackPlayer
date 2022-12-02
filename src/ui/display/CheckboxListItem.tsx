@@ -7,6 +7,8 @@ export type CheckboxListItemProps = {
   checked: boolean;
   onPress: () => void;
   bottomDivider?: boolean;
+  checkedColor?: string;
+  uncheckedColor?: string;
 };
 
 export const CheckboxListItem: FC<CheckboxListItemProps> = ({
@@ -14,7 +16,9 @@ export const CheckboxListItem: FC<CheckboxListItemProps> = ({
   rightContent,
   checked,
   onPress,
-  bottomDivider
+  bottomDivider = false,
+  checkedColor,
+  uncheckedColor
 }) => {
   const { theme } = useTheme();
 
@@ -26,9 +30,9 @@ export const CheckboxListItem: FC<CheckboxListItemProps> = ({
       {rightContent}
       <ListItem.CheckBox
         checked={checked}
-        checkedColor={theme.colors.secondary}
+        checkedColor={checkedColor || theme.colors.secondary}
         onPress={onPress}
-        uncheckedColor={theme.colors.black}
+        uncheckedColor={uncheckedColor || theme.colors.black}
       />
     </ListItem>
   );

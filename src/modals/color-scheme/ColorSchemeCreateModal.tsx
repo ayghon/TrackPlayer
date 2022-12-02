@@ -3,19 +3,20 @@ import {
   ColorSchemePalette,
   Horizontal,
   ScreenContainer,
-  TextInput
+  SwitchInput
 } from '../../ui';
 import { Card, Text, makeStyles, useTheme } from '@rneui/themed';
 import { ColorPaletteItem } from './components/ColorPaletteItem';
 import { ColorPickerDialog } from './components/ColorPickerDialog';
 import {
   ColorSchemeModel,
-  colorSchemeExists,
-  createColorScheme
-} from '../../services/color-scheme';
+  RootStackScreenProps,
+  Routes,
+  createColorScheme,
+  i18nKeys
+} from '../../services';
 import { FlatList } from 'react-native';
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers';
-import { RootStackScreenProps, Routes, i18nKeys } from '../../services';
 import { colorSchemeModelItemToI18n } from './color-scheme.utils';
 import { fromHsv, toHsv } from 'react-native-color-picker';
 import { useTranslation } from 'react-i18next';
@@ -24,11 +25,11 @@ import React, { FC, useState } from 'react';
 export const ColorSchemeCreateModal: FC<
   RootStackScreenProps<Routes.COLOR_SCHEME_CREATE>
 > = ({ navigation: { goBack } }) => {
-  const styles = useStyles();
+  const { t } = useTranslation();
   const { theme } = useTheme();
-  const [error, setError] = useState('');
-  const [colorSchemeName, setColorSchemeName] = useState('');
+  const styles = useStyles();
   const [isColorPickerModalOpen, setColorPickerModalOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const [activePicker, setActivePicker] = useState<ColorSchemePalette>();
   const [colorScheme, setColorScheme] = useState<ColorSchemeModel>({
     [ColorSchemePalette.DARK]: theme.colors.black,
@@ -37,7 +38,6 @@ export const ColorSchemeCreateModal: FC<
     [ColorSchemePalette.SECONDARY]: theme.colors.secondary,
     [ColorSchemePalette.BACKGROUND]: theme.colors.background
   });
-  const { t } = useTranslation();
 
   const colorSelectedHandler = (color: HsvColor, item: ColorSchemePalette) =>
     setColorScheme((state) => ({
@@ -51,44 +51,33 @@ export const ColorSchemeCreateModal: FC<
   };
 
   const createColorSchemeHandler = async () => {
-    if (!colorSchemeName || colorSchemeName.length === 0) {
-      setError(
-        t(
-          i18nKeys.modals.color_scheme_create.input.color_scheme_name.error
-            .invalid
-        )
-      );
-    }
+    await createColorScheme({
+      mode: darkMode ? 'dark' : 'light',
+      palette: colorScheme
+    });
 
-    const schemeExists = await colorSchemeExists(colorSchemeName);
-    if (schemeExists) {
-      setError(
-        t(
-          i18nKeys.modals.color_scheme_create.input.color_scheme_name.error.used
-        )
-      );
-    } else {
-      setError('');
-
-      await createColorScheme({
-        name: colorSchemeName,
-        palette: colorScheme
-      });
-
-      goBack();
-    }
+    goBack();
   };
 
   return (
     <ScreenContainer>
-      <TextInput
-        error={error}
-        onChange={setColorSchemeName}
-        placeholder={t(
-          i18nKeys.modals.color_scheme_create.input.color_scheme_name
-            .placeholder
+      {/* TODO uncomment when multiple custom color schemes creation is implemented */}
+      {/*<TextInput*/}
+      {/*  error={error}*/}
+      {/*  onChange={setColorSchemeName}*/}
+      {/*  placeholder={t(*/}
+      {/*    i18nKeys.modals.color_scheme_create.input.color_scheme_name*/}
+      {/*      .placeholder*/}
+      {/*  )}*/}
+      {/*  value={colorSchemeName}*/}
+      {/*/>*/}
+      <SwitchInput
+        helperText={t(
+          i18nKeys.modals.color_scheme_create.switch.dark_mode.helper_text
         )}
-        value={colorSchemeName}
+        label={t(i18nKeys.modals.color_scheme_create.switch.dark_mode.label)}
+        onChange={(value) => setDarkMode(value)}
+        value={darkMode}
       />
       <FlatList
         data={Object.values(ColorSchemePalette)}
