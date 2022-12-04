@@ -2,33 +2,12 @@ import { Horizontal } from '../../display';
 import { Icon, Slider, makeStyles, useTheme } from '@rneui/themed';
 import { RepeatMode } from 'react-native-track-player';
 import { RepeatModeControls } from './RepeatModeControls';
+import {
+  TrackControlsCapability,
+  TrackControls as TrackControlsProps
+} from '../../../services';
 import { View } from 'react-native';
 import React from 'react';
-
-type TrackControlButton = {
-  disabled: boolean;
-  onPress: () => void;
-};
-
-export enum TrackControlsCapability {
-  PLAY_PAUSE = 'play-pause',
-  JUMP_FORWARD = 'jump-forward',
-  JUMP_BACKWARD = 'jump-backward',
-  SKIP_TO_NEXT = 'skip-to-next',
-  SKIP_TO_PREVIOUS = 'skip-to-previous'
-}
-
-export type TrackControlsProps = {
-  position: number;
-  isPlaying: boolean;
-  duration: number;
-  onProgressChange: (position: number) => void;
-  capabilities: Record<TrackControlsCapability, TrackControlButton>;
-  repeatMode?: RepeatMode;
-  changeRepeatMode?: (mode: RepeatMode) => void;
-  toggleShuffle?: () => void;
-  shuffle?: boolean;
-};
 
 export const TrackControls = ({
   duration,

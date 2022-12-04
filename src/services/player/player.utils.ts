@@ -6,7 +6,7 @@ import {
   useState
 } from 'react';
 import { Playlist } from '../playlists';
-import { TrackControlsCapability, TrackControlsProps } from '../../ui';
+import { TrackControls, TrackControlsCapability } from './player.types';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -81,7 +81,7 @@ export type UsePlayerControlsResponse = {
   setQueue: Dispatch<SetStateAction<Track[]>>;
   currentTrack?: TrackInQueue;
   setCurrentTrack: Dispatch<SetStateAction<TrackInQueue | undefined>>;
-  controlsProps: TrackControlsProps;
+  controls: TrackControls;
   playlist?: Playlist;
   setPlaylist?: Dispatch<SetStateAction<Playlist | undefined>>;
 };
@@ -95,22 +95,19 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   const [playlist, setPlaylist] = useState<Playlist>();
 
   useTrackPlayerEvents(
-    [
-      Event.PlaybackTrackChanged,
-      Event.RemotePlay,
-      Event.RemotePause,
-      Event.PlaybackState
-    ],
+    [Event.PlaybackTrackChanged, Event.PlaybackState],
     async (event) => {
       if (
         event.type === Event.PlaybackTrackChanged &&
         event.nextTrack != null
       ) {
         const track = await TrackPlayer.getTrack(event.nextTrack);
-        const index = await TrackPlayer.getCurrentTrack();
 
         if (track) {
-          setCurrentTrack({ ...track, index: index || 0 });
+          setCurrentTrack({
+            ...track,
+            index: event.nextTrack
+          });
         }
       }
       if (event.type === Event.PlaybackState) {
@@ -153,7 +150,7 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   const shuffleTrack = () => TrackPlayer.skip(getShuffledPosition());
 
   return {
-    controlsProps: {
+    controls: {
       capabilities: {
         [TrackControlsCapability.JUMP_BACKWARD]: {
           disabled: !currentTrack,

@@ -1,9 +1,9 @@
 import { Image } from '../image';
 import { MinimalTrackView } from './components/MinimalTrackView';
-import { TrackControls, TrackControlsProps } from './controls';
+import { TrackControls } from './controls';
+import { TrackControls as TrackControlsProps, i18nKeys } from '../../services';
 import { TrackTitle } from './components/TrackTitle';
 import { View } from 'react-native';
-import { i18nKeys } from '../../services';
 import { makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import React from 'react';

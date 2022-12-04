@@ -1,4 +1,4 @@
-import { TrackControlsCapability } from '../../ui';
+import { TrackControlsCapability } from './player.types';
 import {
   UsePlayerControlsResponse,
   useInitPlayer,
@@ -14,7 +14,7 @@ import React, {
 import TrackPlayer from 'react-native-track-player';
 
 const initialValue: UsePlayerControlsResponse = {
-  controlsProps: {
+  controls: {
     capabilities: {
       [TrackControlsCapability.JUMP_BACKWARD]: {
         disabled: false,

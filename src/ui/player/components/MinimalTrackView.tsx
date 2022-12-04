@@ -1,7 +1,7 @@
 import { Horizontal } from '../../display';
 import { Icon, Slider, makeStyles, useTheme } from '@rneui/themed';
 import { Image } from '../../image';
-import { TrackControlsCapability } from '../controls';
+import { TrackControlsCapability } from '../../../services';
 import { TrackTitle } from './TrackTitle';
 import { TrackViewProps } from '../TrackView';
 import { View } from 'react-native';

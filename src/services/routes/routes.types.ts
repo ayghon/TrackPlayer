@@ -36,5 +36,7 @@ export type RootStackParamList = {
   [Routes.COLOR_SCHEME_CREATE]: undefined;
 };
 
-export type RootStackScreenProps<T extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, T>;
+export type RootStackScreenProps<T extends Routes> = NativeStackScreenProps<
+  RootStackParamList,
+  T
+>;

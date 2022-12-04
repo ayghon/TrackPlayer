@@ -1,3 +1,4 @@
+import { ActivityIndicator } from 'react-native';
 import {
   Playlist,
   RootStackScreenProps,
@@ -9,46 +10,85 @@ import React, { FC, useEffect } from 'react';
 import TrackPlayer, { Track } from 'react-native-track-player';
 
 export type PlayerModalProps = {
-  tracks: Track[];
+  tracks?: Track[];
   position?: number;
+  index?: number;
   playlist?: Playlist;
+  continueCurrent?: boolean;
+  autoPlay?: boolean;
 };
 
 export const PlayerModal: FC<RootStackScreenProps<Routes.PLAYER>> = ({
   route: {
-    params: { tracks, position = 0, playlist }
+    params: {
+      continueCurrent = false,
+      autoPlay = true,
+      tracks,
+      position = 0,
+      index = 0,
+      playlist
+    }
   }
 }) => {
-  const { controlsProps, currentTrack, setQueue, setPlaylist } =
+  const { controls, currentTrack, setQueue, setPlaylist, queue } =
     usePlayerState();
 
   useEffect(() => {
     const addTracks = async () => {
-      setQueue(tracks);
       if (playlist && setPlaylist) {
         setPlaylist(playlist);
       }
 
-      await TrackPlayer.add(tracks);
+      if (!continueCurrent && tracks) {
+        setQueue(tracks);
 
-      if (position > 0) {
-        await TrackPlayer.skip(position);
+        // clean previous queue
+        await TrackPlayer.reset();
+        // create new queue
+        await TrackPlayer.add(tracks);
+
+        if (index >= 0) {
+          await TrackPlayer.skip(index);
+        }
+
+        if (position > 0) {
+          await TrackPlayer.seekTo(position);
+        }
+
+        if (autoPlay) {
+          await TrackPlayer.play();
+        }
       }
     };
 
     addTracks();
-  }, [playlist, position, setPlaylist, setQueue, tracks]);
+  }, [
+    autoPlay,
+    continueCurrent,
+    index,
+    playlist,
+    position,
+    setPlaylist,
+    setQueue,
+    tracks
+  ]);
+
+  if (!currentTrack || queue.length === 0) {
+    return (
+      <ScreenContainer>
+        <ActivityIndicator />
+      </ScreenContainer>
+    );
+  }
 
   return (
     <ScreenContainer>
-      {currentTrack && (
-        <TrackView
-          artist={currentTrack.artist}
-          artwork={currentTrack?.artwork as string}
-          controlsProps={controlsProps}
-          title={currentTrack.title}
-        />
-      )}
+      <TrackView
+        artist={currentTrack.artist}
+        artwork={currentTrack?.artwork as string}
+        controlsProps={controls}
+        title={currentTrack.title}
+      />
     </ScreenContainer>
   );
 };

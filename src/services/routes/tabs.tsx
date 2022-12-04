@@ -1,14 +1,18 @@
 import { CustomBottomTabBar } from './components/CustomBottomTabBar';
 import { HomeScreen, LibraryScreen } from '../../screens';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
-import { RootStackScreenProps, Routes } from './routes.types';
+import {
+  RootStackParamList,
+  RootStackScreenProps,
+  Routes
+} from './routes.types';
 import { TabBarIcon } from './components/TabBarIcon';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { i18nKeys } from '../i18n';
 import { useTranslation } from 'react-i18next';
 import React, { FC, ReactNode } from 'react';
 
-const TabStack = createBottomTabNavigator();
+const TabStack = createBottomTabNavigator<RootStackParamList>();
 
 type TabScreenProps = {
   iconName: string;

@@ -27,8 +27,16 @@ export const PlaylistViewScreen: FC<
   const { theme } = useTheme();
   const { editPlaylist } = usePlaylistsState();
 
-  const navigateToPlayer = (position?: number) => {
-    navigate(Routes.PLAYER, { playlist, position, tracks });
+  const navigateToPlayer = (args?: { index?: number; position?: number }) => {
+    const { index, position } = args || {};
+
+    navigate(Routes.PLAYER, {
+      autoPlay: true,
+      index,
+      playlist,
+      position,
+      tracks
+    });
   };
 
   const changeArtworkHandler = async () => {
@@ -71,10 +79,10 @@ export const PlaylistViewScreen: FC<
       />
       <FlatList<Track>
         data={tracks}
-        keyExtractor={(t) => t.title || t.url.toString()}
+        keyExtractor={(t) => t.url.toString()}
         renderItem={({ item, index }) => (
           <TouchableOpacity
-            onPress={() => navigateToPlayer(index)}
+            onPress={() => navigateToPlayer({ index })}
             style={styles.trackButton}
           >
             <TrackItem {...item} />
