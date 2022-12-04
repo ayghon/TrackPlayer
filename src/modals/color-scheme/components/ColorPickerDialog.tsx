@@ -1,9 +1,9 @@
-import { Button, ButtonVariant, ColorSchemePalette } from '../../../ui';
-import { Dialog, makeStyles, useTheme } from '@rneui/themed';
+import { ColorSchemePalette, ConfirmDialog } from '../../../ui';
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers';
 import { TriangleColorPicker } from 'react-native-color-picker';
 import { colorSchemeModelItemToI18n } from '../color-scheme.utils';
 import { i18nKeys } from '../../../services';
+import { makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
 
@@ -25,7 +25,6 @@ export const ColorPickerDialog: FC<ColorPickerDialogProps> = ({
 }) => {
   const styles = useStyles();
   const { t } = useTranslation();
-  const { theme } = useTheme();
   const [color, setColor] = useState<HsvColor>();
 
   const closeHandler = () => {
@@ -42,24 +41,25 @@ export const ColorPickerDialog: FC<ColorPickerDialogProps> = ({
   };
 
   return (
-    <Dialog
-      isVisible={isOpen}
-      onBackdropPress={closeHandler}
-      onRequestClose={closeHandler}
-      overlayStyle={{
-        backgroundColor: theme.colors.background
+    <ConfirmDialog
+      cancelButton={{
+        onPress: resetHandler,
+        title: t(
+          i18nKeys.modals.color_scheme_create.dialog.color_picker.actions.reset
+        )
       }}
-      style={styles.flex}
+      close={closeHandler}
+      confirmButton={{
+        onPress: closeHandler,
+        title: t(
+          i18nKeys.modals.color_scheme_create.dialog.color_picker.actions.accept
+        )
+      }}
+      isOpen={isOpen}
+      title={t(i18nKeys.modals.color_scheme_create.dialog.color_picker.title, {
+        label: t(colorSchemeModelItemToI18n[paletteItem])
+      })}
     >
-      <Dialog.Title
-        title={t(
-          i18nKeys.modals.color_scheme_create.dialog.color_picker.title,
-          {
-            label: t(colorSchemeModelItemToI18n[paletteItem])
-          }
-        )}
-        titleStyle={{ color: theme.colors.black }}
-      />
       <TriangleColorPicker
         color={color}
         defaultColor={defaultColor}
@@ -68,27 +68,7 @@ export const ColorPickerDialog: FC<ColorPickerDialogProps> = ({
         rotationHackFactor={0}
         style={styles.coloPicker}
       />
-      <Dialog.Actions>
-        <Button onPress={closeHandler} size="sm" style={styles.button}>
-          {t(
-            i18nKeys.modals.color_scheme_create.dialog.color_picker.actions
-              .accept
-          )}
-        </Button>
-        {!!defaultColor && (
-          <Button
-            onPress={resetHandler}
-            size="sm"
-            variant={ButtonVariant.BORDERLESS}
-          >
-            {t(
-              i18nKeys.modals.color_scheme_create.dialog.color_picker.actions
-                .reset
-            )}
-          </Button>
-        )}
-      </Dialog.Actions>
-    </Dialog>
+    </ConfirmDialog>
   );
 };
 

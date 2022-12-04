@@ -1,4 +1,9 @@
-import { Horizontal, ScreenContainer, TextInput } from '../../ui';
+import {
+  ConfirmDialog,
+  Horizontal,
+  ScreenContainer,
+  TextInput
+} from '../../ui';
 import { Icon, Text, makeStyles } from '@rneui/themed';
 import {
   Playlist,
@@ -28,9 +33,15 @@ export const PlaylistSettingsModal: FC<
   const styles = useStyles();
   const { removePlaylist, editPlaylist } = usePlaylistsState();
   const { t } = useTranslation();
+  const [isConfirmDeleteDialogOpen, setConfirmDeleteDialogOpen] =
+    useState(false);
+
+  const closeConfirmDeleteDialogHandler = () =>
+    setConfirmDeleteDialogOpen(false);
 
   const deleteHandler = async () => {
     await removePlaylist(playlist.id);
+    setConfirmDeleteDialogOpen(false);
     pop(2);
   };
 
@@ -62,7 +73,10 @@ export const PlaylistSettingsModal: FC<
             value={playlistName}
           />
         </Horizontal>
-        <TouchableOpacity onPress={deleteHandler} style={styles.textButton}>
+        <TouchableOpacity
+          onPress={() => setConfirmDeleteDialogOpen(true)}
+          style={styles.textButton}
+        >
           <Horizontal alignCenter>
             <Icon color="red" name="delete" />
             <Text style={styles.deleteText}>
@@ -71,6 +85,18 @@ export const PlaylistSettingsModal: FC<
           </Horizontal>
         </TouchableOpacity>
       </View>
+      <ConfirmDialog
+        close={closeConfirmDeleteDialogHandler}
+        confirmButton={{
+          onPress: deleteHandler,
+          title: t(
+            i18nKeys.modals.playlist.settings.dialog.confirm_delete.action
+              .confirm
+          )
+        }}
+        isOpen={isConfirmDeleteDialogOpen}
+        title={t(i18nKeys.modals.playlist.settings.dialog.confirm_delete.title)}
+      />
     </ScreenContainer>
   );
 };

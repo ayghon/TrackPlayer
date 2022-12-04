@@ -72,6 +72,15 @@ export const i18nKeys = {
         button: {
           delete_playlist: 'modals.playlist.settings.button.delete_playlist'
         },
+        dialog: {
+          confirm_delete: {
+            action: {
+              confirm:
+                'modals.playlist.settings.dialog.confirm_delete.action.confirm'
+            },
+            title: 'modals.playlist.settings.dialog.confirm_delete.title'
+          }
+        },
         input: {
           rename_playlist: {
             label: 'modals.playlist.settings.input.rename_playlist.label',
@@ -160,6 +169,13 @@ export const i18nKeys = {
     }
   },
   ui: {
+    dialog: {
+      confirm_dialog: {
+        cancel_action: {
+          title: 'ui.dialog.confirm_dialog.cancel_action.title'
+        }
+      }
+    },
     player: {
       track_view: {
         label: {
