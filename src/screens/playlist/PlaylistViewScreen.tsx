@@ -1,15 +1,20 @@
 import { AddTracksButton } from './components/AddTracksButton';
+import { Alert, FlatList, TouchableOpacity } from 'react-native';
 import { FAB, Icon, Text, makeStyles, useTheme } from '@rneui/themed';
-import { FlatList, TouchableOpacity } from 'react-native';
 import { Horizontal, Image, ScreenContainer, TrackItem } from '../../ui';
 import {
   Playlist,
   RootStackScreenProps,
   Routes,
+  i18nKeys,
   usePlaylistsState
 } from '../../services';
 import { Track } from 'react-native-track-player';
-import { pickSingle, types } from 'react-native-document-picker';
+import { useTranslation } from 'react-i18next';
+import DocumentPicker, {
+  pickSingle,
+  types
+} from 'react-native-document-picker';
 import React, { FC } from 'react';
 
 export type PlaylistViewScreenProps = { playlist: Playlist };
@@ -23,6 +28,7 @@ export const PlaylistViewScreen: FC<
   }
 }) => {
   const { tracks, title, artwork } = playlist;
+  const { t } = useTranslation();
   const styles = useStyles();
   const { theme } = useTheme();
   const { editPlaylist } = usePlaylistsState();
@@ -40,9 +46,15 @@ export const PlaylistViewScreen: FC<
   };
 
   const changeArtworkHandler = async () => {
-    const newArtWork = await pickSingle({ type: [types.images] }).catch(() => {
-      // TODO handle error
-    });
+    const newArtWork = await pickSingle({ type: [types.images] }).catch(
+      (error) => {
+        if (DocumentPicker.isCancel(error)) {
+          return null;
+        } else {
+          Alert.alert(t(i18nKeys.errors.unexpected.try_again));
+        }
+      }
+    );
 
     if (newArtWork) {
       const newList = await editPlaylist(playlist.id, {
@@ -79,7 +91,7 @@ export const PlaylistViewScreen: FC<
       />
       <FlatList<Track>
         data={tracks}
-        keyExtractor={(t) => t.url.toString()}
+        keyExtractor={({ url }) => url.toString()}
         renderItem={({ item, index }) => (
           <TouchableOpacity
             onPress={() => navigateToPlayer({ index })}
