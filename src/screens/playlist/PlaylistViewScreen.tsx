@@ -1,7 +1,7 @@
 import { AddTracksButton } from './components/AddTracksButton';
 import { Alert, FlatList, TouchableOpacity } from 'react-native';
-import { FAB, Icon, Text, makeStyles, useTheme } from '@rneui/themed';
-import { Horizontal, Image, ScreenContainer, TrackItem } from '../../ui';
+import { FloatingPlayButton } from './components/FloatingPlayButton';
+import { Horizontal, ScreenContainer, TrackItem } from '../../ui';
 import {
   Playlist,
   RootStackScreenProps,
@@ -9,6 +9,8 @@ import {
   i18nKeys,
   usePlaylistsState
 } from '../../services';
+import { PlaylistArtwork } from './components/PlaylistArtwork';
+import { Text, makeStyles } from '@rneui/themed';
 import { Track } from 'react-native-track-player';
 import { useTranslation } from 'react-i18next';
 import DocumentPicker, {
@@ -30,7 +32,6 @@ export const PlaylistViewScreen: FC<
   const { tracks, title, artwork } = playlist;
   const { t } = useTranslation();
   const styles = useStyles();
-  const { theme } = useTheme();
   const { editPlaylist } = usePlaylistsState();
 
   const navigateToPlayer = (args?: { index?: number; position?: number }) => {
@@ -70,19 +71,12 @@ export const PlaylistViewScreen: FC<
 
   return (
     <ScreenContainer>
-      <TouchableOpacity onPress={changeArtworkHandler}>
-        <Image
-          containerStyle={styles.image}
-          source={artwork ? { uri: artwork } : undefined}
-        />
-      </TouchableOpacity>
+      <PlaylistArtwork artwork={artwork} onPress={changeArtworkHandler} />
       <Horizontal alignCenter style={styles.playlistTitleSection}>
         <Text style={styles.playlistTitle}>{title}</Text>
-        <FAB
-          buttonStyle={styles.fab}
-          icon={<Icon color={theme.colors.white} name="play-arrow" size={32} />}
+        <FloatingPlayButton
+          isVisible={tracks.length > 0}
           onPress={() => navigateToPlayer()}
-          visible={tracks.length > 0}
         />
       </Horizontal>
       <AddTracksButton
@@ -110,14 +104,6 @@ export const PlaylistViewScreen: FC<
 const useStyles = makeStyles((theme) => ({
   button: {
     marginBottom: 16
-  },
-  fab: { margin: 0, padding: 0 },
-  image: {
-    alignSelf: 'center',
-    backgroundColor: theme.colors.white,
-    height: 200,
-    marginVertical: 16,
-    width: 200
   },
   playlistTitle: {
     fontSize: 24,
