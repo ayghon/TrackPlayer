@@ -9,7 +9,7 @@ export type RepeatModeControlsProps = {
   onChange: (mode: RepeatMode) => void;
 };
 
-export const RepeatModeControls: FC<RepeatModeControlsProps> = ({
+export const RepeatModeButton: FC<RepeatModeControlsProps> = ({
   repeatMode = RepeatMode.Off,
   style,
   onChange

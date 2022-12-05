@@ -1,7 +1,9 @@
 import { Horizontal } from '../../display';
-import { Icon, Slider, makeStyles, useTheme } from '@rneui/themed';
+import { Icon, makeStyles } from '@rneui/themed';
+import { ProgressBar } from './ProgressBar';
 import { RepeatMode } from 'react-native-track-player';
-import { RepeatModeControls } from './RepeatModeControls';
+import { RepeatModeButton } from './RepeatModeButton';
+import { ShuffleModeButton } from './ShuffleModeButton';
 import {
   TrackControlsCapability,
   TrackControls as TrackControlsProps
@@ -21,82 +23,63 @@ export const TrackControls = ({
   shuffle = false
 }: TrackControlsProps) => {
   const styles = useStyles();
-  const { theme } = useTheme();
+
+  const icons = [
+    {
+      capability: TrackControlsCapability.SKIP_TO_PREVIOUS,
+      containerStyle: styles.outerIconStart,
+      name: 'skip-previous'
+    },
+    {
+      capability: TrackControlsCapability.JUMP_BACKWARD,
+      containerStyle: styles.innerIconStart,
+      name: 'fast-rewind'
+    },
+    {
+      capability: TrackControlsCapability.PLAY_PAUSE,
+      name: isPlaying ? 'play-arrow' : 'pause'
+    },
+    {
+      capability: TrackControlsCapability.JUMP_FORWARD,
+      containerStyle: styles.innerIconEnd,
+      name: 'fast-forward'
+    },
+    {
+      capability: TrackControlsCapability.SKIP_TO_NEXT,
+      containerStyle: styles.outerIconEnd,
+      name: 'skip-next'
+    }
+  ];
 
   return (
     <View>
-      <Slider
-        maximumTrackTintColor={theme.colors.primary}
-        maximumValue={duration}
-        minimumTrackTintColor={theme.colors.secondary}
-        minimumValue={0}
-        onSlidingComplete={onProgressChange}
-        thumbStyle={styles.sliderThumb}
-        thumbTintColor={theme.colors.secondary}
-        thumbTouchSize={{ height: 12, width: 12 }}
-        trackStyle={styles.sliderTrack}
-        value={position}
+      <ProgressBar
+        duration={duration}
+        onProgressChange={onProgressChange}
+        position={position}
       />
       <Horizontal alignCenter style={styles.container}>
-        <Icon
-          containerStyle={styles.outerIconStart}
-          disabled={
-            capabilities[TrackControlsCapability.SKIP_TO_PREVIOUS].disabled
-          }
-          disabledStyle={styles.icon}
-          name="skip-previous"
-          onPress={
-            capabilities[TrackControlsCapability.SKIP_TO_PREVIOUS].onPress
-          }
-          size={56}
-        />
-        <Icon
-          containerStyle={styles.innerIconStart}
-          disabled={
-            capabilities[TrackControlsCapability.JUMP_BACKWARD].disabled
-          }
-          disabledStyle={styles.icon}
-          name="fast-rewind"
-          onPress={capabilities[TrackControlsCapability.JUMP_BACKWARD].onPress}
-          size={32}
-        />
-        <Icon
-          disabled={capabilities[TrackControlsCapability.PLAY_PAUSE].disabled}
-          disabledStyle={styles.icon}
-          name={isPlaying ? 'play-arrow' : 'pause'}
-          onPress={capabilities[TrackControlsCapability.PLAY_PAUSE].onPress}
-          size={56}
-        />
-        <Icon
-          containerStyle={styles.innerIconEnd}
-          disabled={capabilities[TrackControlsCapability.JUMP_FORWARD].disabled}
-          disabledStyle={styles.icon}
-          name="fast-forward"
-          onPress={capabilities[TrackControlsCapability.JUMP_FORWARD].onPress}
-          size={32}
-        />
-        <Icon
-          containerStyle={styles.outerIconEnd}
-          disabled={capabilities[TrackControlsCapability.SKIP_TO_NEXT].disabled}
-          disabledStyle={styles.icon}
-          name="skip-next"
-          onPress={capabilities[TrackControlsCapability.SKIP_TO_NEXT].onPress}
-          size={56}
-        />
+        {icons.map(({ capability, containerStyle, name }) => {
+          return (
+            <Icon
+              containerStyle={containerStyle}
+              disabled={capabilities[capability].disabled}
+              disabledStyle={styles.icon}
+              key={capability}
+              name={name}
+              onPress={capabilities[capability].onPress}
+              size={56}
+            />
+          );
+        })}
       </Horizontal>
       {(toggleShuffle || changeRepeatMode) && (
         <Horizontal style={styles.advancedControlsContainer}>
           {toggleShuffle && (
-            <Icon
-              color={shuffle ? theme.colors.secondary : undefined}
-              name="shuffle"
-              onPress={toggleShuffle}
-              size={32}
-              style={styles.startIcon}
-            />
+            <ShuffleModeButton isActive={shuffle} onPress={toggleShuffle} />
           )}
           {changeRepeatMode && (
-            <RepeatModeControls
+            <RepeatModeButton
               onChange={changeRepeatMode}
               repeatMode={repeatMode}
               style={styles.endIcon}
