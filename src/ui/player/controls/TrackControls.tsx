@@ -115,10 +115,5 @@ const useStyles = makeStyles((theme) => ({
   },
   outerIconStart: {
     paddingEnd: 16
-  },
-  sliderThumb: { height: 16, width: 16 },
-  sliderTrack: { height: 6 },
-  startIcon: {
-    alignSelf: 'flex-start'
   }
 }));
