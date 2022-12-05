@@ -89,10 +89,7 @@ export const PlaylistSettingsModal: FC<
         close={closeConfirmDeleteDialogHandler}
         confirmButton={{
           onPress: deleteHandler,
-          title: t(
-            i18nKeys.modals.playlist.settings.dialog.confirm_delete.action
-              .confirm
-          )
+          title: t(i18nKeys.button.delete)
         }}
         isOpen={isConfirmDeleteDialogOpen}
         title={t(i18nKeys.modals.playlist.settings.dialog.confirm_delete.title)}

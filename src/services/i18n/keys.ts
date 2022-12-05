@@ -2,7 +2,8 @@
 
 export const i18nKeys = {
   button: {
-    create: 'button.create'
+    create: 'button.create',
+    delete: 'button.delete'
   },
   errors: {
     unexpected: {
@@ -84,10 +85,6 @@ export const i18nKeys = {
         },
         dialog: {
           confirm_delete: {
-            action: {
-              confirm:
-                'modals.playlist.settings.dialog.confirm_delete.action.confirm'
-            },
             title: 'modals.playlist.settings.dialog.confirm_delete.title'
           }
         },
@@ -173,6 +170,12 @@ export const i18nKeys = {
       color_scheme: {
         label: 'screens.settings.color_scheme.label'
       },
+      dialog: {
+        confirm_clear_cache: {
+          subtitle: 'screens.settings.dialog.confirm_clear_cache.subtitle',
+          title: 'screens.settings.dialog.confirm_clear_cache.title'
+        }
+      },
       language: {
         label: 'screens.settings.language.label'
       }
@@ -195,7 +198,6 @@ export const i18nKeys = {
     },
     playlist: {
       swipe_action: {
-        delete: 'ui.playlist.swipe_action.delete',
         pin: 'ui.playlist.swipe_action.pin',
         unpin: 'ui.playlist.swipe_action.unpin'
       },

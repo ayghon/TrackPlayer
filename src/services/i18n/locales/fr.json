@@ -23,7 +23,6 @@
   "screens.settings.color_scheme.label": "Thème",
   "screens.settings.language.label": "Langue",
   "ui.player.track_view.label.unknown": "Inconnu",
-  "ui.playlist.swipe_action.delete": "Supprimer",
   "ui.playlist.track_count": "{{count}} musique",
   "ui.playlist.track_count_plural": "{{count}} musiques",
   "screens.playlist.button.add_tracks": "Ajouter des musiques",
@@ -46,9 +45,11 @@
   "modals.color_scheme_create.switch.dark_mode.label": "Utiliser le thème sombre",
   "modals.color_scheme_create.switch.dark_mode.helper_text": "Contrôle la couleur de texte dans la barre de statut. Le thème sombre affiche du texte blanc sur la couleur d'arrière-plan que vous avez choisi, autrement, la couleur noire sera utilisée.",
   "ui.dialog.confirm_dialog.cancel_action.title": "Annuler",
-  "modals.playlist.settings.dialog.confirm_delete.action.confirm": "Supprimer",
   "modals.playlist.settings.dialog.confirm_delete.title": "Êtes-vous certains ?",
   "errors.unexpected.try_again": "Erreur inattendue, veuillez réessayer",
   "button.create": "Créer",
-  "modals.color_scheme_create.button.choose_color": "Choisir une couleur"
+  "modals.color_scheme_create.button.choose_color": "Choisir une couleur",
+  "button.delete": "Supprimer",
+  "screens.settings.dialog.confirm_clear_cache.subtitle": "Toutes vos playlist et votre thème personnalisé seront supprimés.",
+  "screens.settings.dialog.confirm_clear_cache.title": "Cette action est irréversible !"
 }

@@ -1,5 +1,6 @@
 import {
   Button,
+  ConfirmDialog,
   Horizontal,
   ScreenContainer,
   ThemeColorScheme,
@@ -19,11 +20,12 @@ import { Text, makeStyles } from '@rneui/themed';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
 export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
   navigation: { navigate }
 }) => {
+  const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [t, { language }] = useTranslation();
   const styles = useStyles();
   const { activeColorSchemeText } = useColorScheme();
@@ -58,10 +60,23 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
         <Text style={styles.switchTitle}>
           {t(i18nKeys.screens.settings.clear_cache.label)}
         </Text>
-        <Button onPress={clearCache}>
+        <Button onPress={() => setConfirmDialogOpen(true)}>
           {t(i18nKeys.screens.settings.clear_cache.button)}
         </Button>
       </Horizontal>
+      <ConfirmDialog
+        close={() => setConfirmDialogOpen(false)}
+        confirmButton={{
+          onPress: () => clearCache(),
+          title: t(i18nKeys.button.delete)
+        }}
+        isOpen={isConfirmDialogOpen}
+        title={t(i18nKeys.screens.settings.dialog.confirm_clear_cache.title)}
+      >
+        <Text>
+          {t(i18nKeys.screens.settings.dialog.confirm_clear_cache.subtitle)}
+        </Text>
+      </ConfirmDialog>
     </ScreenContainer>
   );
 };

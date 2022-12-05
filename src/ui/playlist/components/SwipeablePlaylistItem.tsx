@@ -49,7 +49,7 @@ export const SwipeablePlaylistItem: FC<SwipeablePlaylistItemProps> = ({
         onDelete && (
           <PlaylistItemSwipeAction
             backgroundColor={theme.colors.error}
-            label={t(i18nKeys.ui.playlist.swipe_action.delete)}
+            label={t(i18nKeys.button.delete)}
           />
         )
       }
