@@ -99,13 +99,13 @@ export const ColorSchemeCreateModal: FC<
               size="sm"
               style={styles.button}
             >
-              Choose a color
+              {t(i18nKeys.modals.color_scheme_create.button.choose_color)}
             </Button>
           </Card>
         )}
       />
       <Button onPress={createColorSchemeHandler} style={styles.createButton}>
-        Create
+        {t(i18nKeys.button.create)}
       </Button>
       {activePicker && (
         <ColorPickerDialog

@@ -1,6 +1,14 @@
 // This file is auto-generated, manual edits in this file will be overwritten!
 
 export const i18nKeys = {
+  button: {
+    create: 'button.create'
+  },
+  errors: {
+    unexpected: {
+      try_again: 'errors.unexpected.try_again'
+    }
+  },
   language: {
     en: 'language.en',
     fr: 'language.fr'
@@ -21,6 +29,9 @@ export const i18nKeys = {
       }
     },
     color_scheme_create: {
+      button: {
+        choose_color: 'modals.color_scheme_create.button.choose_color'
+      },
       dialog: {
         color_picker: {
           actions: {
@@ -60,7 +71,6 @@ export const i18nKeys = {
     },
     playlist: {
       create: {
-        button: 'modals.playlist.create.button',
         input: {
           name_playlist: {
             placeholder:

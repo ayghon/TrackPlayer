@@ -2,12 +2,11 @@
   "language.en": "Anglais",
   "language.fr": "Français",
   "modals.color_scheme.button.create_color_scheme": "Créer un thème personnalisé",
-  "modals.playlist.create.button": "Créer",
   "modals.playlist.create.input.name_playlist.placeholder": "Nommer la playlist",
   "modals.playlist.settings.button.delete_playlist": "Supprimer playlist",
   "modals.playlist.settings.input.rename_playlist.label": "Renommer la playlist",
   "modals.playlist.settings.input.rename_playlist.placeholder": "Nommer la playlist",
-  "routes.modals.color_scheme.header_title": "Theme",
+  "routes.modals.color_scheme.header_title": "Thème",
   "routes.modals.language.header_title": "Langue",
   "routes.stacks.settings.title": "Paramètres",
   "routes.tabs.home.header_title.period.afternoon": "Bonne après-midi",
@@ -21,7 +20,7 @@
   "screens.home.section.recently_played.title": "Joué récemment",
   "screens.settings.clear_cache.button": "Vider",
   "screens.settings.clear_cache.label": "Vider le cache de l'app",
-  "screens.settings.color_scheme.label": "Theme",
+  "screens.settings.color_scheme.label": "Thème",
   "screens.settings.language.label": "Langue",
   "ui.player.track_view.label.unknown": "Inconnu",
   "ui.playlist.swipe_action.delete": "Supprimer",
@@ -48,5 +47,8 @@
   "modals.color_scheme_create.switch.dark_mode.helper_text": "Contrôle la couleur de texte dans la barre de statut. Le thème sombre affiche du texte blanc sur la couleur d'arrière-plan que vous avez choisi, autrement, la couleur noire sera utilisée.",
   "ui.dialog.confirm_dialog.cancel_action.title": "Annuler",
   "modals.playlist.settings.dialog.confirm_delete.action.confirm": "Supprimer",
-  "modals.playlist.settings.dialog.confirm_delete.title": "Êtes-vous certains ?"
+  "modals.playlist.settings.dialog.confirm_delete.title": "Êtes-vous certains ?",
+  "errors.unexpected.try_again": "Erreur inattendue, veuillez réessayer",
+  "button.create": "Créer",
+  "modals.color_scheme_create.button.choose_color": "Choisir une couleur"
 }

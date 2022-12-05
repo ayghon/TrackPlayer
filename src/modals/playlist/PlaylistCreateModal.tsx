@@ -41,7 +41,7 @@ export const PlaylistCreateModal: FC<
           value={playlistName}
         />
         <Button loading={isLoading} onPress={createHandler}>
-          {t(i18nKeys.modals.playlist.create.button)}
+          {t(i18nKeys.button.create)}
         </Button>
       </View>
     </ScreenContainer>
