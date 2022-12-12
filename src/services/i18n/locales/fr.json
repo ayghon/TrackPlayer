@@ -51,5 +51,10 @@
   "modals.color_scheme_create.button.choose_color": "Choisir une couleur",
   "button.delete": "Supprimer",
   "screens.settings.dialog.confirm_clear_cache.subtitle": "Toutes vos playlist et votre thème personnalisé seront supprimés.",
-  "screens.settings.dialog.confirm_clear_cache.title": "Cette action est irréversible !"
+  "screens.settings.dialog.confirm_clear_cache.title": "Cette action est irréversible !",
+  "ui.player.controls.dialog.confirm_set.actions.accept": "Régler",
+  "ui.player.controls.dialog.confirm_set.input.minutes.error.too_low": "Entrez une valeur plus grande que 0",
+  "ui.player.controls.dialog.confirm_set.input.minutes.label": "Minutes",
+  "ui.player.controls.dialog.confirm_set.subtitle": "Choisissez une valeur de temps en minutes après laquelle le lecteur s'arrêtera automatiquement.",
+  "ui.player.controls.dialog.confirm_set.title": "Sleep Timer"
 }

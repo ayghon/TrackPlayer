@@ -1,4 +1,5 @@
 import { RepeatMode } from 'react-native-track-player';
+import { UseSleepTimerResponse } from './hooks/sleep-timer';
 
 export enum TrackControlsCapability {
   PLAY_PAUSE = 'play-pause',
@@ -28,4 +29,10 @@ export type TrackControls = {
   changeRepeatMode?: (mode: RepeatMode) => void;
   toggleShuffle?: () => void;
   shuffle?: boolean;
+  sleepTimer: UseSleepTimerResponse;
 };
+
+export enum SleepTimerState {
+  IDLE = 'idle',
+  ACTIVE = 'active'
+}

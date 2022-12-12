@@ -4,12 +4,15 @@ import { ProgressBar } from './ProgressBar';
 import { RepeatMode } from 'react-native-track-player';
 import { RepeatModeButton } from './RepeatModeButton';
 import { ShuffleModeButton } from './ShuffleModeButton';
+import { SleepTimerButton } from './SleepTimerButton';
+import { SleepTimerDialog } from './SleepTimerDialog';
 import {
+  SleepTimerState,
   TrackControlsCapability,
   TrackControls as TrackControlsProps
 } from '../../../services';
 import { View } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 
 export const TrackControls = ({
   duration,
@@ -20,9 +23,12 @@ export const TrackControls = ({
   repeatMode = RepeatMode.Off,
   changeRepeatMode,
   toggleShuffle,
-  shuffle = false
+  shuffle = false,
+  sleepTimer
 }: TrackControlsProps) => {
+  const [isDialogOpen, setDialogOpen] = useState(false);
   const styles = useStyles();
+  const { timerState } = sleepTimer;
 
   const icons = [
     {
@@ -78,27 +84,39 @@ export const TrackControls = ({
           {toggleShuffle && (
             <ShuffleModeButton isActive={shuffle} onPress={toggleShuffle} />
           )}
-          {changeRepeatMode && (
-            <RepeatModeButton
-              onChange={changeRepeatMode}
-              repeatMode={repeatMode}
-              style={styles.endIcon}
+          <Horizontal alignCenter style={styles.endIcons}>
+            <SleepTimerButton
+              isActive={timerState === SleepTimerState.ACTIVE}
+              onPress={() => setDialogOpen(true)}
             />
-          )}
+            {changeRepeatMode && (
+              <RepeatModeButton
+                onChange={changeRepeatMode}
+                repeatMode={repeatMode}
+                style={styles.lastEndIcon}
+              />
+            )}
+          </Horizontal>
         </Horizontal>
       )}
+      <SleepTimerDialog
+        isOpen={isDialogOpen}
+        onClose={() => setDialogOpen(false)}
+        sleepTimer={sleepTimer}
+      />
     </View>
   );
 };
 
 const useStyles = makeStyles((theme) => ({
   advancedControlsContainer: {
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    marginTop: 8
   },
   container: {
     justifyContent: 'center'
   },
-  endIcon: {
+  endIcons: {
     alignSelf: 'flex-end'
   },
   icon: {
@@ -109,6 +127,9 @@ const useStyles = makeStyles((theme) => ({
   },
   innerIconStart: {
     paddingEnd: 8
+  },
+  lastEndIcon: {
+    marginStart: 8
   },
   outerIconEnd: {
     paddingStart: 16

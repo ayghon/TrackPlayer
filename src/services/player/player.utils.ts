@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { Playlist } from '../playlists';
 import { TrackControls, TrackControlsCapability } from './player.types';
+import { useSleepTimer } from './hooks/sleep-timer';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -56,7 +57,8 @@ export const useInitPlayer = () => {
           Capability.Pause,
           Capability.SkipToNext,
           Capability.SkipToPrevious
-        ]
+        ],
+        progressUpdateEventInterval: 2
       });
       await TrackPlayer.setRepeatMode(RepeatMode.Queue);
     };
@@ -149,6 +151,9 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   const toggleShuffle = () => setShuffle((state) => !state);
   const shuffleTrack = () => TrackPlayer.skip(getShuffledPosition());
 
+  // SLEEP TIMER handlers
+  const sleepTimer = useSleepTimer();
+
   return {
     controls: {
       capabilities: {
@@ -184,6 +189,7 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
       position,
       repeatMode,
       shuffle,
+      sleepTimer,
       toggleShuffle
     },
     currentTrack,

@@ -190,6 +190,27 @@ export const i18nKeys = {
       }
     },
     player: {
+      controls: {
+        dialog: {
+          confirm_set: {
+            actions: {
+              accept: 'ui.player.controls.dialog.confirm_set.actions.accept'
+            },
+            input: {
+              minutes: {
+                error: {
+                  too_low:
+                    'ui.player.controls.dialog.confirm_set.input.minutes.error.too_low'
+                },
+                label:
+                  'ui.player.controls.dialog.confirm_set.input.minutes.label'
+              }
+            },
+            subtitle: 'ui.player.controls.dialog.confirm_set.subtitle',
+            title: 'ui.player.controls.dialog.confirm_set.title'
+          }
+        }
+      },
       track_view: {
         label: {
           unknown: 'ui.player.track_view.label.unknown'

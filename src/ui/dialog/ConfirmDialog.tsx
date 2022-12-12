@@ -10,6 +10,7 @@ export type ConfirmDialogProps = {
   confirmButton: {
     title: string;
     onPress: () => void;
+    disabled?: boolean;
   };
   cancelButton?: {
     title?: string;
@@ -47,7 +48,12 @@ export const ConfirmDialog: FC<PropsWithChildren<ConfirmDialogProps>> = ({
       <Dialog.Title title={title} titleStyle={{ color: theme.colors.black }} />
       {children}
       <Dialog.Actions>
-        <Button onPress={confirmButton.onPress} size="sm" style={styles.button}>
+        <Button
+          disabled={confirmButton.disabled}
+          onPress={confirmButton.onPress}
+          size="sm"
+          style={styles.button}
+        >
           {confirmButton.title}
         </Button>
         <Button
