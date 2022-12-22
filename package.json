@@ -25,7 +25,7 @@
     "@react-native-community/cli-platform-ios": "9.2.1",
     "@react-navigation/bottom-tabs": "^6.5.1",
     "@react-navigation/native": "^6.0.14",
-    "@react-navigation/native-stack": "^6.9.2",
+    "@react-navigation/native-stack": "^6.9.7",
     "@rneui/base": "^4.0.0-rc.7",
     "@rneui/themed": "^4.0.0-rc.7",
     "axios": "^1.2.1",
