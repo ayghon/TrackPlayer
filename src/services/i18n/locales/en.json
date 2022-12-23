@@ -58,5 +58,14 @@
   "ui.playlist.swipe_action.pin": "Pin",
   "ui.playlist.swipe_action.unpin": "Unpin",
   "ui.playlist.track_count": "{{count}} track",
-  "ui.playlist.track_count_plural": "{{count}} tracks"
+  "ui.playlist.track_count_plural": "{{count}} tracks",
+  "ui.theme.schemes.theme_color_scheme.custom": "Custom",
+  "ui.theme.schemes.theme_color_scheme.dark_blue": "Dark Blue",
+  "ui.theme.schemes.theme_color_scheme.dark_purple": "Dark Purple",
+  "ui.theme.schemes.theme_color_scheme.dark_red": "Dark Red",
+  "ui.theme.schemes.theme_color_scheme.default": "Default",
+  "ui.theme.schemes.theme_color_scheme.light_blue": "Light Blue",
+  "ui.theme.schemes.theme_color_scheme.light_purple": "Light Purple",
+  "ui.theme.schemes.theme_color_scheme.light_red": "Light Red",
+  "ui.theme.schemes.theme_color_scheme.light_turquoise": "Light Turquoise"
 }

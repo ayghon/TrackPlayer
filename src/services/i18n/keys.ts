@@ -234,6 +234,21 @@ export const i18nKeys = {
       },
       track_count: 'ui.playlist.track_count',
       track_count_plural: 'ui.playlist.track_count_plural'
+    },
+    theme: {
+      schemes: {
+        theme_color_scheme: {
+          custom: 'ui.theme.schemes.theme_color_scheme.custom',
+          dark_blue: 'ui.theme.schemes.theme_color_scheme.dark_blue',
+          dark_purple: 'ui.theme.schemes.theme_color_scheme.dark_purple',
+          dark_red: 'ui.theme.schemes.theme_color_scheme.dark_red',
+          default: 'ui.theme.schemes.theme_color_scheme.default',
+          light_blue: 'ui.theme.schemes.theme_color_scheme.light_blue',
+          light_purple: 'ui.theme.schemes.theme_color_scheme.light_purple',
+          light_red: 'ui.theme.schemes.theme_color_scheme.light_red',
+          light_turquoise: 'ui.theme.schemes.theme_color_scheme.light_turquoise'
+        }
+      }
     }
   }
 };

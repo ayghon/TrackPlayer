@@ -58,5 +58,14 @@
   "ui.player.controls.dialog.confirm_set.subtitle": "Choisissez une valeur de temps en minutes après laquelle le lecteur s'arrêtera automatiquement.",
   "ui.player.controls.dialog.confirm_set.title": "Sleep Timer",
   "dialog.irreversible_action.title": "Cette action est irréversible !",
-  "modals.playlist.settings.dialog.confirm_delete.subtitle": "Êtes-vous certain de vouloir supprimer la playlist : {{name}} ?"
+  "modals.playlist.settings.dialog.confirm_delete.subtitle": "Êtes-vous certain de vouloir supprimer la playlist : {{name}} ?",
+  "ui.theme.schemes.theme_color_scheme.custom": "Custom",
+  "ui.theme.schemes.theme_color_scheme.default": "Défaut",
+  "ui.theme.schemes.theme_color_scheme.dark_purple": "Pourpre Sombre",
+  "ui.theme.schemes.theme_color_scheme.dark_blue": "Bleu Sombre",
+  "ui.theme.schemes.theme_color_scheme.dark_red": "Rouge Sombre",
+  "ui.theme.schemes.theme_color_scheme.light_purple": "Pourpre Clair",
+  "ui.theme.schemes.theme_color_scheme.light_blue": "Bleu Clair",
+  "ui.theme.schemes.theme_color_scheme.light_red": "Rouge Clair",
+  "ui.theme.schemes.theme_color_scheme.light_turquoise": "Turquoise Clair"
 }

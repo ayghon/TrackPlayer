@@ -7,6 +7,7 @@ import {
 import { StorageKeys } from '../storage';
 import { useCallback, useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type UseColorSchemeResponse = {
@@ -17,6 +18,7 @@ type UseColorSchemeResponse = {
 };
 
 export const useColorScheme = (): UseColorSchemeResponse => {
+  const { t } = useTranslation();
   const { changeTheme } = useThemeManager();
   const [colorScheme, setColorScheme] = useState<ThemeColorScheme>(
     ThemeColorScheme.DEFAULT
@@ -25,23 +27,23 @@ export const useColorScheme = (): UseColorSchemeResponse => {
   const [colorSchemeList, setColorSchemeList] = useState<ColorSchemeList>([]);
 
   useEffect(() => {
-    getColorSchemeConfiguration(colorScheme).then(({ label }) =>
-      setActiveColorSchemeText(label)
+    getColorSchemeConfiguration(colorScheme).then(({ labelKey }) =>
+      setActiveColorSchemeText(t(labelKey))
     );
-  }, [colorScheme]);
+  }, [colorScheme, t]);
 
   useEffect(() => {
     Promise.all(
       Object.values(ThemeColorScheme).map(async (value) => {
-        const { label } = await getColorSchemeConfiguration(value);
+        const { labelKey } = await getColorSchemeConfiguration(value);
 
         return {
           name: value,
-          title: label
+          title: t(labelKey)
         };
       })
     ).then((list) => setColorSchemeList(list));
-  }, []);
+  }, [t]);
 
   const changeColorScheme = useCallback(
     async (scheme: ThemeColorScheme) => {

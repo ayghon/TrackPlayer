@@ -1,7 +1,8 @@
 import {
   ColorSchemeStorageData,
   StorageKeys,
-  getParsedStorageData
+  getParsedStorageData,
+  i18nKeys
 } from '../../../services';
 import { CustomTheme, ThemeMode, defaultThemeOverrides } from '../theme';
 import { ThemeColorScheme } from './schemes.types';
@@ -39,7 +40,7 @@ export type ColorSchemeConfigurationPalette = [string, string] | never[];
 export type GetColorSchemeConfigurationResponse = {
   mode: ThemeMode;
   palette: ColorSchemeConfigurationPalette;
-  label: string;
+  labelKey: string;
   theme: CustomTheme;
 };
 
@@ -93,7 +94,7 @@ export const getColorSchemeConfiguration = async (
     case ThemeColorScheme.DEFAULT:
     default:
       return {
-        label: 'Default',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.default,
         mode: ThemeMode.DARK,
         palette: [
           defaultSchemeColors.primary.normal,
@@ -110,7 +111,7 @@ export const getColorSchemeConfiguration = async (
       };
     case ThemeColorScheme.DARK_PURPLE:
       return {
-        label: 'Dark Purple',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.dark_purple,
         mode: ThemeMode.DARK,
         palette: [
           darkPurpleSchemeColors.primary.normal,
@@ -127,7 +128,7 @@ export const getColorSchemeConfiguration = async (
       };
     case ThemeColorScheme.DARK_RED:
       return {
-        label: 'Dark Red',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.dark_red,
         mode: ThemeMode.DARK,
         palette: [
           darkRedSchemeColors.primary.normal,
@@ -144,7 +145,7 @@ export const getColorSchemeConfiguration = async (
       };
     case ThemeColorScheme.DARK_BLUE:
       return {
-        label: 'Dark Blue',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.dark_blue,
         mode: ThemeMode.DARK,
         palette: [
           darkBlueSchemeColors.primary.normal,
@@ -161,7 +162,7 @@ export const getColorSchemeConfiguration = async (
       };
     case ThemeColorScheme.LIGHT_BLUE:
       return {
-        label: 'Light Blue',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.light_blue,
         mode: ThemeMode.LIGHT,
         palette: [
           lightBlueSchemeColors.primary.normal,
@@ -178,7 +179,7 @@ export const getColorSchemeConfiguration = async (
       };
     case ThemeColorScheme.LIGHT_RED:
       return {
-        label: 'Light Red',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.light_red,
         mode: ThemeMode.LIGHT,
         palette: [
           lightRedSchemeColors.primary.normal,
@@ -195,7 +196,7 @@ export const getColorSchemeConfiguration = async (
       };
     case ThemeColorScheme.LIGHT_PURPLE:
       return {
-        label: 'Light Purple',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.light_purple,
         mode: ThemeMode.LIGHT,
         palette: [
           lightPurpleSchemeColors.primary.normal,
@@ -212,7 +213,7 @@ export const getColorSchemeConfiguration = async (
       };
     case ThemeColorScheme.LIGHT_TURQUOISE:
       return {
-        label: 'Light Turquoise',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.light_turquoise,
         mode: ThemeMode.LIGHT,
         palette: [
           lightTurquoiseSchemeColors.primary.normal,
@@ -229,7 +230,7 @@ export const getColorSchemeConfiguration = async (
       };
     case ThemeColorScheme.CUSTOM:
       return {
-        label: 'Custom',
+        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.custom,
         mode: customPalette.mode,
         palette: customPalette.palette,
         theme: extendTheme({
