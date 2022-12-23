@@ -13,6 +13,7 @@ import { PlaylistSettingsButton } from './components/PlaylistSettingsButton';
 import { PlaylistViewScreen, SettingsScreen } from '../../screens';
 import { PlaylistsProvider } from '../playlists';
 import { RootStackParamList, Routes } from './routes.types';
+import { RouteProp } from '@react-navigation/core/lib/typescript/src/types';
 import { SettingsButton } from './components/SettingsButton';
 import { TabNavigator } from './tabs';
 import { ThemeMode } from '../../ui';
@@ -71,18 +72,7 @@ export const BaseStackNavigation = () => {
             <BaseStack.Screen
               component={PlaylistViewScreen}
               name={Routes.PLAYLIST_VIEW}
-              options={({
-                route: {
-                  params: { playlist }
-                }
-              }) => ({
-                headerBackTitle: '',
-                headerRight: () => (
-                  <PlaylistSettingsButton playlist={playlist} />
-                ),
-                headerTitle: '',
-                title: ''
-              })}
+              options={playlistViewOptions}
             />
           </BaseStack.Group>
           <BaseStack.Group
@@ -165,4 +155,19 @@ export const BaseStackNavigation = () => {
       </PlaylistsProvider>
     </NavigationContainer>
   );
+};
+
+const playlistViewOptions = ({
+  route: {
+    params: { playlist }
+  }
+}: {
+  route: RouteProp<RootStackParamList, Routes.PLAYLIST_VIEW>;
+}) => {
+  return {
+    headerBackTitle: '',
+    headerRight: () => <PlaylistSettingsButton playlist={playlist} />,
+    headerTitle: '',
+    title: ''
+  };
 };
