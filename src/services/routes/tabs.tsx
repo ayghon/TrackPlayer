@@ -55,10 +55,10 @@ export const TabNavigator = () => {
             key={name}
             name={name}
             options={{
+              ...tabsOptions(iconName),
               headerRight,
               headerShown,
               headerTitle: '',
-              tabBarIcon: (props) => <Icon {...props} name={iconName} />,
               title: t(titleKey)
             }}
           />
@@ -67,3 +67,9 @@ export const TabNavigator = () => {
     </TabStack.Navigator>
   );
 };
+
+const tabsOptions = (iconName: string) => ({
+  tabBarIcon: (props: { focused: boolean; color: string; size: number }) => (
+    <Icon {...props} name={iconName} />
+  )
+});
