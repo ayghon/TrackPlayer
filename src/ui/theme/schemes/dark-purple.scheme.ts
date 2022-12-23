@@ -1,14 +1,19 @@
-import { ThemeColors } from '../theme.types';
+import { textColorsDefaults } from './schemes.utils';
 
-export const darkPurpleSchemeColors: ThemeColors = {
-  darkColors: {
-    background: '#1b1b1b',
-    primary: '#424242',
-    secondary: '#651fff'
+export const darkPurpleSchemeColors = {
+  primary: {
+    dark: '#000000',
+    light: '#484848',
+    normal: '#212121',
+    opaque: '#00000099'
   },
-  lightColors: {
-    background: '#1b1b1b',
-    primary: '#424242',
-    secondary: '#651fff'
+  secondary: {
+    dark: '#0100ca',
+    light: '#a255ff',
+    normal: '#651fff'
+  },
+  text: {
+    accent: '#651fff',
+    ...textColorsDefaults.dark
   }
 };

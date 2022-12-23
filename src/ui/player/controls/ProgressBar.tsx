@@ -1,4 +1,4 @@
-import { Slider, makeStyles, useTheme } from '@rneui/themed';
+import { Progress, Slider } from 'native-base';
 import React, { FC } from 'react';
 
 export type ProgressBarProps = {
@@ -14,39 +14,29 @@ export const ProgressBar: FC<ProgressBarProps> = ({
   duration,
   minimal = false
 }) => {
-  const { theme } = useTheme();
-  const styles = useStyles();
+  if (minimal) {
+    return (
+      <Progress
+        max={duration}
+        min={0}
+        size={minimal ? 'xs' : 'sm'}
+        value={position}
+      />
+    );
+  }
 
   return (
     <Slider
-      maximumTrackTintColor={theme.colors.primary}
-      maximumValue={duration}
-      minimumTrackTintColor={theme.colors.secondary}
-      minimumValue={0}
-      onSlidingComplete={onProgressChange}
-      style={minimal ? styles.minimalSlider : undefined}
-      thumbStyle={minimal ? styles.minimalSliderThumb : styles.sliderThumb}
-      thumbTintColor={theme.colors.secondary}
-      thumbTouchSize={
-        minimal ? { height: 2, width: 2 } : { height: 12, width: 12 }
-      }
-      trackStyle={minimal ? styles.minimalSliderTrack : styles.sliderTrack}
+      maxValue={duration}
+      minValue={0}
+      onChange={onProgressChange}
+      size={minimal ? 'md' : 'lg'}
       value={position}
-    />
+    >
+      <Slider.Track>
+        <Slider.FilledTrack />
+      </Slider.Track>
+      <Slider.Thumb height={minimal ? 0 : 4} width={minimal ? 0 : 4} />
+    </Slider>
   );
 };
-
-const useStyles = makeStyles({
-  minimalSlider: {
-    height: 6
-  },
-  minimalSliderThumb: {
-    height: 2,
-    width: 2
-  },
-  minimalSliderTrack: {
-    height: 4
-  },
-  sliderThumb: { height: 16, width: 16 },
-  sliderTrack: { height: 6 }
-});

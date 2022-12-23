@@ -1,11 +1,18 @@
 import {
   Button,
+  FlatList,
+  Row,
+  Text,
+  useColorMode,
+  useTheme
+} from 'native-base';
+import {
+  Card,
   ColorSchemePalette,
-  Horizontal,
   ScreenContainer,
-  SwitchInput
+  SwitchInput,
+  ThemeMode
 } from '../../ui';
-import { Card, Text, makeStyles, useTheme } from '@rneui/themed';
 import { ColorPaletteItem } from './components/ColorPaletteItem';
 import { ColorPickerDialog } from './components/ColorPickerDialog';
 import {
@@ -15,7 +22,6 @@ import {
   createColorScheme,
   i18nKeys
 } from '../../services';
-import { FlatList } from 'react-native';
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers';
 import { colorSchemeModelItemToI18n } from './color-scheme.utils';
 import { fromHsv, toHsv } from 'react-native-color-picker';
@@ -26,17 +32,19 @@ export const ColorSchemeCreateModal: FC<
   RootStackScreenProps<Routes.COLOR_SCHEME_CREATE>
 > = ({ navigation: { goBack } }) => {
   const { t } = useTranslation();
-  const { theme } = useTheme();
-  const styles = useStyles();
   const [isColorPickerModalOpen, setColorPickerModalOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const theme = useTheme();
+  const { colorMode } = useColorMode();
+  const [darkMode, setDarkMode] = useState(colorMode === ThemeMode.DARK);
   const [activePicker, setActivePicker] = useState<ColorSchemePalette>();
   const [colorScheme, setColorScheme] = useState<ColorSchemeModel>({
-    [ColorSchemePalette.DARK]: theme.colors.black,
-    [ColorSchemePalette.LIGHT]: theme.colors.white,
-    [ColorSchemePalette.PRIMARY]: theme.colors.primary,
-    [ColorSchemePalette.SECONDARY]: theme.colors.secondary,
-    [ColorSchemePalette.BACKGROUND]: theme.colors.background
+    [ColorSchemePalette.PRIMARY_NORMAL]: theme.colors.primary.normal,
+    [ColorSchemePalette.PRIMARY_DARK]: theme.colors.primary.dark,
+    [ColorSchemePalette.PRIMARY_LIGHT]: theme.colors.primary.light,
+    [ColorSchemePalette.PRIMARY_OPAQUE]: theme.colors.primary.opaque,
+    [ColorSchemePalette.SECONDARY_DARK]: theme.colors.secondary.dark,
+    [ColorSchemePalette.SECONDARY_NORMAL]: theme.colors.secondary.normal,
+    [ColorSchemePalette.SECONDARY_LIGHT]: theme.colors.secondary.light
   });
 
   const colorSelectedHandler = (color: HsvColor, item: ColorSchemePalette) =>
@@ -52,7 +60,7 @@ export const ColorSchemeCreateModal: FC<
 
   const createColorSchemeHandler = async () => {
     await createColorScheme({
-      mode: darkMode ? 'dark' : 'light',
+      mode: darkMode ? ThemeMode.DARK : ThemeMode.LIGHT,
       palette: colorScheme
     });
 
@@ -82,29 +90,32 @@ export const ColorSchemeCreateModal: FC<
       <FlatList
         data={Object.values(ColorSchemePalette)}
         keyExtractor={(item) => item}
+        marginY={4}
         renderItem={({ item }) => (
-          <Card>
-            <Card.FeaturedTitle style={styles.title}>
-              {t(colorSchemeModelItemToI18n[item])}
-            </Card.FeaturedTitle>
-            <Horizontal alignCenter style={styles.cardTitleContainer}>
+          <Card marginBottom={4} paddingBottom={4}>
+            <Text>{t(colorSchemeModelItemToI18n[item])}</Text>
+            <Row
+              alignItems="center"
+              justifyContent="space-between"
+              marginBottom={4}
+            >
               <Text>
                 {colorScheme[item] ||
                   t(i18nKeys.modal.playlist.create.palette_color_item.empty)}
               </Text>
               <ColorPaletteItem color={colorScheme[item] || 'transparent'} />
-            </Horizontal>
+            </Row>
             <Button
+              alignSelf="flex-end"
               onPress={() => openColorPickerDialogHandler(item)}
               size="sm"
-              style={styles.button}
             >
               {t(i18nKeys.modals.color_scheme_create.button.choose_color)}
             </Button>
           </Card>
         )}
       />
-      <Button onPress={createColorSchemeHandler} style={styles.createButton}>
+      <Button onPress={createColorSchemeHandler}>
         {t(i18nKeys.button.create)}
       </Button>
       {activePicker && (
@@ -122,16 +133,3 @@ export const ColorSchemeCreateModal: FC<
     </ScreenContainer>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  button: {
-    alignSelf: 'flex-end'
-  },
-  cardTitleContainer: { justifyContent: 'space-between', marginBottom: 16 },
-  createButton: {
-    marginTop: 12
-  },
-  title: {
-    color: theme.colors.black
-  }
-}));

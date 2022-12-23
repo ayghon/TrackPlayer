@@ -27,6 +27,7 @@ export const LanguageModal = () => {
           key={lang}
           onPress={() => handleChange(lang)}
           title={t(i18nLanguageKeyToTranslation[lang])}
+          value={checked}
         />
       ))}
     </ScreenContainer>

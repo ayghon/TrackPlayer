@@ -1,9 +1,8 @@
 import { ConfirmDialog } from '../../dialog';
-import { Icon, Text, makeStyles } from '@rneui/themed';
+import { Icon, Stack, Text } from 'native-base';
 import { NumberInput } from '../../fields';
 import { SleepTimerState, i18nKeys } from '../../../services';
 import { UseSleepTimerResponse } from '../../../services/player/hooks/sleep-timer';
-import { View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
 
@@ -20,7 +19,6 @@ export const SleepTimerDialog: FC<SleepTimerDialogProps> = ({
 }) => {
   const [timeout, setTimeout] = useState<number>(15);
   const { t } = useTranslation();
-  const styles = useStyles();
   const { startTimer, timerState, resetTimer } = sleepTimer;
 
   const isValueIsTooLow =
@@ -47,10 +45,10 @@ export const SleepTimerDialog: FC<SleepTimerDialogProps> = ({
       isOpen={isOpen}
       title={t(i18nKeys.ui.player.controls.dialog.confirm_set.title)}
     >
-      <Text style={styles.dialogIntroduction}>
-        {t(i18nKeys.ui.player.controls.dialog.confirm_set.subtitle)}
-      </Text>
-      <View style={styles.dialogInputContainer}>
+      <Stack space={2}>
+        <Text>
+          {t(i18nKeys.ui.player.controls.dialog.confirm_set.subtitle)}
+        </Text>
         <NumberInput
           error={
             isValueIsTooLow
@@ -64,19 +62,10 @@ export const SleepTimerDialog: FC<SleepTimerDialogProps> = ({
             i18nKeys.ui.player.controls.dialog.confirm_set.input.minutes.label
           )}
           onChange={(value) => setTimeout(value)}
-          rightIcon={<Icon name="alarm" />}
+          rightElement={<Icon name="alarm" />}
           value={timeout}
         />
-      </View>
+      </Stack>
     </ConfirmDialog>
   );
 };
-
-const useStyles = makeStyles({
-  dialogInputContainer: {
-    width: '100%'
-  },
-  dialogIntroduction: {
-    marginBottom: 16
-  }
-});

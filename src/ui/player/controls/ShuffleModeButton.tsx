@@ -1,4 +1,4 @@
-import { Icon, makeStyles, useTheme } from '@rneui/themed';
+import { Icon } from 'native-base';
 import React, { FC } from 'react';
 
 export type ShuffleModeButtonProps = {
@@ -9,23 +9,11 @@ export type ShuffleModeButtonProps = {
 export const ShuffleModeButton: FC<ShuffleModeButtonProps> = ({
   isActive,
   onPress
-}) => {
-  const { theme } = useTheme();
-  const styles = useStyles();
-
-  return (
-    <Icon
-      color={isActive ? theme.colors.secondary : undefined}
-      name="shuffle"
-      onPress={onPress}
-      size={32}
-      style={styles.startIcon}
-    />
-  );
-};
-
-const useStyles = makeStyles({
-  startIcon: {
-    alignSelf: 'flex-start'
-  }
-});
+}) => (
+  <Icon
+    color={isActive ? 'secondary.normal' : undefined}
+    name="shuffle"
+    onPress={onPress}
+    size="2xl"
+  />
+);

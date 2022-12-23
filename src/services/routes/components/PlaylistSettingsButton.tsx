@@ -1,4 +1,4 @@
-import { Icon } from '@rneui/themed';
+import { Icon } from 'native-base';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Playlist } from '../../playlists';
 import { RootStackParamList, Routes } from '../routes.types';

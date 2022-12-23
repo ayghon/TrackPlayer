@@ -1,5 +1,4 @@
-import { ColorSchemePalette } from '../../ui';
-import { ThemeMode } from '@rneui/themed';
+import { ColorSchemePalette, ThemeMode } from '../../ui';
 
 export type ColorSchemeModel = {
   [x in ColorSchemePalette]: string;

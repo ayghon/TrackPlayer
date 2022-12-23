@@ -1,34 +1,32 @@
-import { ActivityIndicator, View } from 'react-native';
-import { ImageProps, Image as RNEImage, makeStyles } from '@rneui/themed';
+import { AspectRatio, IImageProps, Image as NBImage, View } from 'native-base';
+import { ResponsiveValue } from 'native-base/lib/typescript/components/types';
 import React from 'react';
 
-export const Image = (props: ImageProps) => {
-  const styles = useStyles();
+export type ImageProps = IImageProps & {
+  ratio?: ResponsiveValue<number>;
+};
+
+export const Image = ({ alt = 'Image', ratio = 1, ...props }: ImageProps) => {
   if (!props?.source) {
-    return <View style={[styles.image, props?.containerStyle, props?.style]} />;
+    return (
+      <AspectRatio height={props.height} ratio={ratio} width={props.width}>
+        <View bgColor="primary.light" borderRadius="md" />
+      </AspectRatio>
+    );
   }
 
   return (
-    <RNEImage
-      PlaceholderContent={<ActivityIndicator />}
-      placeholderStyle={styles.loader}
-      resizeMode="cover"
-      transition
-      transitionDuration={200}
-      {...props}
-      containerStyle={[styles.image, props.containerStyle]}
-    />
+    <AspectRatio height={props.height} ratio={ratio} width={props.width}>
+      <NBImage
+        alt={alt}
+        bgColor="primary.light"
+        borderRadius="md"
+        fallbackElement={
+          <View bgColor="primary.light" borderRadius="md" {...props} />
+        }
+        resizeMode="cover"
+        {...props}
+      />
+    </AspectRatio>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  image: {
-    backgroundColor: theme.colors.background,
-    borderRadius: 6
-  },
-  loader: {
-    backgroundColor: theme.colors.background,
-    height: '100%',
-    width: '100%'
-  }
-}));

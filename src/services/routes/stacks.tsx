@@ -19,31 +19,33 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getHeaderTitle } from './routes.utils';
 import { i18nKeys } from '../i18n';
 import { isAndroid } from '../../utils';
+import { useColorMode, useTheme } from 'native-base';
 import { useInitStorage } from '../storage/init-storage.hooks';
-import { useTheme } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
 const BaseStack = createNativeStackNavigator<RootStackParamList>();
 
 export const BaseStackNavigation = () => {
-  const { theme } = useTheme();
   const { t } = useTranslation();
-
   useInitStorage();
+  const { colorMode } = useColorMode();
+  const {
+    colors: { primary, secondary, text }
+  } = useTheme();
 
   return (
     <NavigationContainer
       theme={{
         colors: {
-          background: theme.colors.background,
-          border: theme.colors.background,
-          card: theme.colors.background,
-          notification: theme.colors.secondary,
-          primary: theme.colors.black,
-          text: theme.colors.black
+          background: primary.normal,
+          border: primary.light,
+          card: primary.normal,
+          notification: secondary.dark,
+          primary: text.primary,
+          text: text.primary
         },
-        dark: theme.mode === 'dark'
+        dark: colorMode === 'dark'
       }}
     >
       <PlaylistsProvider>

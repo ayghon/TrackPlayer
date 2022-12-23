@@ -1,4 +1,3 @@
-import { ActivityIndicator } from 'react-native';
 import {
   Playlist,
   RootStackScreenProps,
@@ -6,6 +5,7 @@ import {
   usePlayerState
 } from '../../services';
 import { ScreenContainer, TrackView } from '../../ui';
+import { Spinner } from 'native-base';
 import React, { FC, useEffect } from 'react';
 import TrackPlayer, { Track } from 'react-native-track-player';
 
@@ -74,11 +74,7 @@ export const PlayerModal: FC<RootStackScreenProps<Routes.PLAYER>> = ({
   ]);
 
   if (!currentTrack || queue.length === 0) {
-    return (
-      <ScreenContainer>
-        <ActivityIndicator />
-      </ScreenContainer>
-    );
+    return <Spinner />;
   }
 
   return (

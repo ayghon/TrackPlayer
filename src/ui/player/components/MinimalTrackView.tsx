@@ -1,12 +1,10 @@
-import { Horizontal } from '../../display';
+import { Box, Row } from 'native-base';
 import { Image } from '../../image';
 import { PlayButton } from '../../button';
 import { ProgressBar } from '../controls';
 import { TrackControlsCapability } from '../../../services';
 import { TrackTitle } from './TrackTitle';
 import { TrackViewProps } from '../TrackView';
-import { View } from 'react-native';
-import { makeStyles } from '@rneui/themed';
 import React from 'react';
 
 export type MinimalTrackViewProps = Omit<
@@ -23,60 +21,37 @@ export const MinimalTrackView = ({
   artist,
   artwork
 }: MinimalTrackViewProps) => {
-  const styles = useStyles();
-
   const { position, onProgressChange, capabilities, isPlaying, duration } =
     controlsProps;
 
   return (
-    <View style={styles.controlsContainer}>
-      <Horizontal alignCenter style={styles.contentContainer}>
-        <Horizontal>
+    <Box backgroundColor="primary.opaque">
+      <Row
+        alignItems="center"
+        justifyContent="space-between"
+        marginX={3}
+        marginY={3}
+      >
+        <Row space={4}>
           <Image
-            containerStyle={styles.image}
+            height={10}
             source={artwork ? { uri: artwork } : undefined}
+            width={10}
           />
-          <TrackTitle
-            artist={artist}
-            minimal
-            style={styles.title}
-            title={title}
-          />
-        </Horizontal>
+          <TrackTitle artist={artist} minimal title={title} />
+        </Row>
         <PlayButton
           isDisabled={capabilities[TrackControlsCapability.PLAY_PAUSE].disabled}
           isPlaying={isPlaying}
           onPress={capabilities[TrackControlsCapability.PLAY_PAUSE].onPress}
         />
-      </Horizontal>
+      </Row>
       <ProgressBar
         duration={duration}
         minimal
         onProgressChange={onProgressChange}
         position={position}
       />
-    </View>
+    </Box>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  contentContainer: {
-    justifyContent: 'space-between',
-    marginBottom: 6,
-    marginHorizontal: 12,
-    marginTop: 8
-  },
-  controlsContainer: {
-    backgroundColor: theme.colors.white
-  },
-  icon: {
-    backgroundColor: theme.colors.background
-  },
-  image: {
-    height: 40,
-    width: 40
-  },
-  title: {
-    backgroundColor: 'green'
-  }
-}));

@@ -1,4 +1,4 @@
-import { FAB, Icon, makeStyles, useTheme } from '@rneui/themed';
+import { Fab, Icon } from 'native-base';
 import React, { FC } from 'react';
 
 export type FloatingPlayButtonProps = {
@@ -10,19 +10,18 @@ export const FloatingPlayButton: FC<FloatingPlayButtonProps> = ({
   isVisible,
   onPress
 }) => {
-  const styles = useStyles();
-  const { theme } = useTheme();
+  if (!isVisible) {
+    return null;
+  }
 
   return (
-    <FAB
-      buttonStyle={styles.fab}
-      icon={<Icon color={theme.colors.white} name="play-arrow" size={32} />}
+    <Fab
+      bg="secondary.normal"
+      bottom={0}
+      icon={<Icon color="text.secondary" name="play-arrow" size="2xl" />}
       onPress={onPress}
-      visible={isVisible}
+      renderInPortal={false}
+      right={0}
     />
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  fab: { margin: 0, padding: 0 }
-}));

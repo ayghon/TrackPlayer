@@ -1,9 +1,9 @@
 import { ColorSchemePalette, ConfirmDialog } from '../../../ui';
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers';
+import { StyleSheet } from 'react-native';
 import { TriangleColorPicker } from 'react-native-color-picker';
 import { colorSchemeModelItemToI18n } from '../color-scheme.utils';
 import { i18nKeys } from '../../../services';
-import { makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
 
@@ -23,7 +23,6 @@ export const ColorPickerDialog: FC<ColorPickerDialogProps> = ({
   isOpen,
   defaultColor
 }) => {
-  const styles = useStyles();
   const { t } = useTranslation();
   const [color, setColor] = useState<HsvColor>();
 
@@ -66,18 +65,14 @@ export const ColorPickerDialog: FC<ColorPickerDialogProps> = ({
         hideControls
         onColorChange={setColor}
         rotationHackFactor={0}
-        style={styles.coloPicker}
+        style={styles.colorPicker}
       />
     </ConfirmDialog>
   );
 };
 
-const useStyles = makeStyles({
-  button: {
-    marginStart: 4
-  },
-  coloPicker: {
+const styles = StyleSheet.create({
+  colorPicker: {
     height: 250
-  },
-  flex: { flex: 1 }
+  }
 });

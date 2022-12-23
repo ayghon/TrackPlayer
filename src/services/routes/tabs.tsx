@@ -1,12 +1,12 @@
 import { CustomBottomTabBar } from './components/CustomBottomTabBar';
 import { HomeScreen, LibraryScreen } from '../../screens';
+import { Icon } from 'native-base';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import {
   RootStackParamList,
   RootStackScreenProps,
   Routes
 } from './routes.types';
-import { TabBarIcon } from './components/TabBarIcon';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { i18nKeys } from '../i18n';
 import { useTranslation } from 'react-i18next';
@@ -58,7 +58,7 @@ export const TabNavigator = () => {
               headerRight,
               headerShown,
               headerTitle: '',
-              tabBarIcon: (props) => <TabBarIcon {...props} name={iconName} />,
+              tabBarIcon: (props) => <Icon {...props} name={iconName} />,
               title: t(titleKey)
             }}
           />

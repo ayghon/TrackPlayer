@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { FlatList } from 'native-base';
 import { ListRenderItem } from './components/ListRenderItem';
 import {
   RootStackScreenProps,

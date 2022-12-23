@@ -1,4 +1,4 @@
-import { Icon } from '@rneui/themed';
+import { Icon } from 'native-base';
 import { Playlist, i18nKeys, usePlaylistsState } from '../../../services';
 import { TextInput } from '../../../ui';
 import { useTranslation } from 'react-i18next';
@@ -56,8 +56,8 @@ export const LibrarySearchBar: FC<LibrarySearchBarProps> = ({
 
   return (
     <TextInput
-      leftIcon={<Icon name="search" />}
-      onChange={searchHandler}
+      leftElement={<Icon marginRight={2} name="search" />}
+      onChangeText={searchHandler}
       placeholder={t(i18nKeys.screens.library.input.search.placeholder)}
       value={search}
     />

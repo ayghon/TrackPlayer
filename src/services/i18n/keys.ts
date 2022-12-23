@@ -5,6 +5,11 @@ export const i18nKeys = {
     create: 'button.create',
     delete: 'button.delete'
   },
+  dialog: {
+    irreversible_action: {
+      title: 'dialog.irreversible_action.title'
+    }
+  },
   errors: {
     unexpected: {
       try_again: 'errors.unexpected.try_again'
@@ -56,11 +61,17 @@ export const i18nKeys = {
         }
       },
       model_item: {
-        background: 'modals.color_scheme_create.model_item.background',
-        dark: 'modals.color_scheme_create.model_item.dark',
-        light: 'modals.color_scheme_create.model_item.light',
-        primary: 'modals.color_scheme_create.model_item.primary',
-        secondary: 'modals.color_scheme_create.model_item.secondary'
+        primary: {
+          dark: 'modals.color_scheme_create.model_item.primary.dark',
+          light: 'modals.color_scheme_create.model_item.primary.light',
+          normal: 'modals.color_scheme_create.model_item.primary.normal',
+          opaque: 'modals.color_scheme_create.model_item.primary.opaque'
+        },
+        secondary: {
+          dark: 'modals.color_scheme_create.model_item.secondary.dark',
+          light: 'modals.color_scheme_create.model_item.secondary.light',
+          normal: 'modals.color_scheme_create.model_item.secondary.normal'
+        }
       },
       switch: {
         dark_mode: {
@@ -85,7 +96,7 @@ export const i18nKeys = {
         },
         dialog: {
           confirm_delete: {
-            title: 'modals.playlist.settings.dialog.confirm_delete.title'
+            subtitle: 'modals.playlist.settings.dialog.confirm_delete.subtitle'
           }
         },
         input: {
@@ -172,8 +183,7 @@ export const i18nKeys = {
       },
       dialog: {
         confirm_clear_cache: {
-          subtitle: 'screens.settings.dialog.confirm_clear_cache.subtitle',
-          title: 'screens.settings.dialog.confirm_clear_cache.title'
+          subtitle: 'screens.settings.dialog.confirm_clear_cache.subtitle'
         }
       },
       language: {

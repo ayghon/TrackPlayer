@@ -1,4 +1,4 @@
-import { Icon, useTheme } from '@rneui/themed';
+import { Icon } from 'native-base';
 import React, { FC } from 'react';
 
 export type SleepTimerButtonProps = {
@@ -9,14 +9,11 @@ export type SleepTimerButtonProps = {
 export const SleepTimerButton: FC<SleepTimerButtonProps> = ({
   isActive,
   onPress
-}) => {
-  const { theme } = useTheme();
-
-  return (
-    <Icon
-      color={isActive ? theme.colors.secondary : theme.colors.disabled}
-      name="bedtime"
-      onPress={onPress}
-    />
-  );
-};
+}) => (
+  <Icon
+    color={isActive ? 'secondary.normal' : undefined}
+    name="bedtime"
+    onPress={onPress}
+    size="2xl"
+  />
+);

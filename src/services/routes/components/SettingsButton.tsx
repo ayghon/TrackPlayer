@@ -1,23 +1,17 @@
-import { Horizontal } from '../../../ui';
-import { Icon, useTheme } from '@rneui/themed';
+import { Icon, Row } from 'native-base';
 import { LibraryHeaderRight } from './LibraryHeaderRight';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList, Routes } from '../routes.types';
 import React from 'react';
 
 export const SettingsButton = () => {
-  const { theme } = useTheme();
   const { navigate } =
     useNavigation<NavigationProp<RootStackParamList, Routes.ROOT>>();
 
   return (
-    <Horizontal>
+    <Row space={4}>
       <LibraryHeaderRight />
-      <Icon
-        color={theme.colors.black}
-        name="settings"
-        onPress={() => navigate(Routes.SETTINGS)}
-      />
-    </Horizontal>
+      <Icon name="settings" onPress={() => navigate(Routes.SETTINGS)} />
+    </Row>
   );
 };

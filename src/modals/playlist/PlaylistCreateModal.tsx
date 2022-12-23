@@ -1,13 +1,12 @@
-import { Button, ScreenContainer, TextInput } from '../../ui';
+import { Button, Center } from 'native-base';
 import {
   RootStackScreenProps,
   Routes,
   i18nKeys,
   usePlaylistsState
 } from '../../services';
-import { View } from 'react-native';
+import { ScreenContainer, TextInput } from '../../ui';
 import { isIOS } from '../../utils';
-import { makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
 
@@ -16,7 +15,6 @@ export const PlaylistCreateModal: FC<
 > = ({ navigation: { goBack } }) => {
   const [playlistName, setPlaylistName] = useState('');
   const { t } = useTranslation();
-  const styles = useStyles();
   const { createPlaylist, isLoading } = usePlaylistsState();
 
   const createHandler = async () => {
@@ -31,30 +29,21 @@ export const PlaylistCreateModal: FC<
 
   return (
     <ScreenContainer hasCloseButton={isIOS}>
-      <View style={styles.container}>
+      <Center height="80%">
         <TextInput
           autoFocus
-          onChange={(text) => setPlaylistName(text)}
+          marginY={8}
+          onChangeText={(text) => setPlaylistName(text)}
+          paddingX={8}
           placeholder={t(
             i18nKeys.modals.playlist.create.input.name_playlist.placeholder
           )}
           value={playlistName}
         />
-        <Button loading={isLoading} onPress={createHandler}>
+        <Button isLoading={isLoading} onPress={createHandler}>
           {t(i18nKeys.button.create)}
         </Button>
-      </View>
+      </Center>
     </ScreenContainer>
   );
 };
-
-const useStyles = makeStyles({
-  container: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    height: '80%',
-    justifyContent: 'center',
-    paddingHorizontal: 40,
-    width: '100%'
-  }
-});

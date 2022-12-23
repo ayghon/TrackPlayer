@@ -1,5 +1,4 @@
-import { Button, ButtonVariant } from '../button';
-import { Dialog, makeStyles, useTheme } from '@rneui/themed';
+import { Button, Modal } from 'native-base';
 import { i18nKeys } from '../../services';
 import { useTranslation } from 'react-i18next';
 import React, { FC, PropsWithChildren } from 'react';
@@ -27,8 +26,6 @@ export const ConfirmDialog: FC<PropsWithChildren<ConfirmDialogProps>> = ({
   close,
   children
 }) => {
-  const styles = useStyles();
-  const { theme } = useTheme();
   const { t } = useTranslation();
 
   const defaultCancelText = t(
@@ -36,44 +33,30 @@ export const ConfirmDialog: FC<PropsWithChildren<ConfirmDialogProps>> = ({
   );
 
   return (
-    <Dialog
-      isVisible={isOpen}
-      onBackdropPress={close}
-      onRequestClose={close}
-      overlayStyle={{
-        backgroundColor: theme.colors.background
-      }}
-      style={styles.flex}
-    >
-      <Dialog.Title title={title} titleStyle={{ color: theme.colors.black }} />
-      {children}
-      <Dialog.Actions>
-        <Button
-          disabled={confirmButton.disabled}
-          onPress={confirmButton.onPress}
-          size="sm"
-          style={styles.button}
-        >
-          {confirmButton.title}
-        </Button>
-        <Button
-          onPress={cancelButton?.onPress ?? close}
-          size="sm"
-          variant={ButtonVariant.BORDERLESS}
-        >
-          {cancelButton?.title ?? defaultCancelText}
-        </Button>
-      </Dialog.Actions>
-    </Dialog>
+    <Modal isOpen={isOpen} onClose={close} useRNModal>
+      <Modal.Content>
+        <Modal.Header>
+          {title}
+          <Modal.CloseButton />
+        </Modal.Header>
+        <Modal.Body>{children}</Modal.Body>
+        <Modal.Footer>
+          <Button.Group size="sm">
+            <Button
+              onPress={cancelButton?.onPress ?? close}
+              variant="borderless"
+            >
+              {cancelButton?.title ?? defaultCancelText}
+            </Button>
+            <Button
+              disabled={confirmButton.disabled}
+              onPress={confirmButton.onPress}
+            >
+              {confirmButton.title}
+            </Button>
+          </Button.Group>
+        </Modal.Footer>
+      </Modal.Content>
+    </Modal>
   );
 };
-
-const useStyles = makeStyles({
-  button: {
-    marginStart: 4
-  },
-  coloPicker: {
-    height: 250
-  },
-  flex: { flex: 1 }
-});

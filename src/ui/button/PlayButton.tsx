@@ -1,4 +1,4 @@
-import { Icon, makeStyles } from '@rneui/themed';
+import { Icon } from 'native-base';
 import React, { FC } from 'react';
 
 export type PlayButtonProps = {
@@ -11,22 +11,12 @@ export const PlayButton: FC<PlayButtonProps> = ({
   isDisabled,
   isPlaying,
   onPress
-}) => {
-  const styles = useStyles();
-
-  return (
-    <Icon
-      disabled={isDisabled}
-      disabledStyle={styles.icon}
-      name={isPlaying ? 'play-arrow' : 'pause'}
-      onPress={onPress}
-      size={32}
-    />
-  );
-};
-
-const useStyles = makeStyles((theme) => ({
-  icon: {
-    backgroundColor: theme.colors.background
-  }
-}));
+}) => (
+  <Icon
+    color={isDisabled ? undefined : 'text.primary'}
+    disabled={isDisabled}
+    name={isPlaying ? 'play-arrow' : 'pause'}
+    onPress={onPress}
+    size="4xl"
+  />
+);

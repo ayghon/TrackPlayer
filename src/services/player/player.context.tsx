@@ -1,4 +1,4 @@
-import { TrackControlsCapability } from './player.types';
+import { SleepTimerState, TrackControlsCapability } from './player.types';
 import {
   UsePlayerControlsResponse,
   useInitPlayer,
@@ -40,7 +40,12 @@ const initialValue: UsePlayerControlsResponse = {
     duration: 0,
     isPlaying: false,
     onProgressChange: () => null,
-    position: 0
+    position: 0,
+    sleepTimer: {
+      resetTimer: () => null,
+      startTimer: () => null,
+      timerState: SleepTimerState.IDLE
+    }
   },
   currentTrack: undefined,
   queue: [],

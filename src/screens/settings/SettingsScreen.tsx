@@ -1,7 +1,6 @@
+import { Button, Row, Text } from 'native-base';
 import {
-  Button,
   ConfirmDialog,
-  Horizontal,
   ScreenContainer,
   ThemeColorScheme,
   ValueButton,
@@ -16,7 +15,6 @@ import {
   i18nLanguageKeyToTranslation,
   useColorScheme
 } from '../../services';
-import { Text, makeStyles } from '@rneui/themed';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,7 +25,6 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
 }) => {
   const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [t, { language }] = useTranslation();
-  const styles = useStyles();
   const { activeColorSchemeText } = useColorScheme();
   const { changeTheme } = useThemeManager();
 
@@ -56,14 +53,14 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
       >
         {t(i18nKeys.screens.settings.color_scheme.label)}
       </ValueButton>
-      <Horizontal alignCenter style={styles.setting}>
-        <Text style={styles.switchTitle}>
+      <Row alignItems="center" justifyContent="space-between">
+        <Text variant="body2">
           {t(i18nKeys.screens.settings.clear_cache.label)}
         </Text>
         <Button onPress={() => setConfirmDialogOpen(true)}>
           {t(i18nKeys.screens.settings.clear_cache.button)}
         </Button>
-      </Horizontal>
+      </Row>
       <ConfirmDialog
         close={() => setConfirmDialogOpen(false)}
         confirmButton={{
@@ -71,22 +68,12 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
           title: t(i18nKeys.button.delete)
         }}
         isOpen={isConfirmDialogOpen}
-        title={t(i18nKeys.screens.settings.dialog.confirm_clear_cache.title)}
+        title={t(i18nKeys.dialog.irreversible_action.title)}
       >
-        <Text>
+        <Text variant="body1">
           {t(i18nKeys.screens.settings.dialog.confirm_clear_cache.subtitle)}
         </Text>
       </ConfirmDialog>
     </ScreenContainer>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  setting: {
-    justifyContent: 'space-between',
-    marginBottom: 32
-  },
-  switchTitle: {
-    fontWeight: 'bold'
-  }
-}));

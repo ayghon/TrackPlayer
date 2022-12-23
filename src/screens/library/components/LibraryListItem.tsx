@@ -1,14 +1,23 @@
 import { LayoutVariant, PlaylistItem } from '../../../ui';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Playlist, RootStackParamList, Routes } from '../../../services';
+import { StyledProps } from 'native-base';
 import React, { FC } from 'react';
 
-export const LibraryListItem: FC<{
+export type LibraryListItemProps = StyledProps & {
   item: Playlist;
   variant?: LayoutVariant;
   pinHandler?: (playlist: Playlist) => void;
   deleteHandler?: (playlistId: string) => void;
-}> = ({ item, variant = LayoutVariant.LIST, pinHandler, deleteHandler }) => {
+};
+
+export const LibraryListItem: FC<LibraryListItemProps> = ({
+  item,
+  variant = LayoutVariant.LIST,
+  pinHandler,
+  deleteHandler,
+  ...rest
+}) => {
   const { navigate } =
     useNavigation<NavigationProp<RootStackParamList, Routes.LIBRARY>>();
 
@@ -22,6 +31,7 @@ export const LibraryListItem: FC<{
       title={item.title}
       trackCount={item.count}
       variant={variant}
+      {...rest}
     />
   );
 };

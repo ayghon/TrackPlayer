@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Pressable } from 'react-native';
+import { Pressable } from 'native-base';
 import { RootStackParamList, Routes } from '../routes.types';
 import { TrackView } from '../../../ui';
 import { usePlayerState } from '../../player';

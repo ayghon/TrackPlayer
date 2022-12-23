@@ -1,6 +1,4 @@
-import { IconNode } from '@rneui/base';
-import { Input, useTheme } from '@rneui/themed';
-import { StyleProp, TextStyle } from 'react-native';
+import { TextInput } from './text-input';
 import React, { FC } from 'react';
 
 export type NumberInputProps = {
@@ -10,9 +8,8 @@ export type NumberInputProps = {
   label?: string;
   error?: string;
   autoFocus?: boolean;
-  leftIcon?: IconNode;
-  rightIcon?: IconNode;
-  labelStyle?: StyleProp<TextStyle>;
+  leftElement?: JSX.Element | JSX.Element[];
+  rightElement?: JSX.Element | JSX.Element[];
 };
 
 const parseText = (text: string): number | null => {
@@ -28,17 +25,14 @@ const parseText = (text: string): number | null => {
 
 export const NumberInput: FC<NumberInputProps> = ({
   label,
-  labelStyle,
   autoFocus = false,
-  leftIcon,
-  rightIcon,
+  leftElement,
+  rightElement,
   error,
   value,
   onChange,
   placeholder
 }) => {
-  const { theme } = useTheme();
-
   const onChangeText = (text: string) => {
     const parsedText = parseText(text);
 
@@ -48,19 +42,17 @@ export const NumberInput: FC<NumberInputProps> = ({
   };
 
   return (
-    <Input
+    <TextInput
       autoCapitalize="none"
       autoFocus={autoFocus}
-      errorMessage={error}
+      error={error}
       keyboardType="numeric"
       label={label}
-      labelStyle={labelStyle}
-      leftIcon={leftIcon}
+      leftElement={leftElement}
       maxLength={10}
       onChangeText={onChangeText}
       placeholder={placeholder}
-      rightIcon={rightIcon}
-      selectionColor={theme.colors.secondary}
+      rightElement={rightElement}
       value={value?.toFixed(0)}
     />
   );

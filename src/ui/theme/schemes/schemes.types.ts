@@ -14,11 +14,13 @@ export enum ThemeColorScheme {
  * @description List of colors linked to a color-scheme
  */
 export enum ColorSchemePalette {
-  PRIMARY = 'primary',
-  SECONDARY = 'secondary',
-  BACKGROUND = 'background',
-  LIGHT = 'white',
-  DARK = 'black'
+  PRIMARY_DARK = 'primary.dark',
+  PRIMARY_NORMAL = 'primary.normal',
+  PRIMARY_LIGHT = 'primary.light',
+  PRIMARY_OPAQUE = 'primary.opaque',
+  SECONDARY_DARK = 'secondary.dark',
+  SECONDARY_NORMAL = 'secondary.normal',
+  SECONDARY_LIGHT = 'secondary.light'
 }
 
 export type ColorSchemeItem = {

@@ -1,5 +1,4 @@
-import { Horizontal } from '../../display';
-import { Icon, makeStyles } from '@rneui/themed';
+import { Center, Icon, Row, Stack } from 'native-base';
 import { ProgressBar } from './ProgressBar';
 import { RepeatMode } from 'react-native-track-player';
 import { RepeatModeButton } from './RepeatModeButton';
@@ -11,7 +10,6 @@ import {
   TrackControlsCapability,
   TrackControls as TrackControlsProps
 } from '../../../services';
-import { View } from 'react-native';
 import React, { useState } from 'react';
 
 export const TrackControls = ({
@@ -27,18 +25,15 @@ export const TrackControls = ({
   sleepTimer
 }: TrackControlsProps) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
-  const styles = useStyles();
   const { timerState } = sleepTimer;
 
   const icons = [
     {
       capability: TrackControlsCapability.SKIP_TO_PREVIOUS,
-      containerStyle: styles.outerIconStart,
       name: 'skip-previous'
     },
     {
       capability: TrackControlsCapability.JUMP_BACKWARD,
-      containerStyle: styles.innerIconStart,
       name: 'fast-rewind'
     },
     {
@@ -47,44 +42,43 @@ export const TrackControls = ({
     },
     {
       capability: TrackControlsCapability.JUMP_FORWARD,
-      containerStyle: styles.innerIconEnd,
       name: 'fast-forward'
     },
     {
       capability: TrackControlsCapability.SKIP_TO_NEXT,
-      containerStyle: styles.outerIconEnd,
       name: 'skip-next'
     }
   ];
 
   return (
-    <View>
+    <Stack space={2}>
       <ProgressBar
         duration={duration}
         onProgressChange={onProgressChange}
         position={position}
       />
-      <Horizontal alignCenter style={styles.container}>
-        {icons.map(({ capability, containerStyle, name }) => {
-          return (
+      <Center>
+        <Row alignItems="center" space={2}>
+          {icons.map(({ capability, name }) => (
             <Icon
-              containerStyle={containerStyle}
+              color={
+                capabilities[capability].disabled ? undefined : 'text.primary'
+              }
               disabled={capabilities[capability].disabled}
-              disabledStyle={styles.icon}
               key={capability}
               name={name}
               onPress={capabilities[capability].onPress}
-              size={56}
+              size="6xl"
             />
-          );
-        })}
-      </Horizontal>
+          ))}
+        </Row>
+      </Center>
       {(toggleShuffle || changeRepeatMode) && (
-        <Horizontal style={styles.advancedControlsContainer}>
+        <Row justifyContent="space-between">
           {toggleShuffle && (
             <ShuffleModeButton isActive={shuffle} onPress={toggleShuffle} />
           )}
-          <Horizontal alignCenter style={styles.endIcons}>
+          <Row alignSelf="flex-end" space={2}>
             <SleepTimerButton
               isActive={timerState === SleepTimerState.ACTIVE}
               onPress={() => setDialogOpen(true)}
@@ -93,48 +87,16 @@ export const TrackControls = ({
               <RepeatModeButton
                 onChange={changeRepeatMode}
                 repeatMode={repeatMode}
-                style={styles.lastEndIcon}
               />
             )}
-          </Horizontal>
-        </Horizontal>
+          </Row>
+        </Row>
       )}
       <SleepTimerDialog
         isOpen={isDialogOpen}
         onClose={() => setDialogOpen(false)}
         sleepTimer={sleepTimer}
       />
-    </View>
+    </Stack>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  advancedControlsContainer: {
-    justifyContent: 'space-between',
-    marginTop: 8
-  },
-  container: {
-    justifyContent: 'center'
-  },
-  endIcons: {
-    alignSelf: 'flex-end'
-  },
-  icon: {
-    backgroundColor: theme.colors.background
-  },
-  innerIconEnd: {
-    paddingStart: 8
-  },
-  innerIconStart: {
-    paddingEnd: 8
-  },
-  lastEndIcon: {
-    marginStart: 8
-  },
-  outerIconEnd: {
-    paddingStart: 16
-  },
-  outerIconStart: {
-    paddingEnd: 16
-  }
-}));
