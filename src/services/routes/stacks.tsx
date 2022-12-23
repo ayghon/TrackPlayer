@@ -15,6 +15,7 @@ import { PlaylistsProvider } from '../playlists';
 import { RootStackParamList, Routes } from './routes.types';
 import { SettingsButton } from './components/SettingsButton';
 import { TabNavigator } from './tabs';
+import { ThemeMode } from '../../ui';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { getHeaderTitle } from './routes.utils';
 import { i18nKeys } from '../i18n';
@@ -45,7 +46,7 @@ export const BaseStackNavigation = () => {
           primary: text.primary,
           text: text.primary
         },
-        dark: colorMode === 'dark'
+        dark: colorMode === ThemeMode.DARK
       }}
     >
       <PlaylistsProvider>

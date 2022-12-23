@@ -7,6 +7,7 @@ import {
 import {
   CustomTheme,
   DEFAULT_THEME_MODE,
+  ThemeMode,
   commonDisplayStyles,
   initialTheme,
   useThemeManager
@@ -50,7 +51,9 @@ export const App = () => {
         <StatusBar
           backgroundColor="primary.normal"
           barStyle={
-            DEFAULT_THEME_MODE === 'dark' ? 'light-content' : 'dark-content'
+            DEFAULT_THEME_MODE === ThemeMode.DARK
+              ? 'light-content'
+              : 'dark-content'
           }
         />
         <Spinner />
