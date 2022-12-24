@@ -1,6 +1,6 @@
-import { Icon, StatusBar, View, useColorMode, useTheme } from 'native-base';
+import { Icon, View } from 'native-base';
 import { SafeAreaView } from 'react-native';
-import { ThemeMode } from '../theme';
+import { ScreenStatusBar } from './ScreenStatusBar';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC, PropsWithChildren } from 'react';
 
@@ -15,18 +15,10 @@ export const ScreenContainer: FC<PropsWithChildren<ScreenContainerProps>> = ({
   onClose
 }) => {
   const { goBack } = useNavigation();
-  const { colorMode } = useColorMode();
-  const {
-    colors: { primary }
-  } = useTheme();
-  const isDarkMode = colorMode === ThemeMode.DARK;
 
   return (
     <SafeAreaView>
-      <StatusBar
-        backgroundColor={primary.normal}
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-      />
+      <ScreenStatusBar />
       <View height="100%" paddingX={4} paddingY={3}>
         {hasCloseButton && (
           <Icon

@@ -6,15 +6,14 @@ import {
 } from './services';
 import {
   CustomTheme,
-  DEFAULT_THEME_MODE,
-  ThemeMode,
+  ScreenStatusBar,
   commonDisplayStyles,
   initialTheme,
   useThemeManager
 } from './ui';
 import { DeviceEventEmitter } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NativeBaseProvider, Spinner, StatusBar } from 'native-base';
+import { NativeBaseProvider, Spinner } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 
@@ -48,14 +47,7 @@ export const App = () => {
   if (isLoading) {
     return (
       <Providers>
-        <StatusBar
-          backgroundColor="primary.normal"
-          barStyle={
-            DEFAULT_THEME_MODE === ThemeMode.DARK
-              ? 'light-content'
-              : 'dark-content'
-          }
-        />
+        <ScreenStatusBar />
         <Spinner />
       </Providers>
     );
