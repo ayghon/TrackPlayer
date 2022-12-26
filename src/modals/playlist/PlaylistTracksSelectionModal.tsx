@@ -1,4 +1,4 @@
-import { FlatList, Pressable, View } from 'native-base';
+import { FlatList, TouchableOpacity, View } from 'react-native';
 import {
   Playlist,
   RootStackScreenProps,
@@ -9,6 +9,7 @@ import {
 import { ScreenContainer, TrackItem } from '../../ui';
 import { Track } from 'react-native-track-player';
 import { isIOS } from '../../utils';
+import { makeStyles } from '@rneui/themed';
 import React, { FC, useState } from 'react';
 
 export type PlaylistTracksSelectionModalProps = {
@@ -23,13 +24,17 @@ export const PlaylistTracksSelectionModal: FC<
     params: { playlist }
   }
 }) => {
+  const styles = useStyles();
   const [selectedTracks, setSelectedTracks] = useState<Track[]>(
     playlist?.tracks ?? []
   );
   const { editPlaylist } = usePlaylistsState();
 
-  const getIsSelected = (trackId: string) =>
-    !!selectedTracks.find((item) => item.title === trackId);
+  const getSelectedStyle = (trackId: string) => {
+    return selectedTracks.find((item) => item.title === trackId)
+      ? styles.selectedTrack
+      : undefined;
+  };
 
   const onModalClose = async () => {
     if (
@@ -59,8 +64,7 @@ export const PlaylistTracksSelectionModal: FC<
           data={tracksMocks}
           keyExtractor={(t) => t.title || t.url.toString()}
           renderItem={({ item }) => (
-            <Pressable
-              marginBottom={4}
+            <TouchableOpacity
               onPress={() => {
                 if (
                   selectedTracks.find(
@@ -74,16 +78,28 @@ export const PlaylistTracksSelectionModal: FC<
                   setSelectedTracks((state) => [...state, item]);
                 }
               }}
-              opacity={
-                item.title && getIsSelected(item.title) ? 0.5 : undefined
-              }
-              paddingY={1}
+              style={[
+                styles.trackButton,
+                item.title ? getSelectedStyle(item.title) : undefined
+              ]}
             >
               <TrackItem {...item} />
-            </Pressable>
+            </TouchableOpacity>
           )}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </ScreenContainer>
   );
 };
+
+const useStyles = makeStyles({
+  selectedTrack: {
+    opacity: 0.5
+  },
+  trackButton: {
+    marginBottom: 16,
+    paddingVertical: 4
+  }
+});

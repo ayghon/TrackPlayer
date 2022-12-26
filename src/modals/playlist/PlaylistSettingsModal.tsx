@@ -1,6 +1,5 @@
-import { ConfirmDialog, ScreenContainer, TextInput } from '../../ui';
-import { DeletePlaylistButton } from './components/DeletePlaylistButton';
-import { Icon } from 'native-base';
+import { Horizontal, ScreenContainer } from '../../ui';
+import { Icon, Input, Text, makeStyles, useTheme } from '@rneui/themed';
 import {
   Playlist,
   RootStackScreenProps,
@@ -8,6 +7,7 @@ import {
   i18nKeys,
   usePlaylistsState
 } from '../../services';
+import { TouchableOpacity, View } from 'react-native';
 import { isIOS } from '../../utils';
 import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
@@ -25,17 +25,13 @@ export const PlaylistSettingsModal: FC<
   }
 }) => {
   const [playlistName, setPlaylistName] = useState(playlist.title);
+  const styles = useStyles();
   const { removePlaylist, editPlaylist } = usePlaylistsState();
+  const { theme } = useTheme();
   const { t } = useTranslation();
-  const [isConfirmDeleteDialogOpen, setConfirmDeleteDialogOpen] =
-    useState(false);
-
-  const closeConfirmDeleteDialogHandler = () =>
-    setConfirmDeleteDialogOpen(false);
 
   const deleteHandler = async () => {
     await removePlaylist(playlist.id);
-    setConfirmDeleteDialogOpen(false);
     pop(2);
   };
 
@@ -51,29 +47,53 @@ export const PlaylistSettingsModal: FC<
 
   return (
     <ScreenContainer hasCloseButton={isIOS} onClose={closeModalHandler}>
-      <TextInput
-        label={t(i18nKeys.modals.playlist.settings.input.rename_playlist.label)}
-        leftElement={<Icon marginRight={2} name="edit" />}
-        onChangeText={(text) => setPlaylistName(text)}
-        placeholder={t(
-          i18nKeys.modals.playlist.settings.input.rename_playlist.placeholder
-        )}
-        value={playlistName}
-      />
-      <DeletePlaylistButton onPress={() => setConfirmDeleteDialogOpen(true)} />
-      <ConfirmDialog
-        close={closeConfirmDeleteDialogHandler}
-        confirmButton={{
-          onPress: deleteHandler,
-          title: t(i18nKeys.button.delete)
-        }}
-        isOpen={isConfirmDeleteDialogOpen}
-        title={t(i18nKeys.dialog.irreversible_action.title)}
-      >
-        {t(i18nKeys.modals.playlist.settings.dialog.confirm_delete.subtitle, {
-          name: playlist.title
-        })}
-      </ConfirmDialog>
+      <View>
+        <Horizontal alignCenter style={styles.renamePlaylistSection}>
+          <Input
+            autoFocus
+            label={t(
+              i18nKeys.modals.playlist.settings.input.rename_playlist.label
+            )}
+            labelStyle={styles.renamePlaylistLabel}
+            leftIcon={<Icon name="edit" />}
+            onChangeText={(text) => setPlaylistName(text)}
+            placeholder={t(
+              i18nKeys.modals.playlist.settings.input.rename_playlist
+                .placeholder
+            )}
+            selectionColor={theme.colors.secondary}
+            value={playlistName}
+          />
+        </Horizontal>
+        <TouchableOpacity onPress={deleteHandler} style={styles.textButton}>
+          <Horizontal alignCenter>
+            <Icon color="red" name="delete" />
+            <Text style={styles.deleteText}>
+              {t(i18nKeys.modals.playlist.settings.button.delete_playlist)}
+            </Text>
+          </Horizontal>
+        </TouchableOpacity>
+      </View>
     </ScreenContainer>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  deleteText: {
+    color: 'red',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginStart: 4
+  },
+  renamePlaylistLabel: {
+    color: theme.colors.black,
+    fontSize: 16
+  },
+  renamePlaylistSection: {
+    marginVertical: 16
+  },
+  textButton: {
+    alignSelf: 'flex-start',
+    padding: 8
+  }
+}));

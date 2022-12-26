@@ -17,8 +17,7 @@ export enum Routes {
   PLAYLIST_VIEW = 'playlist-view',
   PLAYLIST_SETTINGS = 'playlist-settings',
   PLAYLIST_TRACKS_SELECTION = 'playlist-tracks-selection',
-  LANGUAGE = 'language',
-  COLOR_SCHEME_CREATE = 'color-scheme-create'
+  LANGUAGE = 'language'
 }
 
 export type RootStackParamList = {
@@ -33,10 +32,7 @@ export type RootStackParamList = {
   [Routes.PLAYLIST_SETTINGS]: PlaylistSettingsModalProps;
   [Routes.PLAYLIST_TRACKS_SELECTION]: PlaylistTracksSelectionModalProps;
   [Routes.LANGUAGE]: undefined;
-  [Routes.COLOR_SCHEME_CREATE]: undefined;
 };
 
-export type RootStackScreenProps<T extends Routes> = NativeStackScreenProps<
-  RootStackParamList,
-  T
->;
+export type RootStackScreenProps<T extends keyof RootStackParamList> =
+  NativeStackScreenProps<RootStackParamList, T>;

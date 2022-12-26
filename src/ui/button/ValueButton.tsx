@@ -1,9 +1,11 @@
-import { Icon, Pressable, Row, Text } from 'native-base';
+import { Horizontal } from '../display';
+import { Icon, Text, makeStyles } from '@rneui/themed';
+import { TouchableOpacity } from 'react-native';
 import React, { FC, PropsWithChildren } from 'react';
 
 export type ValueButtonProps = {
   onPress: () => void;
-  value?: string;
+  value: string;
 };
 
 export const ValueButton: FC<PropsWithChildren<ValueButtonProps>> = ({
@@ -11,17 +13,34 @@ export const ValueButton: FC<PropsWithChildren<ValueButtonProps>> = ({
   value,
   children
 }) => {
+  const styles = useStyles();
+
   return (
-    <Row alignContent="center" justifyContent="space-between" marginBottom={6}>
-      <Text variant="body2">{children}</Text>
-      <Pressable onPress={onPress}>
-        <Row alignItems="center">
-          <Text color="text.accent" marginRight={1} variant="body2">
-            {value}
-          </Text>
-          <Icon name="chevron-right" />
-        </Row>
-      </Pressable>
-    </Row>
+    <Horizontal alignCenter style={styles.container}>
+      <Text style={styles.title}>{children}</Text>
+      <TouchableOpacity onPress={onPress} style={styles.action}>
+        <Text style={styles.value}>{value}</Text>
+        <Icon name="chevron-right" />
+      </TouchableOpacity>
+    </Horizontal>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  action: {
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'row'
+  },
+  container: {
+    justifyContent: 'space-between',
+    marginBottom: 32
+  },
+  title: {
+    fontWeight: 'bold'
+  },
+  value: {
+    color: theme.colors.secondary,
+    marginEnd: 4
+  }
+}));

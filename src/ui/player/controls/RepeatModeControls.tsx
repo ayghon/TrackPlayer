@@ -1,29 +1,35 @@
-import { Icon } from 'native-base';
+import { Icon, useTheme } from '@rneui/themed';
 import { RepeatMode } from 'react-native-track-player';
+import { ViewStyle } from 'react-native';
 import React, { FC } from 'react';
 
 export type RepeatModeControlsProps = {
   repeatMode?: RepeatMode;
+  style?: ViewStyle;
   onChange: (mode: RepeatMode) => void;
 };
 
-export const RepeatModeButton: FC<RepeatModeControlsProps> = ({
+export const RepeatModeControls: FC<RepeatModeControlsProps> = ({
   repeatMode = RepeatMode.Off,
+  style,
   onChange
 }) => {
+  const { theme } = useTheme();
+
   if (repeatMode === RepeatMode.Track) {
     return (
       <Icon
-        color="secondary.normal"
+        color={theme.colors.secondary}
         name="repeat-one"
         onPress={() => onChange(RepeatMode.Off)}
-        size="2xl"
+        size={32}
+        style={style}
       />
     );
   }
 
   const color =
-    repeatMode === RepeatMode.Queue ? 'secondary.normal' : undefined;
+    repeatMode === RepeatMode.Queue ? theme.colors.secondary : undefined;
   const changeHandler = () => {
     if (repeatMode === RepeatMode.Queue) {
       onChange(RepeatMode.Track);
@@ -33,6 +39,12 @@ export const RepeatModeButton: FC<RepeatModeControlsProps> = ({
   };
 
   return (
-    <Icon color={color} name="repeat" onPress={changeHandler} size="2xl" />
+    <Icon
+      color={color}
+      name="repeat"
+      onPress={changeHandler}
+      size={32}
+      style={style}
+    />
   );
 };

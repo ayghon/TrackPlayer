@@ -1,4 +1,4 @@
-import { SleepTimerState, TrackControlsCapability } from './player.types';
+import { TrackControlsCapability } from '../../ui';
 import {
   UsePlayerControlsResponse,
   useInitPlayer,
@@ -14,7 +14,7 @@ import React, {
 import TrackPlayer from 'react-native-track-player';
 
 const initialValue: UsePlayerControlsResponse = {
-  controls: {
+  controlsProps: {
     capabilities: {
       [TrackControlsCapability.JUMP_BACKWARD]: {
         disabled: false,
@@ -40,12 +40,7 @@ const initialValue: UsePlayerControlsResponse = {
     duration: 0,
     isPlaying: false,
     onProgressChange: () => null,
-    position: 0,
-    sleepTimer: {
-      resetTimer: () => null,
-      startTimer: () => null,
-      timerState: SleepTimerState.IDLE
-    }
+    position: 0
   },
   currentTrack: undefined,
   queue: [],

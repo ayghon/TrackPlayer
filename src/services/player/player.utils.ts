@@ -6,8 +6,7 @@ import {
   useState
 } from 'react';
 import { Playlist } from '../playlists';
-import { TrackControls, TrackControlsCapability } from './player.types';
-import { useSleepTimer } from './hooks/sleep-timer';
+import { TrackControlsCapability, TrackControlsProps } from '../../ui';
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
@@ -57,8 +56,7 @@ export const useInitPlayer = () => {
           Capability.Pause,
           Capability.SkipToNext,
           Capability.SkipToPrevious
-        ],
-        progressUpdateEventInterval: 2
+        ]
       });
       await TrackPlayer.setRepeatMode(RepeatMode.Queue);
     };
@@ -83,7 +81,7 @@ export type UsePlayerControlsResponse = {
   setQueue: Dispatch<SetStateAction<Track[]>>;
   currentTrack?: TrackInQueue;
   setCurrentTrack: Dispatch<SetStateAction<TrackInQueue | undefined>>;
-  controls: TrackControls;
+  controlsProps: TrackControlsProps;
   playlist?: Playlist;
   setPlaylist?: Dispatch<SetStateAction<Playlist | undefined>>;
 };
@@ -97,19 +95,22 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   const [playlist, setPlaylist] = useState<Playlist>();
 
   useTrackPlayerEvents(
-    [Event.PlaybackTrackChanged, Event.PlaybackState],
+    [
+      Event.PlaybackTrackChanged,
+      Event.RemotePlay,
+      Event.RemotePause,
+      Event.PlaybackState
+    ],
     async (event) => {
       if (
         event.type === Event.PlaybackTrackChanged &&
         event.nextTrack != null
       ) {
         const track = await TrackPlayer.getTrack(event.nextTrack);
+        const index = await TrackPlayer.getCurrentTrack();
 
         if (track) {
-          setCurrentTrack({
-            ...track,
-            index: event.nextTrack
-          });
+          setCurrentTrack({ ...track, index: index || 0 });
         }
       }
       if (event.type === Event.PlaybackState) {
@@ -151,11 +152,8 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
   const toggleShuffle = () => setShuffle((state) => !state);
   const shuffleTrack = () => TrackPlayer.skip(getShuffledPosition());
 
-  // SLEEP TIMER handlers
-  const sleepTimer = useSleepTimer();
-
   return {
-    controls: {
+    controlsProps: {
       capabilities: {
         [TrackControlsCapability.JUMP_BACKWARD]: {
           disabled: !currentTrack,
@@ -189,7 +187,6 @@ export const usePlayerControls = (): UsePlayerControlsResponse => {
       position,
       repeatMode,
       shuffle,
-      sleepTimer,
       toggleShuffle
     },
     currentTrack,

@@ -3,7 +3,7 @@
  */
 
 import 'react-native';
-import { App } from '../src/App';
+import App from '../App';
 import React from 'react';
 
 // Note: test renderer must be required after react-native.

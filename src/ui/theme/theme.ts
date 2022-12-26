@@ -1,80 +1,32 @@
-import { DeviceEventEmitter } from 'react-native';
-import { StorageEvent, StorageKeys } from '../../services';
-import { ThemeColorScheme, getColorSchemeConfiguration } from './schemes';
+import { CreateThemeOptions, createTheme, useTheme } from '@rneui/themed';
+import { DEFAULT_THEME_MODE, StorageKeys } from '../../utils';
 import {
-  buttonOverrides,
-  checkboxOverrides,
-  flatlistOverrides,
-  headingOverrides,
-  iconOverrides,
-  inputOverrides,
-  pressableOverrides,
-  progressOverrides,
-  sliderOverrides,
-  spinnerOverrides,
-  switchOverrides,
-  textOverrides
-} from './components';
-import { colors } from './values/colors';
-import { extendTheme } from 'native-base';
-import { fontConfig, fontSizes, fonts } from './values/font';
+  ThemeColorScheme,
+  defaultSchemeColors,
+  getColorSchemeConfiguration
+} from './schemes';
 import { useCallback, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export enum ThemeMode {
-  DARK = 'dark',
-  LIGHT = 'light'
-}
-
-export const DEFAULT_THEME_MODE: ThemeMode = ThemeMode.DARK;
-
-const componentsOverrides = {
-  Button: buttonOverrides,
-  Checkbox: checkboxOverrides,
-  FlatList: flatlistOverrides,
-  Heading: headingOverrides,
-  Icon: iconOverrides,
-  Input: inputOverrides,
-  Pressable: pressableOverrides,
-  Progress: progressOverrides,
-  SliderFilledTrack: sliderOverrides.filledTrack,
-  SliderThumb: sliderOverrides.thumb,
-  SliderTrack: sliderOverrides.track,
-  Spinner: spinnerOverrides,
-  Switch: switchOverrides,
-  Text: textOverrides
-};
-
-export const defaultThemeOverrides = {
-  components: componentsOverrides,
-  fontConfig,
-  fontSizes,
-  fonts
-};
-
-export const initialTheme = extendTheme({
-  colors,
-  components: componentsOverrides,
-  config: {
-    initialColorMode: DEFAULT_THEME_MODE,
-    useSystemColorMode: false
-  },
-  fontConfig,
-  fontSizes,
-  fonts
+export const initialTheme = createTheme({
+  ...defaultSchemeColors,
+  mode: DEFAULT_THEME_MODE
 });
 
-export type CustomTheme = typeof initialTheme;
-
 export const useThemeManager = () => {
-  const [theme, setTheme] = useState<CustomTheme>(initialTheme);
+  const [theme, setTheme] = useState<CreateThemeOptions>(initialTheme);
+  const { updateTheme } = useTheme();
 
-  const changeTheme = useCallback(async (scheme: ThemeColorScheme) => {
-    const { theme: newTheme } = await getColorSchemeConfiguration(scheme);
-
-    setTheme(newTheme);
-    DeviceEventEmitter.emit(StorageEvent.COLOR_SCHEME_CHANGE, newTheme);
-  }, []);
+  const changeTheme = useCallback(
+    (scheme: ThemeColorScheme) => {
+      const { theme: newTheme } = getColorSchemeConfiguration(scheme);
+      if (updateTheme) {
+        updateTheme(newTheme);
+      }
+      setTheme(newTheme);
+    },
+    [updateTheme]
+  );
 
   useEffect(() => {
     const getStorageColorScheme = async () => {
@@ -83,7 +35,7 @@ export const useThemeManager = () => {
       )) as ThemeColorScheme | null;
 
       if (storageColorScheme) {
-        await changeTheme(storageColorScheme);
+        changeTheme(storageColorScheme);
       }
     };
 

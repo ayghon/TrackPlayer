@@ -1,61 +1,36 @@
-import {
-  BaseStackNavigation,
-  PlayerProvider,
-  StorageEvent,
-  useInitI18n
-} from './services';
-import {
-  CustomTheme,
-  ScreenStatusBar,
-  commonDisplayStyles,
-  initialTheme,
-  useThemeManager
-} from './ui';
-import { DeviceEventEmitter } from 'react-native';
+import { ActivityIndicator, StyleSheet } from 'react-native';
+import { BaseStackNavigation, PlayerProvider, useInitI18n } from './services';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NativeBaseProvider, Spinner } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { ThemeProvider } from '@rneui/themed';
+import { useThemeManager } from './ui';
+import React from 'react';
 
-const Providers: FC<PropsWithChildren> = ({ children }) => {
-  const [theme, setTheme] = useState<CustomTheme>(initialTheme);
-  useThemeManager();
+export const App = () => {
+  const { isLoading } = useInitI18n();
+  const { theme } = useThemeManager();
 
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener(
-      StorageEvent.COLOR_SCHEME_CHANGE,
-      setTheme
-    );
-
-    return () => listener.remove();
-  }, []);
+  if (isLoading) {
+    return <ActivityIndicator style={styles.loader} />;
+  }
 
   return (
     <SafeAreaProvider>
-      <NativeBaseProvider theme={theme}>
-        <GestureHandlerRootView style={commonDisplayStyles.flex}>
-          <PlayerProvider>{children}</PlayerProvider>
+      <ThemeProvider theme={theme}>
+        <GestureHandlerRootView style={styles.rootView}>
+          <PlayerProvider>
+            <BaseStackNavigation />
+          </PlayerProvider>
         </GestureHandlerRootView>
-      </NativeBaseProvider>
+      </ThemeProvider>
     </SafeAreaProvider>
   );
 };
 
-export const App = () => {
-  const { isLoading } = useInitI18n();
-
-  if (isLoading) {
-    return (
-      <Providers>
-        <ScreenStatusBar />
-        <Spinner />
-      </Providers>
-    );
-  }
-
-  return (
-    <Providers>
-      <BaseStackNavigation />
-    </Providers>
-  );
-};
+const styles = StyleSheet.create({
+  loader: {
+    height: '100%',
+    width: '100%'
+  },
+  rootView: { flex: 1 }
+});

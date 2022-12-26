@@ -1,19 +1,10 @@
-import { FlatList } from 'native-base';
-import { ListRenderItem } from './components/ListRenderItem';
-import {
-  RootStackScreenProps,
-  Routes,
-  i18nKeys,
-  useColorScheme
-} from '../../services';
-import { ScreenContainer, ThemeColorScheme, ValueButton } from '../../ui';
-import { useTranslation } from 'react-i18next';
-import React, { FC } from 'react';
+import { ColorSchemeListItem } from './components/ColorSchemeListItem';
+import { FlatList } from 'react-native';
+import { ScreenContainer, ThemeColorScheme } from '../../ui';
+import { useColorScheme } from '../../services';
+import React from 'react';
 
-export const ColorSchemeModal: FC<
-  RootStackScreenProps<Routes.COLOR_SCHEME>
-> = ({ navigation: { navigate } }) => {
-  const { t } = useTranslation();
+export const ColorSchemeModal = () => {
   const { colorSchemeList, changeColorScheme, colorScheme } = useColorScheme();
 
   const handleColorChange = (name: ThemeColorScheme) => {
@@ -25,15 +16,12 @@ export const ColorSchemeModal: FC<
 
   return (
     <ScreenContainer>
-      <ValueButton onPress={() => navigate(Routes.COLOR_SCHEME_CREATE)}>
-        {t(i18nKeys.modals.color_scheme.button.create_color_scheme)}
-      </ValueButton>
       <FlatList
         data={colorSchemeList}
         keyExtractor={({ name }) => name}
         renderItem={({ item: { name, title } }) => (
-          <ListRenderItem
-            colorScheme={colorScheme}
+          <ColorSchemeListItem
+            checked={colorScheme === name}
             handleChange={handleColorChange}
             name={name}
             title={title}

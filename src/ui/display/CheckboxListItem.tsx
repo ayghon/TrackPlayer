@@ -1,52 +1,35 @@
-import { Checkbox, Divider, List, Row, Stack, Text } from 'native-base';
+import { ListItem, useTheme } from '@rneui/themed';
 import React, { FC, ReactNode } from 'react';
 
 export type CheckboxListItemProps = {
   title: string;
   rightContent?: ReactNode;
-  value: string;
   checked: boolean;
   onPress: () => void;
   bottomDivider?: boolean;
-  checkedColor?: string;
-  uncheckedColor?: string;
 };
 
 export const CheckboxListItem: FC<CheckboxListItemProps> = ({
   title,
   rightContent,
-  value,
+  checked,
   onPress,
-  bottomDivider = false,
-  checkedColor,
-  uncheckedColor,
-  checked
+  bottomDivider
 }) => {
+  const { theme } = useTheme();
+
   return (
-    <Stack>
-      <List.Item>
-        <Row alignItems="center" justifyContent="space-between" width="100%">
-          <Text variant="subheader">{title}</Text>
-          <Row space={4}>
-            {rightContent}
-            <Checkbox
-              _checked={{
-                backgroundColor: checkedColor,
-                borderColor: checkedColor
-              }}
-              _unchecked={{
-                backgroundColor: uncheckedColor,
-                borderColor: uncheckedColor
-              }}
-              accessibilityLabel={title}
-              isChecked={checked}
-              onChange={onPress}
-              value={value}
-            />
-          </Row>
-        </Row>
-      </List.Item>
-      {bottomDivider && <Divider />}
-    </Stack>
+    <ListItem bottomDivider={bottomDivider}>
+      <ListItem.Content>
+        <ListItem.Title>{title}</ListItem.Title>
+      </ListItem.Content>
+      {rightContent}
+      <ListItem.CheckBox
+        checked={checked}
+        checkedColor={theme.colors.secondary}
+        onPress={onPress}
+        uncheckedColor={theme.colors.black}
+      />
+    </ListItem>
   );
 };

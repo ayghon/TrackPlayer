@@ -1,246 +1,112 @@
-import {
-  ColorSchemeStorageData,
-  StorageKeys,
-  getParsedStorageData,
-  i18nKeys
-} from '../../../services';
-import { CustomTheme, ThemeMode, defaultThemeOverrides } from '../theme';
+import { CreateThemeOptions, ThemeMode, createTheme } from '@rneui/themed';
 import { ThemeColorScheme } from './schemes.types';
 import { darkBlueSchemeColors } from './dark-blue.scheme';
 import { darkPurpleSchemeColors } from './dark-purple.scheme';
 import { darkRedSchemeColors } from './dark-red.scheme';
 import { defaultSchemeColors } from './default.scheme';
-import { extendTheme } from 'native-base';
+import { initialTheme } from '../theme';
 import { lightBlueSchemeColors } from './light-blue.scheme';
 import { lightPurpleSchemeColors } from './light-purple.scheme';
 import { lightRedSchemeColors } from './light-red.scheme';
 import { lightTurquoiseSchemeColors } from './light-turquoise.scheme';
 
-export const textColorsDefaults = {
-  dark: {
-    primary: '#FFFFFF',
-    secondary: '#000000',
-    subtitle: {
-      primary: '#D9D9D9',
-      secondary: '#2D2D2D'
-    }
-  },
-  light: {
-    primary: '#000000',
-    secondary: '#FFFFFF',
-    subtitle: {
-      primary: '#2D2D2D',
-      secondary: '#D9D9D9'
-    }
-  }
-};
-
-export type ColorSchemeConfigurationPalette = [string, string] | never[];
-
-export type GetColorSchemeConfigurationResponse = {
-  mode: ThemeMode;
-  palette: ColorSchemeConfigurationPalette;
-  labelKey: string;
-  theme: CustomTheme;
-};
-
-const getCustomColorSchemePalette = async () => {
-  const parsedData = await getParsedStorageData<ColorSchemeStorageData>(
-    StorageKeys.CUSTOM_COLOR_SCHEMES
-  );
-
-  if (!parsedData) {
-    return {
-      colors: {},
-      mode: ThemeMode.LIGHT,
-      palette: []
-    };
-  }
-
-  const customThemeColors = {
-    primary: {
-      dark: parsedData.palette['primary.dark'],
-      light: parsedData.palette['primary.light'],
-      normal: parsedData.palette['primary.normal'],
-      opaque: parsedData.palette['primary.opaque']
-    },
-    secondary: {
-      dark: parsedData.palette['secondary.dark'],
-      light: parsedData.palette['secondary.light'],
-      normal: parsedData.palette['secondary.normal']
-    },
-    text: {
-      accent: parsedData.palette['secondary.normal'],
-      ...(parsedData.mode === ThemeMode.DARK
-        ? textColorsDefaults.dark
-        : textColorsDefaults.light)
-    }
-  };
-
-  const palette: ColorSchemeConfigurationPalette = [
-    parsedData.palette['primary.normal'],
-    parsedData.palette['secondary.normal']
-  ];
-
-  return { colors: customThemeColors, mode: parsedData.mode, palette };
-};
-
-export const getColorSchemeConfiguration = async (
+export const getColorSchemeConfiguration = (
   scheme: ThemeColorScheme
-): Promise<GetColorSchemeConfigurationResponse> => {
-  const customPalette = await getCustomColorSchemePalette();
-
+): {
+  mode: ThemeMode;
+  palette: (string | undefined)[];
+  label: string;
+  theme: CreateThemeOptions;
+} => {
   switch (scheme) {
     case ThemeColorScheme.DEFAULT:
     default:
       return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.default,
-        mode: ThemeMode.DARK,
+        label: 'Default',
+        mode: 'dark',
         palette: [
-          defaultSchemeColors.primary.normal,
-          defaultSchemeColors.secondary.normal
+          initialTheme.darkColors?.primary,
+          initialTheme.darkColors?.secondary,
+          initialTheme.darkColors?.background
         ],
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: defaultSchemeColors,
-          config: {
-            initialColorMode: ThemeMode.DARK,
-            useSystemColorMode: false
-          }
-        })
+        theme: createTheme({ ...defaultSchemeColors, mode: 'dark' })
       };
     case ThemeColorScheme.DARK_PURPLE:
       return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.dark_purple,
-        mode: ThemeMode.DARK,
+        label: 'Dark Purple',
+        mode: 'dark',
         palette: [
-          darkPurpleSchemeColors.primary.normal,
-          darkPurpleSchemeColors.secondary.normal
+          darkPurpleSchemeColors.darkColors.primary,
+          darkPurpleSchemeColors.darkColors.secondary,
+          darkPurpleSchemeColors.darkColors.background
         ],
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: darkPurpleSchemeColors,
-          config: {
-            initialColorMode: ThemeMode.DARK,
-            useSystemColorMode: false
-          }
-        })
+        theme: createTheme({ ...darkPurpleSchemeColors, mode: 'dark' })
       };
     case ThemeColorScheme.DARK_RED:
       return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.dark_red,
-        mode: ThemeMode.DARK,
+        label: 'Dark Red',
+        mode: 'dark',
         palette: [
-          darkRedSchemeColors.primary.normal,
-          darkRedSchemeColors.secondary.normal
+          darkRedSchemeColors.darkColors.primary,
+          darkRedSchemeColors.darkColors.secondary,
+          darkRedSchemeColors.darkColors.background
         ],
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: darkRedSchemeColors,
-          config: {
-            initialColorMode: ThemeMode.DARK,
-            useSystemColorMode: false
-          }
-        })
+        theme: createTheme({ ...darkRedSchemeColors, mode: 'dark' })
       };
     case ThemeColorScheme.DARK_BLUE:
       return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.dark_blue,
-        mode: ThemeMode.DARK,
+        label: 'Dark Blue',
+        mode: 'dark',
         palette: [
-          darkBlueSchemeColors.primary.normal,
-          darkBlueSchemeColors.secondary.normal
+          darkBlueSchemeColors.darkColors.primary,
+          darkBlueSchemeColors.darkColors.secondary,
+          darkBlueSchemeColors.darkColors.background
         ],
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: darkBlueSchemeColors,
-          config: {
-            initialColorMode: ThemeMode.DARK,
-            useSystemColorMode: false
-          }
-        })
+        theme: createTheme({ ...darkBlueSchemeColors, mode: 'dark' })
       };
     case ThemeColorScheme.LIGHT_BLUE:
       return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.light_blue,
-        mode: ThemeMode.LIGHT,
+        label: 'Light Blue',
+        mode: 'light',
         palette: [
-          lightBlueSchemeColors.primary.normal,
-          lightBlueSchemeColors.secondary.normal
+          lightBlueSchemeColors.lightColors.primary,
+          lightBlueSchemeColors.lightColors.secondary,
+          lightBlueSchemeColors.lightColors.background
         ],
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: lightBlueSchemeColors,
-          config: {
-            initialColorMode: ThemeMode.LIGHT,
-            useSystemColorMode: false
-          }
-        })
+        theme: createTheme({ ...lightBlueSchemeColors, mode: 'light' })
       };
     case ThemeColorScheme.LIGHT_RED:
       return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.light_red,
-        mode: ThemeMode.LIGHT,
+        label: 'Light Red',
+        mode: 'light',
         palette: [
-          lightRedSchemeColors.primary.normal,
-          lightRedSchemeColors.secondary.normal
+          lightRedSchemeColors.lightColors.primary,
+          lightRedSchemeColors.lightColors.secondary,
+          lightRedSchemeColors.lightColors.background
         ],
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: lightRedSchemeColors,
-          config: {
-            initialColorMode: ThemeMode.LIGHT,
-            useSystemColorMode: false
-          }
-        })
+        theme: createTheme({ ...lightRedSchemeColors, mode: 'light' })
       };
     case ThemeColorScheme.LIGHT_PURPLE:
       return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.light_purple,
-        mode: ThemeMode.LIGHT,
+        label: 'Light Purple',
+        mode: 'light',
         palette: [
-          lightPurpleSchemeColors.primary.normal,
-          lightPurpleSchemeColors.secondary.normal
+          lightPurpleSchemeColors.lightColors.primary,
+          lightPurpleSchemeColors.lightColors.secondary,
+          lightPurpleSchemeColors.lightColors.background
         ],
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: lightPurpleSchemeColors,
-          config: {
-            initialColorMode: ThemeMode.LIGHT,
-            useSystemColorMode: false
-          }
-        })
+        theme: createTheme({ ...lightPurpleSchemeColors, mode: 'light' })
       };
     case ThemeColorScheme.LIGHT_TURQUOISE:
       return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.light_turquoise,
-        mode: ThemeMode.LIGHT,
+        label: 'Light Turquoise',
+        mode: 'light',
         palette: [
-          lightTurquoiseSchemeColors.primary.normal,
-          lightTurquoiseSchemeColors.secondary.normal
+          lightTurquoiseSchemeColors.lightColors.primary,
+          lightTurquoiseSchemeColors.lightColors.secondary,
+          lightTurquoiseSchemeColors.lightColors.background
         ],
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: lightTurquoiseSchemeColors,
-          config: {
-            initialColorMode: ThemeMode.LIGHT,
-            useSystemColorMode: false
-          }
-        })
-      };
-    case ThemeColorScheme.CUSTOM:
-      return {
-        labelKey: i18nKeys.ui.theme.schemes.theme_color_scheme.custom,
-        mode: customPalette.mode,
-        palette: customPalette.palette,
-        theme: extendTheme({
-          ...defaultThemeOverrides,
-          colors: { ...customPalette.colors },
-          config: {
-            initialColorMode: customPalette.mode,
-            useSystemColorMode: false
-          }
-        })
+        theme: createTheme({ ...lightTurquoiseSchemeColors, mode: 'light' })
       };
   }
 };

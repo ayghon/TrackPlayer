@@ -1,37 +1,43 @@
-import { Box, FlatList, useTheme } from 'native-base';
-import { IFlatListProps } from 'native-base/lib/typescript/components/basic/FlatList';
-import { StyleSheet } from 'react-native';
+import { FlatList, FlatListProps, View } from 'react-native';
+import { makeStyles } from '@rneui/themed';
 import LinearGradient from 'react-native-linear-gradient';
 import React from 'react';
 
-type CarouselProps<TItem> = IFlatListProps<TItem> & {
+const ItemSeparator = () => {
+  const styles = useStyles();
+  return <View style={[styles.separator]} />;
+};
+
+type CarouselProps<TItem> = FlatListProps<TItem> & {
   enableGradient?: boolean;
 };
 
-const ItemSeparator = () => <Box margin={1} />;
-
 export function Carousel<TItem>({
-  enableGradient = false,
+  enableGradient = true,
   ...props
 }: CarouselProps<TItem>) {
-  const theme = useTheme();
-
+  const styles = useStyles();
   return (
-    <Box>
-      <FlatList ItemSeparatorComponent={ItemSeparator} horizontal {...props} />
+    <View>
+      <FlatList
+        ItemSeparatorComponent={ItemSeparator}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        {...props}
+      />
       {enableGradient && (
         <LinearGradient
-          colors={['transparent', theme.colors.primary.opaque]}
+          colors={['transparent', 'rgba(0,0,0,0.85)']}
           end={{ x: 1, y: 0 }}
           start={{ x: 0, y: 0 }}
           style={styles.linearGradient}
         />
       )}
-    </Box>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeStyles({
   linearGradient: {
     borderRadius: 6,
     bottom: 0,
@@ -39,5 +45,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: 0
+  },
+  separator: {
+    margin: 4
   }
 });

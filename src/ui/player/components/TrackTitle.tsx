@@ -1,38 +1,57 @@
-import { Box, Row, StyledProps, Text, View } from 'native-base';
+import { Horizontal } from '../../display';
+import { StyleProp, View, ViewStyle } from 'react-native';
+import { Text, makeStyles } from '@rneui/themed';
 import React from 'react';
 
-export type TrackTitleProps = StyledProps & {
+export type TrackTitleProps = {
   title: string;
   artist: string;
+  style?: StyleProp<ViewStyle>;
   minimal?: boolean;
 };
 
 export const TrackTitle = ({
+  style,
   title,
   artist,
-  minimal = false,
-  ...rest
+  minimal = false
 }: TrackTitleProps) => {
+  const styles = useStyles({ minimal });
+
   if (minimal) {
     return (
-      <Row alignItems="center" {...rest}>
-        <Text variant="body2">{title}</Text>
-        <View
-          bgColor="text.primary"
-          borderRadius="full"
-          height={1}
-          marginX={2}
-          width={1}
-        />
-        <Text variant="caption">{artist}</Text>
-      </Row>
+      <Horizontal alignCenter style={styles.minimalContainer}>
+        <Text style={styles.title}>{title}</Text>
+        <View style={styles.minimalSeparator} />
+        <Text style={styles.artist}>{artist}</Text>
+      </Horizontal>
     );
   }
 
   return (
-    <Box {...rest}>
-      <Text variant="title">{title}</Text>
-      <Text variant="subheader">{artist}</Text>
-    </Box>
+    <View style={style}>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.artist}>{artist}</Text>
+    </View>
   );
 };
+
+const useStyles = makeStyles((theme, { minimal }: { minimal?: boolean }) => ({
+  artist: {
+    fontSize: minimal ? 14 : 16
+  },
+  minimalContainer: {
+    marginStart: 6
+  },
+  minimalSeparator: {
+    backgroundColor: theme.colors.black,
+    borderRadius: 100,
+    height: 4,
+    marginHorizontal: 4,
+    width: 4
+  },
+  title: {
+    fontSize: minimal ? 16 : 24,
+    fontWeight: 'bold'
+  }
+}));

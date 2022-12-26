@@ -3,7 +3,7 @@ import {
   Playlist,
   UsePlaylistsResponse
 } from './playlists.types';
-import { StorageKeys } from '../storage';
+import { StorageKeys } from '../../utils';
 import { faker } from '@faker-js/faker';
 import { tracksMocks } from '../tracks';
 import { useCallback, useState } from 'react';

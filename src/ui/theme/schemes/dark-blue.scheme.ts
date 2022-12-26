@@ -1,19 +1,14 @@
-import { textColorsDefaults } from './schemes.utils';
+import { ThemeColors } from '../theme.types';
 
-export const darkBlueSchemeColors = {
-  primary: {
-    dark: '#000000',
-    light: '#484848',
-    normal: '#212121',
-    opaque: '#00000099'
+export const darkBlueSchemeColors: ThemeColors = {
+  darkColors: {
+    background: '#1b1b1b',
+    primary: '#424242',
+    secondary: '#3d5afe'
   },
-  secondary: {
-    dark: '#0031ca',
-    light: '#8187ff',
-    normal: '#3d5afe'
-  },
-  text: {
-    accent: '#3d5afe',
-    ...textColorsDefaults.dark
+  lightColors: {
+    background: '#1b1b1b',
+    primary: '#424242',
+    secondary: '#3d5afe'
   }
 };

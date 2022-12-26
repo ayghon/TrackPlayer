@@ -1,19 +1,14 @@
-import { textColorsDefaults } from './schemes.utils';
+import { ThemeColors } from '../theme.types';
 
-export const lightTurquoiseSchemeColors = {
-  primary: {
-    dark: '#484848',
-    light: '#ffffff',
-    normal: '#fafafa',
-    opaque: '#ffffff99'
+export const lightTurquoiseSchemeColors: ThemeColors = {
+  darkColors: {
+    background: '#fafafa',
+    primary: '#424242',
+    secondary: '#00bfa5'
   },
-  secondary: {
-    dark: '#00b686',
-    light: '#6effe8',
-    normal: '#1DE9B6'
-  },
-  text: {
-    accent: '#00bfa5',
-    ...textColorsDefaults.light
+  lightColors: {
+    background: '#fafafa',
+    primary: '#424242',
+    secondary: '#00bfa5'
   }
 };
