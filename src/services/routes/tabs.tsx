@@ -1,14 +1,18 @@
 import { CustomBottomTabBar } from './components/CustomBottomTabBar';
 import { HomeScreen, LibraryScreen } from '../../screens';
+import { Icon } from 'native-base';
 import { LibraryHeaderRight } from './components/LibraryHeaderRight';
-import { RootStackScreenProps, Routes } from './routes.types';
-import { TabBarIcon } from './components/TabBarIcon';
+import {
+  RootStackParamList,
+  RootStackScreenProps,
+  Routes
+} from './routes.types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { i18nKeys } from '../i18n';
 import { useTranslation } from 'react-i18next';
 import React, { FC, ReactNode } from 'react';
 
-const TabStack = createBottomTabNavigator();
+const TabStack = createBottomTabNavigator<RootStackParamList>();
 
 type TabScreenProps = {
   iconName: string;
@@ -51,10 +55,10 @@ export const TabNavigator = () => {
             key={name}
             name={name}
             options={{
+              ...tabsOptions(iconName),
               headerRight,
               headerShown,
               headerTitle: '',
-              tabBarIcon: (props) => <TabBarIcon {...props} name={iconName} />,
               title: t(titleKey)
             }}
           />
@@ -63,3 +67,9 @@ export const TabNavigator = () => {
     </TabStack.Navigator>
   );
 };
+
+const tabsOptions = (iconName: string) => ({
+  tabBarIcon: (props: { focused: boolean; color: string; size: number }) => (
+    <Icon {...props} name={iconName} />
+  )
+});

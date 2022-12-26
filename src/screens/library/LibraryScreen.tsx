@@ -1,5 +1,4 @@
-import { ActivityIndicator, FlatList } from 'react-native';
-import { Grid, LayoutVariant, ScreenContainer } from '../../ui';
+import { FlatList, Spinner, Stack } from 'native-base';
 import { LibraryListItem } from './components/LibraryListItem';
 import { LibrarySearchBar } from './components/LibrarySearchBar';
 import {
@@ -8,16 +7,11 @@ import {
   Routes,
   usePlaylistsState
 } from '../../services';
+import { ScreenContainer } from '../../ui';
 import { useFocusEffect } from '@react-navigation/native';
 import React, { FC, useCallback, useState } from 'react';
 
-export type LibraryScreenProps = {
-  variant?: LayoutVariant;
-};
-
-export const LibraryScreen: FC<
-  RootStackScreenProps<Routes.LIBRARY> & LibraryScreenProps
-> = ({ variant = LayoutVariant.LIST }) => {
+export const LibraryScreen: FC<RootStackScreenProps<Routes.LIBRARY>> = () => {
   const [search, setSearch] = useState('');
   const { isLoading, editPlaylist, removePlaylist, getPlaylists } =
     usePlaylistsState();
@@ -34,7 +28,7 @@ export const LibraryScreen: FC<
   if (isLoading && searchList.length === 0) {
     return (
       <ScreenContainer>
-        <ActivityIndicator />
+        <Spinner />
       </ScreenContainer>
     );
   }
@@ -49,9 +43,9 @@ export const LibraryScreen: FC<
     setSearchList(newList);
   };
 
-  if (variant === LayoutVariant.LIST) {
-    return (
-      <ScreenContainer>
+  return (
+    <ScreenContainer>
+      <Stack space={4}>
         <LibrarySearchBar
           search={search}
           searchList={searchList}
@@ -66,22 +60,12 @@ export const LibraryScreen: FC<
             <LibraryListItem
               deleteHandler={deleteHandler}
               item={item}
+              marginBottom={2}
               pinHandler={pinHandler}
             />
           )}
         />
-      </ScreenContainer>
-    );
-  }
-
-  return (
-    <ScreenContainer>
-      <Grid<Playlist>
-        data={searchList}
-        initialNumToRender={6}
-        keyExtractor={({ title }) => title}
-        renderItem={({ item }) => <LibraryListItem item={item} />}
-      />
+      </Stack>
     </ScreenContainer>
   );
 };

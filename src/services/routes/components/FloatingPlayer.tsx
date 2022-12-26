@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Pressable } from 'react-native';
+import { Pressable } from 'native-base';
 import { RootStackParamList, Routes } from '../routes.types';
 import { TrackView } from '../../../ui';
 import { usePlayerState } from '../../player';
@@ -7,25 +7,28 @@ import React from 'react';
 
 export const FloatingPlayer = () => {
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
-  const { controlsProps, currentTrack, queue, playlist } = usePlayerState();
+  const { controls, currentTrack, queue, playlist } = usePlayerState();
 
-  if (!currentTrack) {
+  if (!currentTrack || queue.length === 0) {
     return null;
   }
 
   const playerPressHandler = () =>
     navigate(Routes.PLAYER, {
-      playlist,
-      position: currentTrack?.index,
-      tracks: queue
+      continueCurrent: true,
+      playlist
     });
 
   return (
     <Pressable onPress={playerPressHandler}>
       <TrackView
         artist={currentTrack.artist}
-        artwork={currentTrack?.artwork as string}
-        controlsProps={controlsProps}
+        artwork={
+          typeof currentTrack.artwork === 'string'
+            ? currentTrack.artwork
+            : undefined
+        }
+        controlsProps={controls}
         minimal
         title={currentTrack.title}
       />
