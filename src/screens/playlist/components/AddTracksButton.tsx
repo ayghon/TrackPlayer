@@ -1,32 +1,24 @@
-import { Horizontal } from '../../../ui';
-import { Icon, Text, makeStyles } from '@rneui/themed';
-import { TouchableOpacity, TouchableOpacityProps } from 'react-native';
+import { IPressableProps, Icon, Pressable, Row, Text } from 'native-base';
 import { i18nKeys } from '../../../services';
 import { useTranslation } from 'react-i18next';
 import React, { FC } from 'react';
 
-export const AddTracksButton: FC<TouchableOpacityProps> = (props) => {
-  const styles = useStyles();
+export const AddTracksButton: FC<IPressableProps> = (props) => {
   const { t } = useTranslation();
 
   return (
-    <TouchableOpacity {...props}>
-      <Horizontal alignCenter>
-        <Icon iconStyle={styles.icon} name="add" style={styles.iconContainer} />
+    <Pressable {...props}>
+      <Row alignItems="center">
+        <Icon
+          bgColor="primary.light"
+          borderRadius="md"
+          color="text.primary"
+          marginRight={2}
+          name="add"
+          opacity={0.8}
+        />
         <Text>{t(i18nKeys.screens.playlist.button.add_tracks)}</Text>
-      </Horizontal>
-    </TouchableOpacity>
+      </Row>
+    </Pressable>
   );
 };
-
-const useStyles = makeStyles((theme) => ({
-  icon: {
-    color: theme.colors.white
-  },
-  iconContainer: {
-    backgroundColor: theme.colors.black,
-    borderRadius: 4,
-    marginEnd: 8,
-    opacity: 0.8
-  }
-}));

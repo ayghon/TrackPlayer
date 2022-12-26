@@ -1,36 +1,61 @@
-import { ActivityIndicator, StyleSheet } from 'react-native';
-import { BaseStackNavigation, PlayerProvider, useInitI18n } from './services';
+import {
+  BaseStackNavigation,
+  PlayerProvider,
+  StorageEvent,
+  useInitI18n
+} from './services';
+import {
+  CustomTheme,
+  ScreenStatusBar,
+  commonDisplayStyles,
+  initialTheme,
+  useThemeManager
+} from './ui';
+import { DeviceEventEmitter } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { NativeBaseProvider, Spinner } from 'native-base';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ThemeProvider } from '@rneui/themed';
-import { useThemeManager } from './ui';
-import React from 'react';
+import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 
-export const App = () => {
-  const { isLoading } = useInitI18n();
-  const { theme } = useThemeManager();
+const Providers: FC<PropsWithChildren> = ({ children }) => {
+  const [theme, setTheme] = useState<CustomTheme>(initialTheme);
+  useThemeManager();
 
-  if (isLoading) {
-    return <ActivityIndicator style={styles.loader} />;
-  }
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener(
+      StorageEvent.COLOR_SCHEME_CHANGE,
+      setTheme
+    );
+
+    return () => listener.remove();
+  }, []);
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider theme={theme}>
-        <GestureHandlerRootView style={styles.rootView}>
-          <PlayerProvider>
-            <BaseStackNavigation />
-          </PlayerProvider>
+      <NativeBaseProvider theme={theme}>
+        <GestureHandlerRootView style={commonDisplayStyles.flex}>
+          <PlayerProvider>{children}</PlayerProvider>
         </GestureHandlerRootView>
-      </ThemeProvider>
+      </NativeBaseProvider>
     </SafeAreaProvider>
   );
 };
 
-const styles = StyleSheet.create({
-  loader: {
-    height: '100%',
-    width: '100%'
-  },
-  rootView: { flex: 1 }
-});
+export const App = () => {
+  const { isLoading } = useInitI18n();
+
+  if (isLoading) {
+    return (
+      <Providers>
+        <ScreenStatusBar />
+        <Spinner />
+      </Providers>
+    );
+  }
+
+  return (
+    <Providers>
+      <BaseStackNavigation />
+    </Providers>
+  );
+};

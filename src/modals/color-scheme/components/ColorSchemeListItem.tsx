@@ -1,10 +1,10 @@
 import {
   CheckboxListItem,
-  Horizontal,
-  ThemeColorScheme,
-  getColorSchemeConfiguration
+  ColorSchemeConfigurationPalette,
+  ThemeColorScheme
 } from '../../../ui';
 import { ColorPaletteItem } from './ColorPaletteItem';
+import { Row } from 'native-base';
 import React, { FC } from 'react';
 
 export type ColorSchemeListItemProps = {
@@ -12,29 +12,37 @@ export type ColorSchemeListItemProps = {
   name: ThemeColorScheme;
   handleChange: (name: ThemeColorScheme) => void;
   checked: boolean;
+  colorPalette: ColorSchemeConfigurationPalette;
 };
 
 export const ColorSchemeListItem: FC<ColorSchemeListItemProps> = ({
   title,
   name,
   handleChange,
-  checked
+  checked,
+  colorPalette
 }) => {
-  const { palette: colorPalette } = getColorSchemeConfiguration(name);
+  const [, themeColorSecondary] = colorPalette;
 
   return (
     <CheckboxListItem
       bottomDivider
       checked={checked}
-      onPress={() => handleChange(name)}
+      checkedColor={themeColorSecondary}
+      onPress={() =>
+        // force component update by passing changing palette color
+        // for custom color-scheme
+        handleChange(name)
+      }
       rightContent={
-        <Horizontal>
+        <Row alignItems="center">
           {colorPalette.map((color) =>
             color ? <ColorPaletteItem color={color} key={color} /> : null
           )}
-        </Horizontal>
+        </Row>
       }
       title={title}
+      value={title}
     />
   );
 };

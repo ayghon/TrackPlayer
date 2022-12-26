@@ -31,6 +31,7 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-array-constructor': 'error',
+    '@typescript-eslint/no-empty-interface': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-namespace': 'error',
     '@typescript-eslint/no-parameter-properties': 'off',

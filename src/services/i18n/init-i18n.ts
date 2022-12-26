@@ -1,5 +1,5 @@
 import { DEFAULT_LANGUAGE } from './i18n.constants';
-import { StorageKeys } from '../../utils';
+import { StorageKeys } from '../storage';
 import { en, fr } from './locales';
 import { initReactI18next } from 'react-i18next';
 import { useEffect, useState } from 'react';

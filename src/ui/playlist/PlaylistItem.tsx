@@ -1,9 +1,10 @@
 import { GridPlaylistItem } from './components/GridPlaylistItem';
 import { LayoutVariant } from './playlist.types';
+import { StyledProps } from 'native-base';
 import { SwipeablePlaylistItem } from './components/SwipeablePlaylistItem';
 import React, { FC } from 'react';
 
-export type PlaylistItemProps = {
+export type PlaylistItemProps = StyledProps & {
   trackCount: number;
   title: string;
   artwork?: string;
@@ -22,7 +23,8 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
   variant = LayoutVariant.LIST,
   onDelete,
   onPin,
-  pinned
+  pinned,
+  ...rest
 }) => {
   if (variant === LayoutVariant.LIST) {
     return (
@@ -34,6 +36,7 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
         pinned={pinned}
         title={title}
         trackCount={trackCount}
+        {...rest}
       />
     );
   }
@@ -44,6 +47,7 @@ export const PlaylistItem: FC<PlaylistItemProps> = ({
       onPress={onPress}
       title={title}
       trackCount={trackCount}
+      {...rest}
     />
   );
 };

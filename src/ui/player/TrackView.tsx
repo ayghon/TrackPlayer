@@ -1,10 +1,9 @@
 import { Image } from '../image';
 import { MinimalTrackView } from './components/MinimalTrackView';
-import { TrackControls, TrackControlsProps } from './controls';
+import { Stack } from 'native-base';
+import { TrackControls } from './controls';
+import { TrackControls as TrackControlsProps, i18nKeys } from '../../services';
 import { TrackTitle } from './components/TrackTitle';
-import { View } from 'react-native';
-import { i18nKeys } from '../../services';
-import { makeStyles } from '@rneui/themed';
 import { useTranslation } from 'react-i18next';
 import React from 'react';
 
@@ -24,7 +23,6 @@ export const TrackView = ({
   minimal = false
 }: TrackViewProps) => {
   const { t } = useTranslation();
-  const styles = useStyles({ minimal });
 
   const artist = _artist || t(i18nKeys.ui.player.track_view.label.unknown);
   const title = _title || t(i18nKeys.ui.player.track_view.label.unknown);
@@ -41,24 +39,14 @@ export const TrackView = ({
   }
 
   return (
-    <View>
+    <Stack space={4}>
       <Image
-        containerStyle={styles.image}
+        height={360}
         source={artwork ? { uri: artwork } : undefined}
+        width="100%"
       />
-      <TrackTitle artist={artist} style={styles.title} title={title} />
+      <TrackTitle artist={artist} title={title} />
       <TrackControls {...controlsProps} />
-    </View>
+    </Stack>
   );
 };
-
-const useStyles = makeStyles({
-  image: {
-    height: 400,
-    marginBottom: 16,
-    width: '100%'
-  },
-  title: {
-    marginBottom: 24
-  }
-});

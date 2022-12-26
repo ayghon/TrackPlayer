@@ -9,7 +9,8 @@
     "skipLibCheck": true,
     /* Skip type checking all .d.ts files. */
     "types": [
-      "node"
+      "node",
+      "jest"
     ]
   }
 }
