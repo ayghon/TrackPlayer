@@ -1,4 +1,4 @@
-package com.trackplayer.newarchitecture;
+package com.TrackPlayer.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.trackplayer.BuildConfig;
-import com.trackplayer.newarchitecture.components.MainComponentsRegistry;
-import com.trackplayer.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.TrackPlayer.BuildConfig;
+import com.TrackPlayer.newarchitecture.components.MainComponentsRegistry;
+import com.TrackPlayer.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

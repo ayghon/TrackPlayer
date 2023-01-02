@@ -1,4 +1,4 @@
-package com.trackplayer.newarchitecture.modules;
+package com.TrackPlayer.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;

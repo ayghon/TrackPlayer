@@ -1,4 +1,4 @@
-package com.trackplayer.newarchitecture.components;
+package com.TrackPlayer.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

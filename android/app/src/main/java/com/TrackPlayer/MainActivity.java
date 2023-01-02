@@ -1,4 +1,4 @@
-package com.trackplayer;
+package com.TrackPlayer;
 import android.os.Bundle;
 
 import com.facebook.react.ReactActivity;
