@@ -1,0 +1,7 @@
+appId: com.TrackPlayer
+---
+- tapOn:
+    id: 'add-playlist'
+- tapOn: 'Name your playlist'
+- inputText: 'test 1'
+- tapOn: 'CREATE'

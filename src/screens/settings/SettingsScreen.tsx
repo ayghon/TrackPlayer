@@ -39,6 +39,11 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
     }, [changeTheme])
   );
 
+  const clearCacheHandler = async () => {
+    await clearCache();
+    setConfirmDialogOpen(false);
+  };
+
   return (
     <ScreenContainer>
       <ValueButton
@@ -64,7 +69,7 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
       <ConfirmDialog
         close={() => setConfirmDialogOpen(false)}
         confirmButton={{
-          onPress: () => clearCache(),
+          onPress: clearCacheHandler,
           title: t(i18nKeys.button.delete)
         }}
         isOpen={isConfirmDialogOpen}

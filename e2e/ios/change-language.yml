@@ -1,0 +1,27 @@
+appId: com.TrackPlayer
+---
+- launchApp:
+    clearState: true
+- tapOn: 'settings'
+- tapOn: 'English right chevron'
+- assertVisible: 'Language'
+- assertVisible: 'English'
+- assertVisible: 'French'
+- tapOn:
+    text: 'French'
+    index: 1
+- assertVisible: 'Langue'
+- assertVisible: 'Anglais'
+- assertVisible: 'Français'
+- tapOn: 'close'
+- assertVisible: 'Paramètres'
+- assertVisible: 'Français right chevron'
+- runFlow: '../common/relaunch.yml'
+- assertVisible: 'Joué récemment'
+
+# RESET LANGUAGE
+- tapOn: 'settings'
+- tapOn: 'Français right chevron'
+- tapOn:
+    text: 'Anglais'
+    index: 1

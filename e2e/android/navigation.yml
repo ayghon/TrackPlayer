@@ -1,0 +1,34 @@
+appId: com.TrackPlayer
+---
+- launchApp:
+    clearState: true
+# Check elements are visible
+- assertVisible: 'Home'
+- assertVisible: 'Library'
+- assertVisible:
+    id: 'add-playlist'
+- assertVisible: 'Recently played'
+
+# Navigate to Settings, check elements
+- tapOn:
+    id: 'settings'
+- assertVisible: 'Settings'
+- assertVisible: 'Language'
+- assertVisible: 'Color scheme'
+- assertVisible: 'Clear app cache'
+- back
+
+# Navigate to Library, check elements
+- tapOn: 'Library'
+- assertVisible: 'Your library'
+- assertVisible: 'Search'
+
+# Open Create Playlist modal
+- tapOn:
+    id: 'add-playlist'
+- hideKeyboard
+- back
+- tapOn: 'Home'
+- tapOn:
+    id: 'add-playlist'
+- back

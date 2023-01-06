@@ -10,5 +10,5 @@ export const IOSCloseButton = () => {
     return null;
   }
 
-  return <Icon name="close" onPress={goBack} />;
+  return <Icon accessibilityLabel="close" name="close" onPress={goBack} />;
 };

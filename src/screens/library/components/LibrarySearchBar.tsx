@@ -56,7 +56,9 @@ export const LibrarySearchBar: FC<LibrarySearchBarProps> = ({
 
   return (
     <TextInput
-      leftElement={<Icon marginRight={2} name="search" />}
+      leftElement={
+        <Icon accessibilityLabel="search" marginRight={2} name="search" />
+      }
       onChangeText={searchHandler}
       placeholder={t(i18nKeys.screens.library.input.search.placeholder)}
       value={search}

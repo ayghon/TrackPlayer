@@ -1,0 +1,71 @@
+appId: com.TrackPlayer
+---
+- launchApp:
+    clearState: true
+# CREATE
+- runFlow: '../common/create-playlist.yml'
+- tapOn: 'Library'
+- assertVisible:
+    text: 'test 1'
+    above: '0 tracks'
+## CHECK STORAGE
+- runFlow: '../common/relaunch.yml'
+- tapOn: 'Library'
+- assertVisible:
+    text: 'test 1'
+    above: '0 tracks'
+
+# EDIT
+- tapOn:
+    text: 'test 1'
+    above: '0 tracks'
+- assertVisible: 'test 1'
+## ADD TRACKS
+- tapOn: 'Add tracks'
+- tapOn: '0002'
+- tapOn: '0004'
+- tapOn: 'ADD TRACKS'
+- assertVisible:
+    text: '0002'
+    below: 'Add tracks'
+- assertVisible:
+    text: '0004'
+    below: 'Add tracks'
+- assertVisible:
+    id: 'play'
+## CHANGE TITLE
+- tapOn:
+    id: 'settings'
+- tapOn: 'test 1'
+- eraseText
+- inputText: 'test 2'
+- hideKeyboard
+- back
+- assertVisible:
+    text: 'test 2'
+    above: 'Add tracks'
+- back
+- assertVisible:
+    text: 'test 2'
+    above: '2 tracks'
+## CHECK STORAGE
+- runFlow: '../common/relaunch.yml'
+- tapOn: 'Library'
+- assertVisible:
+    text: 'test 2'
+    above: '2 tracks'
+# DELETE
+#- tapOn:
+#    text: 'test 2'
+#    above: '2 tracks'
+#- tapOn:
+#    id: 'settings'
+# FIXME Delete playlist modal is closed immediately when opened
+#- tapOn: 'Delete playlist'
+#- assertVisible: 'This action is irreversible !'
+#- assertVisible: 'Are you certain you wish to delete the playlist: test 2 ?'
+#- tapOn: 'DELETE'
+#- assertVisible: 'Your library'
+#- assertNotVisible:
+#    text: 'test 2'
+#    above: '2 tracks'

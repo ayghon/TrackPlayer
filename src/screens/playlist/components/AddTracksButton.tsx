@@ -10,6 +10,7 @@ export const AddTracksButton: FC<IPressableProps> = (props) => {
     <Pressable {...props}>
       <Row alignItems="center">
         <Icon
+          accessibilityLabel="add"
           bgColor="primary.light"
           borderRadius="md"
           color="text.primary"

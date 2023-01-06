@@ -1,3 +1,4 @@
+import { BackButton } from './components/BackButton';
 import {
   ColorSchemeCreateModal,
   ColorSchemeModal,
@@ -65,14 +66,21 @@ export const BaseStackNavigation = () => {
               component={SettingsScreen}
               name={Routes.SETTINGS}
               options={{
-                headerBackTitle: '',
+                headerBackTitleVisible: false,
+                headerLeft: BackButton,
                 title: t(i18nKeys.routes.stacks.settings.title)
               }}
             />
             <BaseStack.Screen
               component={PlaylistViewScreen}
               name={Routes.PLAYLIST_VIEW}
-              options={playlistViewOptions}
+              options={(props) => ({
+                headerBackTitle: '',
+                headerLeft: BackButton,
+                headerTitle: '',
+                title: '',
+                ...playlistViewOptions(props)
+              })}
             />
           </BaseStack.Group>
           <BaseStack.Group
@@ -85,6 +93,7 @@ export const BaseStackNavigation = () => {
               component={ColorSchemeModal}
               name={Routes.COLOR_SCHEME}
               options={{
+                headerLeft: BackButton,
                 headerRight: IOSCloseButton,
                 headerTitle: t(i18nKeys.routes.modals.color_scheme.header_title)
               }}
@@ -93,6 +102,7 @@ export const BaseStackNavigation = () => {
               component={ColorSchemeCreateModal}
               name={Routes.COLOR_SCHEME_CREATE}
               options={{
+                headerLeft: BackButton,
                 headerRight: IOSCloseButton,
                 headerTitle: t(
                   i18nKeys.routes.modals.color_scheme_create.header_title
@@ -104,6 +114,7 @@ export const BaseStackNavigation = () => {
               component={LanguageModal}
               name={Routes.LANGUAGE}
               options={{
+                headerLeft: BackButton,
                 headerRight: IOSCloseButton,
                 headerTitle: t(i18nKeys.routes.modals.language.header_title)
               }}
@@ -112,6 +123,7 @@ export const BaseStackNavigation = () => {
               component={PlaylistCreateModal}
               name={Routes.PLAYLIST_CREATE}
               options={{
+                headerLeft: BackButton,
                 headerShown: isAndroid,
                 headerTitle: '',
                 title: ''
@@ -128,6 +140,7 @@ export const BaseStackNavigation = () => {
                 contentStyle: {
                   paddingTop: playlist?.title ? 0 : 16
                 },
+                headerLeft: BackButton,
                 headerRight: IOSCloseButton,
                 title: playlist?.title ?? ''
               })}
@@ -136,8 +149,7 @@ export const BaseStackNavigation = () => {
               component={PlaylistSettingsModal}
               name={Routes.PLAYLIST_SETTINGS}
               options={{
-                headerShown: isAndroid,
-                headerTitle: '',
+                headerShown: false,
                 title: ''
               }}
             />
@@ -145,6 +157,7 @@ export const BaseStackNavigation = () => {
               component={PlaylistTracksSelectionModal}
               name={Routes.PLAYLIST_TRACKS_SELECTION}
               options={{
+                headerLeft: BackButton,
                 headerShown: isAndroid,
                 headerTitle: '',
                 title: ''
@@ -163,11 +176,6 @@ const playlistViewOptions = ({
   }
 }: {
   route: RouteProp<RootStackParamList, Routes.PLAYLIST_VIEW>;
-}) => {
-  return {
-    headerBackTitle: '',
-    headerRight: () => <PlaylistSettingsButton playlist={playlist} />,
-    headerTitle: '',
-    title: ''
-  };
-};
+}) => ({
+  headerRight: () => <PlaylistSettingsButton playlist={playlist} />
+});

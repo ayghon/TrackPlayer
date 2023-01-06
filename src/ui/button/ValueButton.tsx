@@ -19,7 +19,7 @@ export const ValueButton: FC<PropsWithChildren<ValueButtonProps>> = ({
           <Text color="text.accent" marginRight={1} variant="body2">
             {value}
           </Text>
-          <Icon name="chevron-right" />
+          <Icon accessibilityLabel="right chevron" name="chevron-right" />
         </Row>
       </Pressable>
     </Row>

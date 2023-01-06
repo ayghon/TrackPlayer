@@ -15,7 +15,9 @@
     "start:nocache": "yarn start --reset-cache",
     "android:release": "(cd android && ./gradlew assembleRelease)",
     "ios:pods": "(cd ios && pod install)",
-    "gen:i18n": "./src/services/i18n/utils/generate-i18n-keys.ts"
+    "gen:i18n": "./src/services/i18n/utils/generate-i18n-keys.ts",
+    "e2e:android": "echo 1 | maestro test e2e/android",
+    "e2e:ios": "echo 2 | maestro test e2e/ios"
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",

@@ -1,0 +1,49 @@
+appId: com.TrackPlayer
+---
+- launchApp:
+    clearState: true
+# CREATE
+- runFlow: '../common/create-playlist.yml'
+- tapOn: 'Library, tab, 2 of 2'
+- assertVisible: 'test 1 0 tracks'
+## CHECK STORAGE
+- runFlow: '../common/relaunch.yml'
+- tapOn: 'Library, tab, 2 of 2'
+- assertVisible: 'test 1 0 tracks'
+
+# EDIT
+- tapOn: 'test 1 0 tracks'
+- assertVisible: 'test 1'
+## ADD TRACKS
+- tapOn: 'add Add tracks'
+- tapOn: 'Image 0002 bigsoundbank'
+- tapOn: 'Image 0004 bigsoundbank'
+- tapOn: 'ADD TRACKS'
+- assertVisible: 'Image 0002 bigsoundbank'
+- assertVisible: 'Image 0004 bigsoundbank'
+- assertVisible: 'play arrow'
+## CHANGE TITLE
+- tapOn: 'settings'
+- tapOn: 'test 1'
+- eraseText
+- inputText: 'test 2'
+- hideKeyboard
+- tapOn: 'close'
+- assertVisible: 'test 2'
+- tapOn:
+    id: 'back'
+- assertVisible: 'test 2 2 tracks'
+## CHECK STORAGE
+- runFlow: '../common/relaunch.yml'
+- tapOn: 'Library, tab, 2 of 2'
+- assertVisible: 'test 2 2 tracks'
+
+# DELETE
+- tapOn: 'test 2 2 tracks'
+- tapOn: 'settings'
+- tapOn: 'delete Delete playlist'
+- assertVisible: 'This action is irreversible !'
+- assertVisible: 'Are you certain you wish to delete the playlist: test 2 ?'
+- tapOn: 'DELETE'
+- assertVisible: 'Your library'
+- assertNotVisible: 'test 2 2 tracks'

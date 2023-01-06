@@ -1,7 +1,8 @@
+import { AddPlaylistButton } from './AddPlaylistButton';
 import { Icon, Row } from 'native-base';
-import { LibraryHeaderRight } from './LibraryHeaderRight';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { RootStackParamList, Routes } from '../routes.types';
+import { testIds } from '../../../utils';
 import React from 'react';
 
 export const SettingsButton = () => {
@@ -10,8 +11,13 @@ export const SettingsButton = () => {
 
   return (
     <Row space={4}>
-      <LibraryHeaderRight />
-      <Icon name="settings" onPress={() => navigate(Routes.SETTINGS)} />
+      <AddPlaylistButton />
+      <Icon
+        accessibilityLabel="settings"
+        name="settings"
+        onPress={() => navigate(Routes.SETTINGS)}
+        testID={testIds.button.settings}
+      />
     </Row>
   );
 };

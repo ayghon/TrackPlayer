@@ -15,7 +15,7 @@ export const DeletePlaylistButton: FC<DeletePlaylistButtonProps> = ({
   return (
     <Pressable marginTop={8} onPress={onPress}>
       <Row alignItems="center" space={2}>
-        <Icon color="error.700" name="delete" />
+        <Icon accessibilityLabel="delete" color="error.700" name="delete" />
         <Text color="error.700" variant="body2">
           {t(i18nKeys.modals.playlist.settings.button.delete_playlist)}
         </Text>

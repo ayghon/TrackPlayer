@@ -1,3 +1,4 @@
+import { BackHandler } from 'react-native';
 import { ConfirmDialog, ScreenContainer, TextInput } from '../../ui';
 import { DeletePlaylistButton } from './components/DeletePlaylistButton';
 import { Icon } from 'native-base';
@@ -8,9 +9,10 @@ import {
   i18nKeys,
   usePlaylistsState
 } from '../../services';
-import { isIOS } from '../../utils';
+import { isAndroid, isIOS } from '../../utils';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 
 export type PlaylistSettingsModalProps = {
   playlist: Playlist;
@@ -39,7 +41,7 @@ export const PlaylistSettingsModal: FC<
     pop(2);
   };
 
-  const closeModalHandler = async () => {
+  const closeModalHandler = useCallback(async () => {
     const newList = await editPlaylist(playlist.id, {
       ...playlist,
       title: playlistName
@@ -47,10 +49,30 @@ export const PlaylistSettingsModal: FC<
     navigate(Routes.PLAYLIST_VIEW, {
       playlist: newList.find((item) => item.id === playlist.id) || playlist
     });
-  };
+  }, [editPlaylist, navigate, playlist, playlistName]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        closeModalHandler();
+        return true;
+      };
+
+      const subscription = BackHandler.addEventListener(
+        'hardwareBackPress',
+        onBackPress
+      );
+
+      return () => subscription.remove();
+    }, [closeModalHandler])
+  );
 
   return (
-    <ScreenContainer hasCloseButton={isIOS} onClose={closeModalHandler}>
+    <ScreenContainer
+      hasBackButton={isAndroid}
+      hasCloseButton={isIOS}
+      onClose={closeModalHandler}
+    >
       <TextInput
         label={t(i18nKeys.modals.playlist.settings.input.rename_playlist.label)}
         leftElement={<Icon marginRight={2} name="edit" />}

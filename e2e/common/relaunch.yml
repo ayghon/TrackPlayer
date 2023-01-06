@@ -1,0 +1,4 @@
+appId: com.TrackPlayer
+---
+- stopApp
+- launchApp

@@ -1,14 +1,16 @@
-import { FlatList, Pressable, View } from 'native-base';
+import { Button, FlatList, Pressable } from 'native-base';
 import {
   Playlist,
   RootStackScreenProps,
   Routes,
+  i18nKeys,
   tracksMocks,
   usePlaylistsState
 } from '../../services';
 import { ScreenContainer, TrackItem } from '../../ui';
 import { Track } from 'react-native-track-player';
 import { isIOS } from '../../utils';
+import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
 
 export type PlaylistTracksSelectionModalProps = {
@@ -23,6 +25,7 @@ export const PlaylistTracksSelectionModal: FC<
     params: { playlist }
   }
 }) => {
+  const { t } = useTranslation();
   const [selectedTracks, setSelectedTracks] = useState<Track[]>(
     playlist?.tracks ?? []
   );
@@ -53,37 +56,36 @@ export const PlaylistTracksSelectionModal: FC<
   };
 
   return (
-    <ScreenContainer hasCloseButton={isIOS} onClose={onModalClose}>
-      <View>
-        <FlatList<Track>
-          data={tracksMocks}
-          keyExtractor={(t) => t.title || t.url.toString()}
-          renderItem={({ item }) => (
-            <Pressable
-              marginBottom={4}
-              onPress={() => {
-                if (
-                  selectedTracks.find(
-                    (selectedTrack) => selectedTrack.title === item.title
-                  )
-                ) {
-                  setSelectedTracks((state) =>
-                    state.filter((i) => i.title !== item.title)
-                  );
-                } else {
-                  setSelectedTracks((state) => [...state, item]);
-                }
-              }}
-              opacity={
-                item.title && getIsSelected(item.title) ? 0.5 : undefined
+    <ScreenContainer hasCloseButton={isIOS} onClose={goBack}>
+      <FlatList<Track>
+        data={tracksMocks}
+        keyExtractor={(i) => i.title || i.url.toString()}
+        renderItem={({ item }) => (
+          <Pressable
+            marginBottom={4}
+            onPress={() => {
+              if (
+                selectedTracks.find(
+                  (selectedTrack) => selectedTrack.title === item.title
+                )
+              ) {
+                setSelectedTracks((state) =>
+                  state.filter((i) => i.title !== item.title)
+                );
+              } else {
+                setSelectedTracks((state) => [...state, item]);
               }
-              paddingY={1}
-            >
-              <TrackItem {...item} />
-            </Pressable>
-          )}
-        />
-      </View>
+            }}
+            opacity={item.title && getIsSelected(item.title) ? 0.5 : undefined}
+            paddingY={1}
+          >
+            <TrackItem {...item} />
+          </Pressable>
+        )}
+      />
+      <Button marginTop={2} onPress={onModalClose}>
+        {t(i18nKeys.screens.playlist.button.add_tracks)}
+      </Button>
     </ScreenContainer>
   );
 };

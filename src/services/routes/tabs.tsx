@@ -1,7 +1,7 @@
+import { AddPlaylistButton } from './components/AddPlaylistButton';
 import { CustomBottomTabBar } from './components/CustomBottomTabBar';
 import { HomeScreen, LibraryScreen } from '../../screens';
 import { Icon } from 'native-base';
-import { LibraryHeaderRight } from './components/LibraryHeaderRight';
 import {
   RootStackParamList,
   RootStackScreenProps,
@@ -35,7 +35,7 @@ const tabs: TabScreenProps[] = [
   },
   {
     component: LibraryScreen,
-    headerRight: LibraryHeaderRight,
+    headerRight: AddPlaylistButton,
     headerShown: false,
     iconName: 'list',
     name: Routes.LIBRARY,

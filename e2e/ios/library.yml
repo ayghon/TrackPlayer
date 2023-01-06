@@ -1,0 +1,18 @@
+appId: com.TrackPlayer
+---
+- launchApp:
+    clearState: true
+# SEARCH
+- runFlow: '../common/create-playlist.yml'
+- tapOn: 'Library, tab, 2 of 2'
+- tapOn: 'search Search'
+- inputText: 'test 1'
+- assertVisible: 'test 1 0 tracks'
+- eraseText
+- inputText: 'blahblah'
+- assertNotVisible: 'test 1 0 tracks'
+- eraseText
+- assertVisible: 'test 1 0 tracks'
+# RESET STATE
+- hideKeyboard
+- clearState
