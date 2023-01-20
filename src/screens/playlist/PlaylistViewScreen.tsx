@@ -2,14 +2,14 @@ import { AddTracksButton } from './components/AddTracksButton';
 import { Alert } from 'react-native';
 import { FlatList, Pressable, Row, Text } from 'native-base';
 import { FloatingPlayButton } from './components/FloatingPlayButton';
+import { PlaylistArtwork } from './components/PlaylistArtwork';
 import {
-  Playlist,
   RootStackScreenProps,
   Routes,
   i18nKeys,
-  usePlaylistsState
+  usePlaylistsState,
+  useQueueTracks
 } from '../../services';
-import { PlaylistArtwork } from './components/PlaylistArtwork';
 import { ScreenContainer, TrackItem } from '../../ui';
 import { Track } from 'react-native-track-player';
 import { useTranslation } from 'react-i18next';
@@ -19,29 +19,41 @@ import DocumentPicker, {
 } from 'react-native-document-picker';
 import React, { FC } from 'react';
 
-export type PlaylistViewScreenProps = { playlist: Playlist };
+export type PlaylistViewScreenProps = { playlistId: string };
 
 export const PlaylistViewScreen: FC<
   RootStackScreenProps<Routes.PLAYLIST_VIEW>
 > = ({
-  navigation: { navigate },
+  navigation: { navigate, goBack },
   route: {
-    params: { playlist }
+    params: { playlistId }
   }
 }) => {
-  const { tracks, title, artwork } = playlist;
   const { t } = useTranslation();
-  const { editPlaylist } = usePlaylistsState();
+  const { editPlaylist, getPlaylist } = usePlaylistsState();
+  const { queueTracks } = useQueueTracks(playlistId);
+  const playlist = getPlaylist(playlistId);
 
-  const navigateToPlayer = (args?: { index?: number; position?: number }) => {
+  if (!playlist) {
+    goBack();
+    return null;
+  }
+
+  const { tracks, title, artwork } = playlist;
+
+  const navigateToPlayer = async (args?: {
+    index?: number;
+    position?: number;
+  }) => {
     const { index, position } = args || {};
 
+    await queueTracks({ autoPlay: true, index, position, tracks });
     navigate(Routes.PLAYER, {
-      autoPlay: true,
-      index,
-      playlist,
-      position,
-      tracks
+      // autoPlay: true,
+      // index,
+      playlistId: playlist.id
+      // position,
+      // tracks
     });
   };
 
@@ -62,8 +74,8 @@ export const PlaylistViewScreen: FC<
       });
 
       navigate(Routes.PLAYLIST_VIEW, {
-        playlist:
-          newList.find((item) => item.title === playlist.title) || playlist
+        playlistId:
+          newList.find((item) => item.id === playlist.id)?.id ?? playlistId
       });
     }
   };
@@ -84,12 +96,15 @@ export const PlaylistViewScreen: FC<
         />
       </Row>
       <AddTracksButton
-        onPress={() => navigate(Routes.PLAYLIST_TRACKS_SELECTION, { playlist })}
+        onPress={() =>
+          navigate(Routes.PLAYLIST_TRACKS_SELECTION, {
+            playlistId: playlist.id
+          })
+        }
       />
       <FlatList<Track>
         data={tracks}
         keyExtractor={({ url }) => url.toString()}
-        marginTop={4}
         renderItem={({ item, index }) => (
           <Pressable marginY={2} onPress={() => navigateToPlayer({ index })}>
             <TrackItem {...item} />

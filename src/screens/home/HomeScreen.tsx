@@ -33,7 +33,9 @@ export const HomeScreen: FC<RootStackScreenProps<Routes.HOME>> = ({
         renderItem={({ item }) => (
           <PlaylistItem
             artwork={item.artwork}
-            onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
+            onPress={() =>
+              navigate(Routes.PLAYLIST_VIEW, { playlistId: item.id })
+            }
             title={item.title}
             trackCount={item.count}
             variant={LayoutVariant.GRID}

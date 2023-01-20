@@ -13,11 +13,14 @@ export const FloatingPlayer = () => {
     return null;
   }
 
-  const playerPressHandler = () =>
-    navigate(Routes.PLAYER, {
-      continueCurrent: true,
-      playlist
-    });
+  const playerPressHandler = () => {
+    if (playlist?.id) {
+      navigate(Routes.PLAYER, {
+        continueCurrent: true,
+        playlistId: playlist.id
+      });
+    }
+  };
 
   return (
     <Pressable onPress={playerPressHandler}>

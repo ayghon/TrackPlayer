@@ -5,6 +5,7 @@ import React, { FC, PropsWithChildren, createContext, useContext } from 'react';
 const initialValue: UsePlaylistsResponse = {
   createPlaylist: () => Promise.resolve([]),
   editPlaylist: () => Promise.resolve([]),
+  getPlaylist: () => undefined,
   getPlaylists: () => Promise.resolve([]),
   isLoading: false,
   orderedPlaylists: [],

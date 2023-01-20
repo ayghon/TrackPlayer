@@ -26,7 +26,7 @@ export const LibraryListItem: FC<LibraryListItemProps> = ({
       artwork={item.artwork}
       onDelete={() => deleteHandler?.(item.id)}
       onPin={() => pinHandler?.(item)}
-      onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlist: item })}
+      onPress={() => navigate(Routes.PLAYLIST_VIEW, { playlistId: item.id })}
       pinned={item.pinned}
       title={item.title}
       trackCount={item.count}

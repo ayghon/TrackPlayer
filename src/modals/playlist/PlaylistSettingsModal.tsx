@@ -3,7 +3,6 @@ import { ConfirmDialog, ScreenContainer, TextInput } from '../../ui';
 import { DeletePlaylistButton } from './components/DeletePlaylistButton';
 import { Icon } from 'native-base';
 import {
-  Playlist,
   RootStackScreenProps,
   Routes,
   i18nKeys,
@@ -15,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 import React, { FC, useCallback, useState } from 'react';
 
 export type PlaylistSettingsModalProps = {
-  playlist: Playlist;
+  playlistId: string;
 };
 
 export const PlaylistSettingsModal: FC<
@@ -23,11 +22,12 @@ export const PlaylistSettingsModal: FC<
 > = ({
   navigation: { pop, navigate },
   route: {
-    params: { playlist }
+    params: { playlistId }
   }
 }) => {
-  const [playlistName, setPlaylistName] = useState(playlist.title);
-  const { removePlaylist, editPlaylist } = usePlaylistsState();
+  const { removePlaylist, editPlaylist, getPlaylist } = usePlaylistsState();
+  const playlist = getPlaylist(playlistId);
+  const [playlistName, setPlaylistName] = useState(playlist?.title ?? '');
   const { t } = useTranslation();
   const [isConfirmDeleteDialogOpen, setConfirmDeleteDialogOpen] =
     useState(false);
@@ -36,18 +36,27 @@ export const PlaylistSettingsModal: FC<
     setConfirmDeleteDialogOpen(false);
 
   const deleteHandler = async () => {
+    if (!playlist) {
+      return null;
+    }
+
     await removePlaylist(playlist.id);
     setConfirmDeleteDialogOpen(false);
     pop(2);
   };
 
   const closeModalHandler = useCallback(async () => {
+    if (!playlist) {
+      return null;
+    }
+
     const newList = await editPlaylist(playlist.id, {
       ...playlist,
       title: playlistName
     });
     navigate(Routes.PLAYLIST_VIEW, {
-      playlist: newList.find((item) => item.id === playlist.id) || playlist
+      playlistId:
+        newList.find((item) => item.id === playlist.id)?.id ?? playlist.id
     });
   }, [editPlaylist, navigate, playlist, playlistName]);
 
@@ -93,7 +102,7 @@ export const PlaylistSettingsModal: FC<
         title={t(i18nKeys.dialog.irreversible_action.title)}
       >
         {t(i18nKeys.modals.playlist.settings.dialog.confirm_delete.subtitle, {
-          name: playlist.title
+          name: playlist?.title ?? ''
         })}
       </ConfirmDialog>
     </ScreenContainer>

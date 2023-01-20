@@ -43,6 +43,8 @@ export const usePlaylists = (): UsePlaylistsResponse => {
     return [];
   }, []);
 
+  const getPlaylist = (id: string) => playlists.find((p) => p.id === id);
+
   const createPlaylist = useCallback(
     async (playlist: CreatePlaylistRequest) => {
       setLoading(true);
@@ -122,6 +124,7 @@ export const usePlaylists = (): UsePlaylistsResponse => {
   return {
     createPlaylist,
     editPlaylist,
+    getPlaylist,
     getPlaylists,
     isLoading,
     orderedPlaylists,

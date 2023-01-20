@@ -1,77 +1,48 @@
 import {
-  Playlist,
   RootStackScreenProps,
   Routes,
-  usePlayerState
+  usePlayerState,
+  usePlaylistsState,
+  useQueueTracks
 } from '../../services';
 import { ScreenContainer, TrackView } from '../../ui';
 import { Spinner } from 'native-base';
 import React, { FC, useEffect } from 'react';
-import TrackPlayer, { Track } from 'react-native-track-player';
 
 export type PlayerModalProps = {
-  tracks?: Track[];
   position?: number;
   index?: number;
-  playlist?: Playlist;
+  playlistId?: string;
   continueCurrent?: boolean;
   autoPlay?: boolean;
 };
 
 export const PlayerModal: FC<RootStackScreenProps<Routes.PLAYER>> = ({
+  navigation: { setOptions },
   route: {
     params: {
       continueCurrent = false,
       autoPlay = true,
-      tracks,
       position = 0,
       index = 0,
-      playlist
+      playlistId
     }
   }
 }) => {
-  const { controls, currentTrack, setQueue, setPlaylist, queue } =
-    usePlayerState();
+  const { getPlaylist } = usePlaylistsState();
+  const { controls, currentTrack, queue } = usePlayerState();
+  const { queueTracks } = useQueueTracks(playlistId || '');
+  const playlist = getPlaylist(playlistId || '');
 
   useEffect(() => {
-    const addTracks = async () => {
-      if (playlist && setPlaylist) {
-        setPlaylist(playlist);
-      }
+    if (playlist) {
+      setOptions({ title: playlist.title });
+    }
+  }, [playlist, setOptions]);
 
-      if (!continueCurrent && tracks) {
-        setQueue(tracks);
-
-        // clean previous queue
-        await TrackPlayer.reset();
-        // create new queue
-        await TrackPlayer.add(tracks);
-
-        if (index >= 0) {
-          await TrackPlayer.skip(index);
-        }
-
-        if (position > 0) {
-          await TrackPlayer.seekTo(position);
-        }
-
-        if (autoPlay) {
-          await TrackPlayer.play();
-        }
-      }
-    };
-
-    addTracks();
-  }, [
-    autoPlay,
-    continueCurrent,
-    index,
-    playlist,
-    position,
-    setPlaylist,
-    setQueue,
-    tracks
-  ]);
+  useEffect(() => {
+    queueTracks({ autoPlay, continueCurrent, index, position });
+  }, [autoPlay, continueCurrent, index, position, queueTracks]);
 
   if (!currentTrack || queue.length === 0) {
     return <Spinner />;

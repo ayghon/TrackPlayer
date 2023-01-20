@@ -1,6 +1,5 @@
 import { Button, FlatList, Pressable } from 'native-base';
 import {
-  Playlist,
   RootStackScreenProps,
   Routes,
   i18nKeys,
@@ -14,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 import React, { FC, useState } from 'react';
 
 export type PlaylistTracksSelectionModalProps = {
-  playlist: Playlist;
+  playlistId: string;
 };
 
 export const PlaylistTracksSelectionModal: FC<
@@ -22,10 +21,12 @@ export const PlaylistTracksSelectionModal: FC<
 > = ({
   navigation: { navigate, goBack },
   route: {
-    params: { playlist }
+    params: { playlistId }
   }
 }) => {
   const { t } = useTranslation();
+  const { getPlaylist } = usePlaylistsState();
+  const playlist = getPlaylist(playlistId);
   const [selectedTracks, setSelectedTracks] = useState<Track[]>(
     playlist?.tracks ?? []
   );
@@ -35,6 +36,11 @@ export const PlaylistTracksSelectionModal: FC<
     !!selectedTracks.find((item) => item.title === trackId);
 
   const onModalClose = async () => {
+    if (!playlist) {
+      goBack();
+      return null;
+    }
+
     if (
       selectedTracks.filter((selected) =>
         playlist.tracks.map(
@@ -47,11 +53,21 @@ export const PlaylistTracksSelectionModal: FC<
         tracks: selectedTracks
       });
       navigate(Routes.PLAYLIST_VIEW, {
-        playlist:
-          newList.find((item) => item.title === playlist.title) || playlist
+        playlistId:
+          newList.find((item) => item.id === playlist.id)?.id ?? playlist.id
       });
     } else {
       goBack();
+    }
+  };
+
+  const selectItemHandler = (item: Track) => {
+    if (
+      selectedTracks.find((selectedTrack) => selectedTrack.title === item.title)
+    ) {
+      setSelectedTracks((state) => state.filter((i) => i.title !== item.title));
+    } else {
+      setSelectedTracks((state) => [...state, item]);
     }
   };
 
@@ -63,19 +79,7 @@ export const PlaylistTracksSelectionModal: FC<
         renderItem={({ item }) => (
           <Pressable
             marginBottom={4}
-            onPress={() => {
-              if (
-                selectedTracks.find(
-                  (selectedTrack) => selectedTrack.title === item.title
-                )
-              ) {
-                setSelectedTracks((state) =>
-                  state.filter((i) => i.title !== item.title)
-                );
-              } else {
-                setSelectedTracks((state) => [...state, item]);
-              }
-            }}
+            onPress={() => selectItemHandler(item)}
             opacity={item.title && getIsSelected(item.title) ? 0.5 : undefined}
             paddingY={1}
           >

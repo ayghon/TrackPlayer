@@ -24,4 +24,5 @@ export type UsePlaylistsResponse = {
   orderedPlaylists: Playlist[];
   playlists: Playlist[];
   removePlaylist: (playlistId: string) => Promise<Playlist[]>;
+  getPlaylist: (id: string) => Playlist | undefined;
 };

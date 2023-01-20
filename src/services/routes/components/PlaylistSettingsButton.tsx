@@ -1,14 +1,13 @@
 import { Icon } from 'native-base';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { Playlist } from '../../playlists';
 import { RootStackParamList, Routes } from '../routes.types';
 import { testIds } from '../../../utils';
 import React, { FC } from 'react';
 
-export type PlaylistSettingsButtonProps = { playlist: Playlist };
+export type PlaylistSettingsButtonProps = { playlistId: string };
 
 export const PlaylistSettingsButton: FC<PlaylistSettingsButtonProps> = ({
-  playlist
+  playlistId
 }) => {
   const { navigate } =
     useNavigation<NavigationProp<RootStackParamList, Routes.ROOT>>();
@@ -19,7 +18,7 @@ export const PlaylistSettingsButton: FC<PlaylistSettingsButtonProps> = ({
       name="more-vert"
       onPress={() =>
         navigate(Routes.PLAYLIST_SETTINGS, {
-          playlist
+          playlistId
         })
       }
       testID={testIds.button.settings}

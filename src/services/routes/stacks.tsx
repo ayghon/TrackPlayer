@@ -134,15 +134,14 @@ export const BaseStackNavigation = () => {
               name={Routes.PLAYER}
               options={({
                 route: {
-                  params: { playlist }
+                  params: { playlistId }
                 }
               }) => ({
                 contentStyle: {
-                  paddingTop: playlist?.title ? 0 : 16
+                  paddingTop: playlistId ? 0 : 16
                 },
                 headerLeft: BackButton,
-                headerRight: IOSCloseButton,
-                title: playlist?.title ?? ''
+                headerRight: IOSCloseButton
               })}
             />
             <BaseStack.Screen
@@ -172,10 +171,10 @@ export const BaseStackNavigation = () => {
 
 const playlistViewOptions = ({
   route: {
-    params: { playlist }
+    params: { playlistId }
   }
 }: {
   route: RouteProp<RootStackParamList, Routes.PLAYLIST_VIEW>;
 }) => ({
-  headerRight: () => <PlaylistSettingsButton playlist={playlist} />
+  headerRight: () => <PlaylistSettingsButton playlistId={playlistId} />
 });
