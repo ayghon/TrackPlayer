@@ -7,6 +7,7 @@ import {
   RootStackScreenProps,
   Routes,
   i18nKeys,
+  usePlayerState,
   usePlaylistsState,
   useQueueTracks
 } from '../../services';
@@ -33,6 +34,8 @@ export const PlaylistViewScreen: FC<
   const { editPlaylist, getPlaylist } = usePlaylistsState();
   const { queueTracks } = useQueueTracks(playlistId);
   const playlist = getPlaylist(playlistId);
+  const { currentTrack, playlist: { id: currentPlaylistId } = {} } =
+    usePlayerState();
 
   if (!playlist) {
     goBack();
@@ -103,7 +106,13 @@ export const PlaylistViewScreen: FC<
         keyExtractor={({ url }) => url.toString()}
         renderItem={({ item, index }) => (
           <Pressable marginY={2} onPress={() => navigateToPlayer({ index })}>
-            <TrackItem {...item} />
+            <TrackItem
+              active={
+                currentPlaylistId === playlistId &&
+                currentTrack?.title === item.title
+              }
+              {...item}
+            />
           </Pressable>
         )}
       />

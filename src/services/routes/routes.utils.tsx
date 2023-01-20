@@ -9,7 +9,7 @@ import {
 import { PlaylistSettingsButton } from './components/buttons/PlaylistSettingsButton';
 import { RootStackParamList, Routes } from './routes.types';
 import { RouteProp } from '@react-navigation/core/lib/typescript/src/types';
-import { getWelcomeMessageByPeriod } from '../../utils';
+import { getWelcomeMessageByPeriod, isAndroid } from '../../utils';
 import { i18nKeys } from '../i18n';
 import React from 'react';
 
@@ -45,7 +45,7 @@ export const playerModalOptions = ({
   contentStyle: {
     paddingTop: playlistId ? 0 : 16
   },
-  headerLeft: BackButton,
+  headerLeft: isAndroid ? BackButton : undefined,
   headerRight: IOSCloseButton,
   headerTitle: (props: HeaderTitleProps) => (
     <PlayerHeader {...props} playlistId={playlistId} />

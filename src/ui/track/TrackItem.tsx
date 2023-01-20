@@ -3,7 +3,18 @@ import { Row, Text, View } from 'native-base';
 import { Track } from 'react-native-track-player';
 import React, { FC } from 'react';
 
-export const TrackItem: FC<Track> = ({ artist, title, artwork }) => {
+export type TrackItemProps = Track & {
+  active?: boolean;
+};
+
+export const TrackItem: FC<TrackItemProps> = ({
+  artist,
+  title,
+  artwork,
+  active = false
+}) => {
+  const textColor = active ? 'text.accent' : 'text.primary';
+
   return (
     <Row alignItems="center">
       <Image
@@ -12,8 +23,12 @@ export const TrackItem: FC<Track> = ({ artist, title, artwork }) => {
         width={10}
       />
       <View marginLeft={2}>
-        <Text variant="body2">{title}</Text>
-        <Text variant="caption">{artist}</Text>
+        <Text color={textColor} variant="body2">
+          {title}
+        </Text>
+        <Text color={textColor} variant="caption">
+          {artist}
+        </Text>
       </View>
     </Row>
   );
