@@ -1,8 +1,8 @@
 import { AddPlaylistButton } from './AddPlaylistButton';
 import { Icon, Row } from 'native-base';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList, Routes } from '../routes.types';
-import { testIds } from '../../../utils';
+import { RootStackParamList, Routes } from '../../routes.types';
+import { testIds } from '../../../../utils';
 import React from 'react';
 
 export const SettingsButton = () => {

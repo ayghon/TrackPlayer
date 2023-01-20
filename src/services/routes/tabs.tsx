@@ -1,7 +1,6 @@
-import { AddPlaylistButton } from './components/AddPlaylistButton';
+import { AddPlaylistButton } from './components/buttons/AddPlaylistButton';
 import { CustomBottomTabBar } from './components/CustomBottomTabBar';
 import { HomeScreen, LibraryScreen } from '../../screens';
-import { Icon } from 'native-base';
 import {
   RootStackParamList,
   RootStackScreenProps,
@@ -9,6 +8,7 @@ import {
 } from './routes.types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { i18nKeys } from '../i18n';
+import { tabsOptions } from './routes.utils';
 import { useTranslation } from 'react-i18next';
 import React, { FC, ReactNode } from 'react';
 
@@ -67,9 +67,3 @@ export const TabNavigator = () => {
     </TabStack.Navigator>
   );
 };
-
-const tabsOptions = (iconName: string) => ({
-  tabBarIcon: (props: { focused: boolean; color: string; size: number }) => (
-    <Icon {...props} name={iconName} />
-  )
-});

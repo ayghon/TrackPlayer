@@ -1,4 +1,4 @@
-import { BackButton } from '../../services/routes/components/BackButton';
+import { BackButton } from '../../services/routes/components/buttons/BackButton';
 import { Column, Icon, useTheme } from 'native-base';
 import { SafeAreaView } from 'react-native';
 import { ScreenStatusBar } from './ScreenStatusBar';

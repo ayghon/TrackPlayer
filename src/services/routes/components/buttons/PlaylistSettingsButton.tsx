@@ -1,7 +1,7 @@
 import { Icon } from 'native-base';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { RootStackParamList, Routes } from '../routes.types';
-import { testIds } from '../../../utils';
+import { RootStackParamList, Routes } from '../../routes.types';
+import { testIds } from '../../../../utils';
 import React, { FC } from 'react';
 
 export type PlaylistSettingsButtonProps = { playlistId: string };

@@ -1,5 +1,5 @@
 import { IPressableProps, Icon, Pressable, Text } from 'native-base';
-import { testIds } from '../../../utils';
+import { testIds } from '../../../../utils';
 import { useNavigation } from '@react-navigation/native';
 import React, { FC } from 'react';
 

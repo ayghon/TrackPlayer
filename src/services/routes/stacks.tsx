@@ -1,4 +1,4 @@
-import { BackButton } from './components/BackButton';
+import { BackButton } from './components/buttons/BackButton';
 import {
   ColorSchemeCreateModal,
   ColorSchemeModal,
@@ -8,18 +8,20 @@ import {
   PlaylistSettingsModal,
   PlaylistTracksSelectionModal
 } from '../../modals';
-import { IOSCloseButton } from './components/IOSCloseButton';
+import { IOSCloseButton } from './components/buttons/IOSCloseButton';
 import { NavigationContainer } from '@react-navigation/native';
-import { PlaylistSettingsButton } from './components/PlaylistSettingsButton';
 import { PlaylistViewScreen, SettingsScreen } from '../../screens';
 import { PlaylistsProvider } from '../playlists';
 import { RootStackParamList, Routes } from './routes.types';
-import { RouteProp } from '@react-navigation/core/lib/typescript/src/types';
-import { SettingsButton } from './components/SettingsButton';
+import { SettingsButton } from './components/buttons/SettingsButton';
 import { TabNavigator } from './tabs';
 import { ThemeMode } from '../../ui';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { getHeaderTitle } from './routes.utils';
+import {
+  getHeaderTitle,
+  playerModalOptions,
+  playlistViewOptions
+} from './routes.utils';
 import { i18nKeys } from '../i18n';
 import { isAndroid } from '../../utils';
 import { useColorMode, useTheme } from 'native-base';
@@ -83,6 +85,11 @@ export const BaseStackNavigation = () => {
               })}
             />
           </BaseStack.Group>
+          {/* ***************************
+           *                            *
+           *           MODALS           *
+           *                            *
+           *************************** */}
           <BaseStack.Group
             screenOptions={{
               animation: 'slide_from_right',
@@ -132,17 +139,7 @@ export const BaseStackNavigation = () => {
             <BaseStack.Screen
               component={PlayerModal}
               name={Routes.PLAYER}
-              options={({
-                route: {
-                  params: { playlistId }
-                }
-              }) => ({
-                contentStyle: {
-                  paddingTop: playlistId ? 0 : 16
-                },
-                headerLeft: BackButton,
-                headerRight: IOSCloseButton
-              })}
+              options={playerModalOptions}
             />
             <BaseStack.Screen
               component={PlaylistSettingsModal}
@@ -168,13 +165,3 @@ export const BaseStackNavigation = () => {
     </NavigationContainer>
   );
 };
-
-const playlistViewOptions = ({
-  route: {
-    params: { playlistId }
-  }
-}: {
-  route: RouteProp<RootStackParamList, Routes.PLAYLIST_VIEW>;
-}) => ({
-  headerRight: () => <PlaylistSettingsButton playlistId={playlistId} />
-});

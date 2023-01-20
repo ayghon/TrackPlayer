@@ -49,11 +49,7 @@ export const PlaylistViewScreen: FC<
 
     await queueTracks({ autoPlay: true, index, position, tracks });
     navigate(Routes.PLAYER, {
-      // autoPlay: true,
-      // index,
       playlistId: playlist.id
-      // position,
-      // tracks
     });
   };
 

@@ -1,5 +1,5 @@
 import { Icon } from 'native-base';
-import { isAndroid } from '../../../utils';
+import { isAndroid } from '../../../../utils';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 
