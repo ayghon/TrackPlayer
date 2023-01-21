@@ -1,10 +1,6 @@
-import {
-  Carousel,
-  LayoutVariant,
-  PlaylistItem,
-  ScreenContainer
-} from '../../ui';
+import { Column } from 'native-base';
 import { DeviceEventEmitter } from 'react-native';
+import { LayoutVariant, PlaylistItem, ScreenContainer } from '../../ui';
 import {
   Playlist,
   RootStackScreenProps,
@@ -15,29 +11,44 @@ import {
   usePlaylistsState,
   useRecentlyPlayed
 } from '../../services';
-import { Text } from 'native-base';
+import { Section } from './components/Section';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 
 export const HomeScreen: FC<RootStackScreenProps<Routes.HOME>> = ({
   navigation: { navigate }
 }) => {
   const { t } = useTranslation();
-  const { playlists } = usePlaylistsState();
+  const {
+    playlists,
+    getPinnedPlaylists,
+    isLoading: isLoadingPlaylists
+  } = usePlaylistsState();
   const { recentlyPlayed, isLoading } = useRecentlyPlayed();
-  const [list, setList] = useState<Playlist[]>([]);
+  const [recentlyPlayedList, setRecentlyPlayedList] = useState<Playlist[]>([]);
+  const [pinnedList, setPinnedList] = useState<Playlist[]>([]);
 
   // set list with storage values of recently played items
   useEffect(() => {
-    if (list.length === 0 && !isLoading) {
-      setList(recentlyPlayed);
+    if (recentlyPlayedList.length === 0 && !isLoading) {
+      setRecentlyPlayedList(recentlyPlayed);
     }
-  }, [isLoading, list.length, recentlyPlayed]);
+  }, [isLoading, recentlyPlayedList.length, recentlyPlayed]);
+
+  // set list with storage values of pinned items
+  useFocusEffect(
+    useCallback(() => {
+      if (!isLoadingPlaylists) {
+        getPinnedPlaylists().then((list) => setPinnedList(list));
+      }
+    }, [getPinnedPlaylists, isLoadingPlaylists])
+  );
 
   useEffect(() => {
     const listener = DeviceEventEmitter.addListener(
       StorageEvent.CLEAR_CACHE,
-      () => setList([])
+      () => setRecentlyPlayedList([])
     );
 
     return () => listener.remove();
@@ -52,7 +63,7 @@ export const HomeScreen: FC<RootStackScreenProps<Routes.HOME>> = ({
           values
         );
 
-        setList(playlistItems);
+        setRecentlyPlayedList(playlistItems);
       }
     );
 
@@ -61,24 +72,40 @@ export const HomeScreen: FC<RootStackScreenProps<Routes.HOME>> = ({
 
   return (
     <ScreenContainer>
-      <Text marginBottom={2} variant="title">
-        {t(i18nKeys.screens.home.section.recently_played.title)}
-      </Text>
-      <Carousel<Playlist>
-        data={list}
-        keyExtractor={({ title }) => title}
-        renderItem={({ item }) => (
-          <PlaylistItem
-            artwork={item.artwork}
-            onPress={() =>
-              navigate(Routes.PLAYLIST_VIEW, { playlistId: item.id })
-            }
-            title={item.title}
-            trackCount={item.count}
-            variant={LayoutVariant.GRID}
-          />
-        )}
-      />
+      <Column space="xl">
+        <Section<Playlist>
+          keyExtractor={({ id }) => id}
+          list={recentlyPlayedList}
+          renderItem={({ item }) => (
+            <PlaylistItem
+              artwork={item.artwork}
+              onPress={() =>
+                navigate(Routes.PLAYLIST_VIEW, { playlistId: item.id })
+              }
+              title={item.title}
+              trackCount={item.count}
+              variant={LayoutVariant.GRID}
+            />
+          )}
+          title={t(i18nKeys.screens.home.section.recently_played.title)}
+        />
+        <Section<Playlist>
+          keyExtractor={({ id }) => id}
+          list={pinnedList}
+          renderItem={({ item }) => (
+            <PlaylistItem
+              artwork={item.artwork}
+              onPress={() =>
+                navigate(Routes.PLAYLIST_VIEW, { playlistId: item.id })
+              }
+              title={item.title}
+              trackCount={item.count}
+              variant={LayoutVariant.GRID}
+            />
+          )}
+          title={t(i18nKeys.screens.home.section.pinned_playlists.title)}
+        />
+      </Column>
     </ScreenContainer>
   );
 };

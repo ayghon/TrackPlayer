@@ -156,6 +156,9 @@ export const i18nKeys = {
   screens: {
     home: {
       section: {
+        pinned_playlists: {
+          title: 'screens.home.section.pinned_playlists.title'
+        },
         recently_played: {
           title: 'screens.home.section.recently_played.title'
         }

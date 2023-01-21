@@ -67,5 +67,6 @@
   "ui.theme.schemes.theme_color_scheme.light_purple": "Pourpre Clair",
   "ui.theme.schemes.theme_color_scheme.light_blue": "Bleu Clair",
   "ui.theme.schemes.theme_color_scheme.light_red": "Rouge Clair",
-  "ui.theme.schemes.theme_color_scheme.light_turquoise": "Turquoise Clair"
+  "ui.theme.schemes.theme_color_scheme.light_turquoise": "Turquoise Clair",
+  "screens.home.section.pinned_playlists.title": "Playlists épinglés"
 }

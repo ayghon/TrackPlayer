@@ -40,6 +40,7 @@
   "routes.tabs.home.tab_bar.button.title": "Home",
   "routes.tabs.library.header_title": "Your library",
   "routes.tabs.library.tab_bar.button.title": "Library",
+  "screens.home.section.pinned_playlists.title": "Pinned playlists",
   "screens.home.section.recently_played.title": "Recently played",
   "screens.library.input.search.placeholder": "Search",
   "screens.playlist.button.add_tracks": "Add tracks",

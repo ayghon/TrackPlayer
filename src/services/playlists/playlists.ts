@@ -3,7 +3,7 @@ import {
   Playlist,
   UsePlaylistsResponse
 } from './playlists.types';
-import { StorageKeys } from '../storage';
+import { StorageKeys, getParsedStorageData } from '../storage';
 import { faker } from '@faker-js/faker';
 import { tracksMocks } from '../tracks';
 import { useCallback, useState } from 'react';
@@ -24,21 +24,43 @@ export const playlistsMock: Playlist[] = Array.from(Array(4)).map(
 
 export const usePlaylists = (): UsePlaylistsResponse => {
   const [playlists, setPlaylists] = useState<Playlist[]>(playlistsMock);
+  const [pinnedPlaylists, setPinnedPlaylists] = useState<Playlist[]>([]);
   const [isLoading, setLoading] = useState(true);
 
   const getPlaylists = useCallback(async () => {
     setLoading(true);
-    const rawStoragePlaylists = await AsyncStorage.getItem(
+    const storagePlaylists = await getParsedStorageData<Playlist[]>(
       StorageKeys.PLAYLISTS
     );
-    if (rawStoragePlaylists) {
-      const newPlaylists = JSON.parse(rawStoragePlaylists) || [];
-      setPlaylists(newPlaylists);
+    if (storagePlaylists) {
+      setPlaylists(storagePlaylists);
       setLoading(false);
-      return newPlaylists;
+      return storagePlaylists;
     }
 
     setPlaylists([]);
+    setLoading(false);
+    return [];
+  }, []);
+
+  const getPinnedPlaylists = useCallback(async () => {
+    setLoading(true);
+    const storagePlaylists = await getParsedStorageData<Playlist[]>(
+      StorageKeys.PLAYLISTS
+    );
+
+    if (storagePlaylists) {
+      const pinnedItems = storagePlaylists.reduce<Playlist[]>(
+        (acc, it) => (it.pinned ? [...acc, it] : acc),
+        []
+      );
+
+      setPinnedPlaylists(pinnedItems);
+      setLoading(false);
+      return pinnedItems;
+    }
+
+    setPinnedPlaylists([]);
     setLoading(false);
     return [];
   }, []);
@@ -107,7 +129,8 @@ export const usePlaylists = (): UsePlaylistsResponse => {
   useFocusEffect(
     useCallback(() => {
       getPlaylists();
-    }, [getPlaylists])
+      getPinnedPlaylists();
+    }, [getPlaylists, getPinnedPlaylists])
   );
 
   const orderedPlaylists = playlists.sort((a, b) => {
@@ -124,10 +147,12 @@ export const usePlaylists = (): UsePlaylistsResponse => {
   return {
     createPlaylist,
     editPlaylist,
+    getPinnedPlaylists,
     getPlaylist,
     getPlaylists,
     isLoading,
     orderedPlaylists,
+    pinnedPlaylists,
     playlists,
     removePlaylist
   };

@@ -20,9 +20,11 @@ export type UsePlaylistsResponse = {
     data: Partial<Playlist>
   ) => Promise<Playlist[]>;
   getPlaylists: () => Promise<Playlist[]>;
+  getPinnedPlaylists: () => Promise<Playlist[]>;
   isLoading: boolean;
   orderedPlaylists: Playlist[];
   playlists: Playlist[];
+  pinnedPlaylists: Playlist[];
   removePlaylist: (playlistId: string) => Promise<Playlist[]>;
   getPlaylist: (id: string) => Playlist | undefined;
 };

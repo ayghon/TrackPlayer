@@ -5,10 +5,12 @@ import React, { FC, PropsWithChildren, createContext, useContext } from 'react';
 const initialValue: UsePlaylistsResponse = {
   createPlaylist: () => Promise.resolve([]),
   editPlaylist: () => Promise.resolve([]),
+  getPinnedPlaylists: () => Promise.resolve([]),
   getPlaylist: () => undefined,
   getPlaylists: () => Promise.resolve([]),
   isLoading: false,
   orderedPlaylists: [],
+  pinnedPlaylists: [],
   playlists: [],
   removePlaylist: () => Promise.resolve([])
 };
