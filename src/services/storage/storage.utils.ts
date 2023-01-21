@@ -20,7 +20,10 @@ export async function getParsedStorageData<
   }
 }
 
-export const clearCache = async () => {
-  await AsyncStorage.removeItem(StorageKeys.PLAYLISTS);
-  await AsyncStorage.removeItem(StorageKeys.CUSTOM_COLOR_SCHEMES);
-};
+export const clearCache = () =>
+  AsyncStorage.multiRemove([
+    StorageKeys.CUSTOM_COLOR_SCHEMES,
+    StorageKeys.COLOR_SCHEME,
+    StorageKeys.PLAYLISTS,
+    StorageKeys.RECENTLY_PLAYED
+  ]);

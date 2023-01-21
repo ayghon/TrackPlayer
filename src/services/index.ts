@@ -5,3 +5,4 @@ export * from './playlists';
 export * from './i18n';
 export * from './storage';
 export * from './color-scheme';
+export * from './analytics';

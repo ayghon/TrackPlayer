@@ -7,6 +7,7 @@ import {
   RootStackScreenProps,
   Routes,
   i18nKeys,
+  updateRecentlyPlayed,
   usePlayerState,
   usePlaylistsState,
   useQueueTracks
@@ -50,6 +51,7 @@ export const PlaylistViewScreen: FC<
   }) => {
     const { index, position } = args || {};
 
+    await updateRecentlyPlayed(playlist.id);
     await queueTracks({ autoPlay: true, index, position, tracks });
     navigate(Routes.PLAYER, {
       playlistId: playlist.id
