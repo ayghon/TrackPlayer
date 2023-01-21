@@ -1,3 +1,2 @@
-export * from './tabs';
-export * from './stacks';
+export * from './navigators';
 export * from './routes.types';

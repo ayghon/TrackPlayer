@@ -1,14 +1,14 @@
-import { AddPlaylistButton } from './components/buttons/AddPlaylistButton';
-import { CustomBottomTabBar } from './components/CustomBottomTabBar';
-import { HomeScreen, LibraryScreen } from '../../screens';
+import { AddPlaylistButton } from '../components/buttons/AddPlaylistButton';
+import { CustomBottomTabBar } from '../components/CustomBottomTabBar';
+import { HomeScreen, LibraryScreen } from '../../../screens';
 import {
   RootStackParamList,
   RootStackScreenProps,
   Routes
-} from './routes.types';
+} from '../routes.types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { i18nKeys } from '../i18n';
-import { tabsOptions } from './routes.utils';
+import { i18nKeys } from '../../i18n';
+import { tabsOptions } from '../routes.utils';
 import { useTranslation } from 'react-i18next';
 import React, { FC, ReactNode } from 'react';
 
