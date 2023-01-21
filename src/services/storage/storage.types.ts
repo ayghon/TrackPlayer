@@ -9,5 +9,6 @@ export enum StorageKeys {
 
 export enum StorageEvent {
   COLOR_SCHEME_CHANGE = 'color-scheme-changed',
-  RECENTLY_PLAYED_UPDATED = 'recently-played-updated'
+  RECENTLY_PLAYED_UPDATED = 'recently-played-updated',
+  CLEAR_CACHE = 'clear-cache'
 }

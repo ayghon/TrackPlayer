@@ -1,5 +1,7 @@
-import { StorageKeys } from './storage.types';
+import { DeviceEventEmitter } from 'react-native';
+import { StorageEvent, StorageKeys } from './storage.types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import TrackPlayer from 'react-native-track-player';
 
 /**
  * @description Get parsed data from AsyncStorage
@@ -20,10 +22,13 @@ export async function getParsedStorageData<
   }
 }
 
-export const clearCache = () =>
-  AsyncStorage.multiRemove([
+export const clearCache = async () => {
+  await AsyncStorage.multiRemove([
     StorageKeys.CUSTOM_COLOR_SCHEMES,
     StorageKeys.COLOR_SCHEME,
     StorageKeys.PLAYLISTS,
     StorageKeys.RECENTLY_PLAYED
   ]);
+  await TrackPlayer.reset();
+  DeviceEventEmitter.emit(StorageEvent.CLEAR_CACHE);
+};

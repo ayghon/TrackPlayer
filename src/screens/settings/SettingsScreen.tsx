@@ -25,7 +25,7 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
 }) => {
   const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [t, { language }] = useTranslation();
-  const { activeColorSchemeText } = useColorScheme();
+  const { activeColorSchemeText, changeColorScheme } = useColorScheme();
   const { changeTheme } = useThemeManager();
 
   // update theme after custom-color scheme update
@@ -40,6 +40,13 @@ export const SettingsScreen: FC<RootStackScreenProps<Routes.SETTINGS>> = ({
   );
 
   const clearCacheHandler = async () => {
+    // if active color scheme is custom, set to default theme before clearing cache
+    const colorScheme = await AsyncStorage.getItem(StorageKeys.COLOR_SCHEME);
+    if (colorScheme === ThemeColorScheme.CUSTOM) {
+      await changeTheme(ThemeColorScheme.DEFAULT);
+      changeColorScheme(ThemeColorScheme.DEFAULT);
+    }
+
     await clearCache();
     setConfirmDialogOpen(false);
   };

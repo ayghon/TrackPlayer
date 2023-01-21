@@ -1,15 +1,27 @@
+import { DeviceEventEmitter } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Pressable } from 'native-base';
 import { RootStackParamList, Routes } from '../routes.types';
+import { StorageEvent } from '../../storage';
 import { TrackView } from '../../../ui';
 import { usePlayerState } from '../../player';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 export const FloatingPlayer = () => {
+  const [enabled, setEnabled] = useState(true);
   const { navigate } = useNavigation<NavigationProp<RootStackParamList>>();
   const { controls, currentTrack, queue, playlist } = usePlayerState();
 
-  if (!currentTrack || queue.length === 0) {
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener(
+      StorageEvent.CLEAR_CACHE,
+      () => setEnabled(false)
+    );
+
+    return () => listener.remove();
+  }, []);
+
+  if (!enabled || !currentTrack || queue.length === 0) {
     return null;
   }
 

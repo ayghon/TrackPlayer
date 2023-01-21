@@ -36,6 +36,15 @@ export const HomeScreen: FC<RootStackScreenProps<Routes.HOME>> = ({
 
   useEffect(() => {
     const listener = DeviceEventEmitter.addListener(
+      StorageEvent.CLEAR_CACHE,
+      () => setList([])
+    );
+
+    return () => listener.remove();
+  }, []);
+
+  useEffect(() => {
+    const listener = DeviceEventEmitter.addListener(
       StorageEvent.RECENTLY_PLAYED_UPDATED,
       (values) => {
         const playlistItems = transformRecentlyPlayedIdsToPlaylists(
