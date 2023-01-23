@@ -25,7 +25,7 @@
     "@react-native-community/cli": "10.0.0",
     "@react-native-community/cli-platform-android": "9.2.1",
     "@react-native-community/cli-platform-ios": "9.2.1",
-    "@react-navigation/bottom-tabs": "^6.5.1",
+    "@react-navigation/bottom-tabs": "^6.5.3",
     "@react-navigation/native": "^6.1.2",
     "@react-navigation/native-stack": "^6.9.8",
     "axios": "^1.2.2",
