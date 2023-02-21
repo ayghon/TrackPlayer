@@ -58,7 +58,7 @@
     "@types/lodash.debounce": "^4.0.7",
     "@types/lodash.setwith": "^4.3.7",
     "@types/luxon": "^3.2.0",
-    "@types/node": "^18.11.18",
+    "@types/node": "^18.14.0",
     "@types/react": "^18.0.21",
     "@types/react-native": "^0.70.8",
     "@types/react-native-vector-icons": "^6.4.12",
