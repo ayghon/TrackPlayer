@@ -34,7 +34,7 @@
     "luxon": "^3.2.1",
     "native-base": "^3.4.25",
     "react": "18.1.0",
-    "react-i18next": "^12.1.4",
+    "react-i18next": "^12.2.2",
     "react-native": "0.70.6",
     "react-native-color-picker": "^0.6.0",
     "react-native-document-picker": "^8.1.3",
